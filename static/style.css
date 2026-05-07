@@ -139,6 +139,7 @@ a { color: inherit; }
 .upload-zone__label { font-size: 16px; color: var(--clr-text); line-height: 1.4; }
 .upload-zone__label strong { font-weight: 600; }
 .upload-zone__hint { font-size: 13px; color: var(--clr-text-muted); }
+#file-input { display: none; }
 
 /* ── LOADING ───────────────────────────────────────────────────────────────── */
 .loading {
