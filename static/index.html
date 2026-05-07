@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr. Jealousy — Jaloezie Visualisator</title>
+  <meta name="description" content="Ontdek hoe jaloezieën er uitzien in jouw ruimte met AI-visualisatie van Mr. Jealousy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── TOPBAR ─────────────────────────────────────────────────────────────── -->
+  <header class="topbar" id="topbar">
+    <div class="topbar__logo" id="topbar-logo">
+      <div class="logo-badge">
+        <span class="logo-heart">♥</span><span class="logo-j">J</span>
+      </div>
+    </div>
+    <button class="topbar__close" id="btn-close" aria-label="Sluiten">Sluiten ×</button>
+  </header>
+
+  <!-- ── SCREEN 1: LANDING ──────────────────────────────────────────────────── -->
+  <main class="screen" id="screen-landing" role="main">
+    <div class="landing">
+      <h1 class="landing__headline">Ervaar de sfeer van jaloezieën in jouw ruimte.</h1>
+
+      <div class="upload-zone" id="upload-zone" tabindex="0" role="button" aria-label="Klik of sleep een afbeelding">
+        <div class="upload-zone__icon" aria-hidden="true">📷</div>
+        <p class="upload-zone__label">Sleep <strong>een foto van jouw ramen</strong><br>of klik om te selecteren</p>
+        <p class="upload-zone__hint">PNG, JPG of WEBP (Max. 4MB)</p>
+        <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" aria-hidden="true" tabindex="-1" />
+      </div>
+
+      <p class="disclaimer">
+        Dit is een AI-tool en dit is een dikke disclaimer. Er kunnen geen rechten worden ontleend aan deze tool, bla bla.
+        Lees meer in onze <a href="#" class="disclaimer__link">algemene voorwaarden</a>.
+      </p>
+    </div>
+  </main>
+
+  <!-- ── SCREEN 2: LOADING ─────────────────────────────────────────────────── -->
+  <main class="screen screen--hidden" id="screen-loading" aria-live="polite">
+    <div class="loading">
+      <div class="loading__header">
+        <div class="loading__avatar" aria-hidden="true">···</div>
+        <span class="loading__message" id="loading-message">Super! Ik analyseer jouw foto…</span>
+      </div>
+
+      <div class="loading__card">
+        <div class="loading__heart" aria-hidden="true">❤️✨</div>
+
+        <ul class="phase-list" id="phase-list" role="list">
+          <li class="phase-item" id="phase-step-1" role="listitem">
+            <span class="phase-item__icon" aria-hidden="true"></span>
+            <span>Afbeelding scannen &amp; optimaliseren…</span>
+          </li>
+          <li class="phase-item" id="phase-step-2" role="listitem">
+            <span class="phase-item__icon" aria-hidden="true"></span>
+            <span>Kleurenpalet &amp; sfeer extraheren…</span>
+          </li>
+          <li class="phase-item" id="phase-step-3" role="listitem">
+            <span class="phase-item__icon" aria-hidden="true"></span>
+            <span>Raamkozijn &amp; lichtinval meten…</span>
+          </li>
+          <li class="phase-item" id="phase-step-4" role="listitem">
+            <span class="phase-item__icon" aria-hidden="true"></span>
+            <span>Interieurstijl bepalen…</span>
+          </li>
+          <li class="phase-item" id="phase-step-5" role="listitem">
+            <span class="phase-item__icon" aria-hidden="true"></span>
+            <span>Perfecte match zoeken in catalogus…</span>
+          </li>
+        </ul>
+
+        <p class="loading__timer">Moment geduld, dit kan tot 60 seconden duren…</p>
+        <div class="loading__bar-track">
+          <div class="loading__bar-fill" id="loading-bar"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── SCREEN 3: RESULT ──────────────────────────────────────────────────── -->
+  <main class="screen screen--hidden" id="screen-result">
+    <div class="result">
+
+      <!-- LEFT: Before/After Slider -->
+      <section class="result__visual" aria-label="Voor/na vergelijking">
+        <div class="slider" id="slider" role="img" aria-label="Vergelijkingsschuif">
+          <img class="slider__before" id="slider-before" src="" alt="Originele kamer" />
+          <div class="slider__clip" id="slider-clip">
+            <img class="slider__after" id="slider-after" src="" alt="Visualisatie met jaloezie" />
+          </div>
+          <div class="slider__divider" id="slider-divider">
+            <div class="slider__handle" id="slider-handle" tabindex="0" role="slider" aria-label="Verschuif vergelijking" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              <span class="slider__arrows" aria-hidden="true">‹ ›</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="result__visual-actions">
+          <button class="btn-ghost" id="btn-retry" type="button">🗑 Opnieuw</button>
+          <button class="btn-ghost" id="btn-save" type="button">💾 Opslaan</button>
+        </div>
+      </section>
+
+      <!-- RIGHT: Config Panel -->
+      <aside class="result__config" id="config-panel" aria-label="Configuratiepaneel">
+
+        <!-- Selected color -->
+        <section class="config-section">
+          <p class="config-label">Gekozen kleur<span class="required" aria-hidden="true">*</span></p>
+          <div class="color-hero" id="color-hero">
+            <img class="color-hero__img" id="color-hero-img" src="" alt="Geselecteerde kleur" />
+            <div class="color-hero__meta">
+              <span class="color-hero__name" id="color-hero-name">—</span>
+              <span class="color-hero__material" id="color-hero-material">—</span>
+            </div>
+            <button class="color-hero__btn" id="btn-open-flyout" type="button" aria-haspopup="true" aria-expanded="false">
+              Kleuren <span aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <div class="link-row">
+            <a href="#" class="btn-link" id="btn-sample">Kleurstaal bestellen</a>
+            <a href="#" class="btn-link" id="btn-blind">Jaloezie bestellen</a>
+          </div>
+        </section>
+
+        <!-- Suggestions -->
+        <section class="config-section">
+          <p class="config-label">Onze suggesties<span class="required" aria-hidden="true">*</span></p>
+          <div class="suggestions" id="suggestions" role="list"></div>
+        </section>
+
+        <button class="btn-primary" id="btn-viz-top" type="button">✨ Resultaat visualiseren</button>
+
+        <!-- Ladder -->
+        <section class="config-section">
+          <p class="config-label">Ladder<span class="required" aria-hidden="true">*</span>
+            <button class="info-btn" type="button" aria-label="Info over ladder">ⓘ</button>
+          </p>
+          <div class="radio-group" role="radiogroup" aria-label="Ladder type">
+            <label class="radio-item"><input type="radio" name="ladder" value="ladderband" checked /> Ladderband</label>
+            <label class="radio-item"><input type="radio" name="ladder" value="ladderkoord" /> Ladderkoord</label>
+          </div>
+        </section>
+
+        <!-- Slat width -->
+        <section class="config-section">
+          <p class="config-label">Lamelbreedte<span class="required" aria-hidden="true">*</span>
+            <button class="info-btn" type="button" aria-label="Info over lamelbreedte">ⓘ</button>
+          </p>
+          <div class="radio-group" role="radiogroup" aria-label="Lamelbreedte">
+            <label class="radio-item"><input type="radio" name="slat" value="25mm" /> 25mm</label>
+            <label class="radio-item"><input type="radio" name="slat" value="50mm" checked /> 50mm</label>
+          </div>
+        </section>
+
+        <!-- Tilt -->
+        <section class="config-section">
+          <p class="config-label">Kantelstand<span class="required" aria-hidden="true">*</span>
+            <button class="info-btn" type="button" aria-label="Info over kantelstand">ⓘ</button>
+          </p>
+          <div class="radio-group" role="radiogroup" aria-label="Kantelstand">
+            <label class="radio-item"><input type="radio" name="tilt" value="open" checked /> Open</label>
+            <label class="radio-item"><input type="radio" name="tilt" value="gesloten" /> Gesloten</label>
+          </div>
+        </section>
+
+        <!-- Time of day -->
+        <section class="config-section">
+          <p class="config-label">Dagdeel<span class="required" aria-hidden="true">*</span>
+            <button class="info-btn" type="button" aria-label="Info over dagdeel">ⓘ</button>
+          </p>
+          <div class="radio-group radio-group--2col" role="radiogroup" aria-label="Dagdeel">
+            <label class="radio-item"><input type="radio" name="daytime" value="Ochtend (Koel)" checked /> Ochtend</label>
+            <label class="radio-item"><input type="radio" name="daytime" value="Middag (Helder)" /> Middag</label>
+            <label class="radio-item"><input type="radio" name="daytime" value="Zonsondergang (Warm)" /> Golden hour</label>
+            <label class="radio-item"><input type="radio" name="daytime" value="Avond (Sfeervol)" /> Avond</label>
+          </div>
+        </section>
+
+        <!-- Technical window check -->
+        <section class="config-section">
+          <p class="config-label config-label--accent">Technische Raamcheck<span class="required" aria-hidden="true">*</span></p>
+          <dl class="tech-list" id="tech-list">
+            <div class="tech-row"><dt>Type raam</dt><dd id="tech-type">—</dd></div>
+            <div class="tech-row"><dt>Plaatsing</dt><dd id="tech-mount">—</dd></div>
+            <div class="tech-row"><dt>Aantal ramen</dt><dd id="tech-count">—</dd></div>
+          </dl>
+        </section>
+
+        <!-- Special notes -->
+        <section class="config-section">
+          <p class="config-label config-label--accent">Bijzonderheden per raam<span class="required" aria-hidden="true">*</span></p>
+          <p class="bijzonderheden" id="bijzonderheden">—</p>
+        </section>
+
+        <button class="btn-primary" id="btn-viz-bottom" type="button">✨ Resultaat visualiseren</button>
+        <div class="link-row">
+          <a href="#" class="btn-link" id="btn-sample-2">Kleurstaal bestellen</a>
+          <a href="#" class="btn-link" id="btn-blind-2">Jaloezie bestellen</a>
+        </div>
+
+        <p class="disclaimer">
+          Dit is een AI-tool en dit is een dikke disclaimer. Er kunnen geen rechten worden ontleend aan deze tool, bla bla.
+          Lees meer in onze <a href="#" class="disclaimer__link">algemene voorwaarden</a>.
+        </p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ── COLOR FLYOUT ───────────────────────────────────────────────────────── -->
+  <div class="flyout-overlay" id="flyout-overlay" aria-hidden="true"></div>
+  <aside class="flyout" id="color-flyout" role="dialog" aria-modal="true" aria-label="Kies jaloeziekleur" aria-hidden="true">
+    <div class="flyout__header">
+      <h2 class="flyout__title">Kies jaloeziekleur</h2>
+      <button class="info-btn" type="button" aria-label="Info over kleuren">ⓘ</button>
+      <button class="flyout__close" id="btn-close-flyout" type="button" aria-label="Sluiten">×</button>
+    </div>
+
+    <div class="flyout__tabs" role="tablist">
+      <button class="flyout__tab flyout__tab--active" id="tab-alu" role="tab" aria-selected="true" aria-controls="tabpanel-alu">Aluminium</button>
+      <button class="flyout__tab" id="tab-hout" role="tab" aria-selected="false" aria-controls="tabpanel-hout">Hout &amp; Bamboe</button>
+    </div>
+
+    <div class="flyout__list" id="tabpanel-alu" role="tabpanel" aria-labelledby="tab-alu"></div>
+    <div class="flyout__list flyout__list--hidden" id="tabpanel-hout" role="tabpanel" aria-labelledby="tab-hout"></div>
+  </aside>
+
+  <!-- ── ERROR TOAST ────────────────────────────────────────────────────────── -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive" aria-hidden="true">
+    <span id="toast-message"></span>
+    <button class="toast__close" id="btn-close-toast" type="button" aria-label="Melding sluiten">×</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
