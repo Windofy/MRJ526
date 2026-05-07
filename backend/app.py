@@ -153,17 +153,20 @@ def preview():
 
     # Run synchronously (previews are user-triggered, acceptable latency)
     try:
-        from render_gemini import generate_render
         from watermark import apply_watermark
         from upload_supabase import upload_render, insert_render
 
         with open(image_local, "rb") as f:
             img_bytes = f.read()
 
-        render_bytes = generate_render(img_bytes, render_instruction, config_override)
+        render_bytes, method = _render_with_fallback(
+            img_bytes,
+            render_instruction,
+            state.get("mask_bytes"),
+            config_override,
+        )
         watermarked = apply_watermark(render_bytes)
 
-        # Count existing renders for this session
         render_index = state.get("render_count", 0) + 1
         _set_session(session_id, {"render_count": render_index})
 
@@ -171,15 +174,45 @@ def preview():
         render_url = upload_result["public_url"]
 
         try:
-            insert_render(session_id, render_url, config_override, "gemini")
+            insert_render(session_id, render_url, config_override, method)
         except Exception:
-            pass  # DB insert failure is non-fatal
+            pass
 
         _set_session(session_id, {"render_url": render_url})
-        return jsonify({"render_url": render_url})
+        return jsonify({"render_url": render_url, "render_method": method})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+# ── RENDER HELPER (SAM2 + inpainting → Gemini fallback) ───────────────────────
+
+def _render_with_fallback(
+    img_bytes: bytes,
+    render_instruction: dict,
+    mask_bytes: bytes | None = None,
+    config_override: dict | None = None,
+) -> tuple[bytes, str]:
+    """
+    Try SAM2 + FLUX inpainting first. Fall back to Gemini if:
+    - FAL_KEY not set
+    - No mask available
+    - Inpainting fails
+    """
+    if mask_bytes and os.environ.get("FAL_KEY"):
+        try:
+            from inpaint import generate_inpaint
+            render_bytes, model = generate_inpaint(
+                img_bytes, mask_bytes, render_instruction, config_override
+            )
+            return render_bytes, f"flux:{model}"
+        except Exception as e:
+            print(f"[INPAINT] Failed, falling back to Gemini: {e}")
+
+    # Gemini fallback
+    from render_gemini import generate_render
+    render_bytes = generate_render(img_bytes, render_instruction, config_override)
+    return render_bytes, "gemini"
 
 
 # ── BACKGROUND ANALYSIS THREAD ─────────────────────────────────────────────────
@@ -230,22 +263,32 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
         except Exception:
             pass
 
-        # Phase 9+: Generate initial render
+        # Phase 9+: SAM2 segmentation → inpainting (Gemini fallback)
         _set_session(session_id, {"status": "rendering", "step": 5})
-        from render_gemini import generate_render
         from watermark import apply_watermark
         from upload_supabase import upload_render, insert_render
+        from segment_sam2 import segment_window
 
         with open(local_path, "rb") as f:
             img_bytes = f.read()
 
-        render_bytes = generate_render(img_bytes, render_instruction)
+        # SAM2: detect window mask (non-fatal if it fails)
+        mask_bytes = segment_window(img_bytes)
+        _set_session(session_id, {"mask_bytes": mask_bytes})
+        if mask_bytes:
+            print(f"[{session_id}] SAM2 mask obtained ({len(mask_bytes)} bytes)")
+        else:
+            print(f"[{session_id}] SAM2 skipped — using Gemini pipeline")
+
+        render_bytes, method = _render_with_fallback(
+            img_bytes, render_instruction, mask_bytes
+        )
         watermarked = apply_watermark(render_bytes)
         upload_result = upload_render(watermarked, session_id, 0)
         render_url = upload_result["public_url"]
 
         try:
-            insert_render(session_id, render_url, {}, "gemini")
+            insert_render(session_id, render_url, {}, method)
             upsert_session(session_id, {"status": "done"})
         except Exception:
             pass
