@@ -11,11 +11,11 @@ from google.genai import types
 
 load_dotenv()
 
-# Ordered fallback list — primary first
+# Ordered fallback list — verified via ListModels (2026-05-07)
 RENDER_MODELS = [
-    "gemini-2.5-flash-preview-05-20",
-    "gemini-2.0-flash-preview-image-generation",
-    "gemini-2.0-flash-exp",
+    "gemini-3.1-flash-image-preview",   # beste/nieuwste flash image model
+    "gemini-2.5-flash-image",           # stabiele 2.5 image variant
+    "gemini-3-pro-image-preview",       # pro kwaliteit, trager
 ]
 
 TRANSIENT_CODES = {429, 500, 503}
