@@ -32,6 +32,9 @@ function showScreen(name) {
   Object.entries(screens).forEach(([k, el]) => {
     el.classList.toggle('screen--hidden', k !== name);
   });
+  // Hide logo badge on loading screen
+  const logo = $('topbar-logo');
+  if (logo) logo.style.display = name === 'loading' ? 'none' : '';
 }
 
 // ── UPLOAD ─────────────────────────────────────────────────────────────────
@@ -103,28 +106,31 @@ async function pollStatus() {
   } catch (e) { /* network hiccup, keep polling */ }
 }
 
+// Phase messages shown as progress advances
+const PHASE_MESSAGES = [
+  'Super! Ik analyseer jouw foto…',
+  'Ik bekijk de ramen in jouw ruimte…',
+  'Ik bepaal de ideale jaloezie voor jou…',
+  'Ik bereken de perfecte kleur…',
+  'Ik leg de laatste hand aan de visualisatie…',
+];
+
 function updateLoadingUI({ status, step }) {
   const stepNum = parseInt(step) || 0;
-  if (stepNum === currentStep) return;
+  if (stepNum === currentStep && status !== 'rendering') return;
   currentStep = stepNum;
 
-  // Advance phase list
-  for (let i = 1; i <= 5; i++) {
-    const el = $(`phase-step-${i}`);
-    el.classList.remove('phase-item--done', 'phase-item--active');
-    if (i < stepNum) el.classList.add('phase-item--done');
-    else if (i === stepNum) el.classList.add('phase-item--active');
-  }
+  // Progress bar: 0→95% across phases, 98% on rendering
+  let pct = Math.min((stepNum / 5) * 95, 95);
+  if (status === 'rendering') pct = 98;
+  $('loading-bar').style.width = `${pct}%`;
 
-  // Done icons
-  document.querySelectorAll('.phase-item--done .phase-item__icon').forEach(ic => { ic.textContent = ''; });
-
-  // Progress bar
-  $('loading-bar').style.width = `${Math.min((stepNum / 5) * 100, 95)}%`;
-
+  // Status message
+  const msgEl = $('loading-message');
   if (status === 'rendering') {
-    $('loading-message').textContent = 'Bijna klaar! Visualisatie wordt gemaakt…';
-    $('loading-bar').style.width = '98%';
+    msgEl.textContent = 'Bijna klaar! Jouw visualisatie wordt gegenereerd…';
+  } else if (stepNum >= 1 && stepNum <= PHASE_MESSAGES.length) {
+    msgEl.textContent = PHASE_MESSAGES[stepNum - 1];
   }
 }
 
@@ -132,10 +138,6 @@ function resetPhaseList() {
   currentStep = 0;
   $('loading-bar').style.width = '0%';
   $('loading-message').textContent = 'Super! Ik analyseer jouw foto…';
-  for (let i = 1; i <= 5; i++) {
-    const el = $(`phase-step-${i}`);
-    el.classList.remove('phase-item--done', 'phase-item--active');
-  }
 }
 
 // ── RESULT ─────────────────────────────────────────────────────────────────

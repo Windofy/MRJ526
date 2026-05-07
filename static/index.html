@@ -41,43 +41,22 @@
 
   <!-- ── SCREEN 2: LOADING ─────────────────────────────────────────────────── -->
   <main class="screen screen--hidden" id="screen-loading" aria-live="polite">
-    <div class="loading">
-      <div class="loading__header">
-        <div class="loading__avatar" aria-hidden="true">···</div>
-        <span class="loading__message" id="loading-message">Super! Ik analyseer jouw foto…</span>
+    <div class="loading-v2">
+      <div class="loading-v2__message-row">
+        <div class="loading-v2__avatar" aria-hidden="true">···</div>
+        <span class="loading-v2__message" id="loading-message">Super! Ik analyseer jouw foto…</span>
       </div>
 
-      <div class="loading__card">
-        <div class="loading__heart" aria-hidden="true">❤️✨</div>
-
-        <ul class="phase-list" id="phase-list" role="list">
-          <li class="phase-item" id="phase-step-1" role="listitem">
-            <span class="phase-item__icon" aria-hidden="true"></span>
-            <span>Afbeelding scannen &amp; optimaliseren…</span>
-          </li>
-          <li class="phase-item" id="phase-step-2" role="listitem">
-            <span class="phase-item__icon" aria-hidden="true"></span>
-            <span>Kleurenpalet &amp; sfeer extraheren…</span>
-          </li>
-          <li class="phase-item" id="phase-step-3" role="listitem">
-            <span class="phase-item__icon" aria-hidden="true"></span>
-            <span>Raamkozijn &amp; lichtinval meten…</span>
-          </li>
-          <li class="phase-item" id="phase-step-4" role="listitem">
-            <span class="phase-item__icon" aria-hidden="true"></span>
-            <span>Interieurstijl bepalen…</span>
-          </li>
-          <li class="phase-item" id="phase-step-5" role="listitem">
-            <span class="phase-item__icon" aria-hidden="true"></span>
-            <span>Perfecte match zoeken in catalogus…</span>
-          </li>
-        </ul>
-
-        <p class="loading__timer">Moment geduld, dit kan tot 60 seconden duren…</p>
-        <div class="loading__bar-track">
-          <div class="loading__bar-fill" id="loading-bar"></div>
+      <div class="loading-v2__card">
+        <div class="loading-v2__bar-track">
+          <div class="loading-v2__bar-fill" id="loading-bar"></div>
         </div>
       </div>
+
+      <p class="loading-v2__disclaimer">
+        Dit is een AI-tool en dit is een dikke disclaimer. Er kunnen geen rechten worden ontleend aan deze tool, bla bla.
+        Lees meer in onze <a href="#" class="loading-v2__disclaimer-link">algemene voorwaarden</a>.
+      </p>
     </div>
   </main>
 

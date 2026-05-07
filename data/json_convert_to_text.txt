@@ -1,0 +1,468 @@
+{
+  "2": {
+    "quality_pass": true
+  },
+  "3": {
+    "style": "Industrieel Renovatie",
+    "styleSummary": "Een ruwe, onafgewerkte ruimte in volle renovatie met authentieke industriële elementen en een warme, neutrale basis die schreeuwt om karaktervolle afwerking.",
+    "styleDescription": "Deze ruimte bevindt zich in een fascinerende tussenfase van transformatie, waarbij de rauwe schoonheid van een industrieel renovatieproject volledig zichtbaar is. De kamer ademt een authentieke, ongepolijste sfeer uit die kenmerkend is voor stedelijke herontwikkeling en loft-achtige verbouwingen. De muren zijn voorzien van vers gepleisterd stucwerk in een warme, gebroken witte tint die neigt naar zacht beige, wat duidt op een voorkeur voor neutrale, tijdloze kleuren als basis. Het plafond toont dezelfde zachte, crèmekleurige afwerking met subtiele oneffenheden die het handwerk verraden. De houten vloerplanken zijn licht en verweerd, met sporen van verfwerk en gebruik die een verhaal vertellen van decennia geschiedenis. Dit geeft de ruimte een organische, geleefde kwaliteit die perfect past bij de industriële esthetiek. Het raamkozijn valt op door zijn donkere, bijna zwarte afwerking in combinatie met warme houttinten aan de binnenzijde, een contrast dat diepte en karakter toevoegt. De aanwezigheid van een klassieke houten trap en bouwmaterialen versterkt het werkende, eerlijke karakter van de ruimte. De lichtinval is natuurlijk en ongehinderd, wat wijst op een voorkeur voor openheid en helderheid. De algehele sfeer is warm maar ingetogen, met een focus op materiaaleerlijkheid en functionele schoonheid. Dit is een ruimte die vraagt om raambekleding die zowel de industriële roots respecteert als warmte en verfijning toevoegt aan het eindresultaat."
+  },
+  "4": {
+    "extracted_colors": [
+      {
+        "hex_code": "#E8E4D9",
+        "extracted_source": "Gepleisterde muren",
+        "matched_catalog_color": "Like RAL9001"
+      },
+      {
+        "hex_code": "#F5F2E8",
+        "extracted_source": "Plafond",
+        "matched_catalog_color": "Flat White"
+      },
+      {
+        "hex_code": "#C9BBA8",
+        "extracted_source": "Houten vloerplanken",
+        "matched_catalog_color": "De Naturist"
+      },
+      {
+        "hex_code": "#3D3530",
+        "extracted_source": "Donker raamkozijn buitenzijde",
+        "matched_catalog_color": "Donker Brown"
+      },
+      {
+        "hex_code": "#B8A078",
+        "extracted_source": "Houten kozijnrand binnenzijde",
+        "matched_catalog_color": "Oak Mooi"
+      }
+    ]
+  },
+  "5": {
+    "5": {
+      "window_architecture": {
+        "outer_frame_bounds": {
+          "beschrijving": "Rechthoekig raamkozijn ingebed in dikke gemetselde muur met diepe dagkanten",
+          "geschatte_breedte_cm": 95,
+          "geschatte_hoogte_cm": 140
+        },
+        "glass_bounds": {
+          "beschrijving": "Twee verticaal geplaatste glassecties gescheiden door horizontale tussendorpel, plus vast bovenlicht",
+          "aantal_glassecties": 3
+        },
+        "sash_divisions": {
+          "horizontale_tussendorpel": true,
+          "verticale_stijl": false,
+          "roede_indeling": false
+        },
+        "mullions_transoms": {
+          "transom_aanwezig": true,
+          "transom_positie": "Horizontaal, scheidt bovenlicht van onderste twee panelen",
+          "mullion_aanwezig": true,
+          "mullion_positie": "Verticaal tussen de twee onderste draairamen"
+        },
+        "recess_depth_cm": 22,
+        "sill": {
+          "aanwezig": true,
+          "type": "Ingebouwde binnenvensterbank, vlak met dagkant",
+          "materiaal": "Gepleisterd/gestuct"
+        },
+        "frame_material": {
+          "buitenzijde": "Aluminium of staal, donker gelakt",
+          "binnenzijde": "Hout, naturel/licht gebeitst"
+        },
+        "handle": {
+          "aanwezig": true,
+          "zijde": "Rechts op linkerdraairaam, links op rechterdraairaam",
+          "type": "Draai-kiepgreep"
+        },
+        "vent_grille_lock": {
+          "ventilatierooster": false,
+          "slot": true,
+          "opmerkingen": "Standaard draai-kiepsluitingen geïntegreerd in greep"
+        },
+        "opening_mechanism": "Draai-kiep",
+        "opening_direction": {
+          "linker_vleugel": "Naar binnen draaiend, scharnieren links",
+          "rechter_vleugel": "Naar binnen draaiend, scharnieren rechts"
+        },
+        "fixed_or_operable": {
+          "bovenlicht": "Vast",
+          "linker_onderpaneel": "Bedienbaar (draai-kiep)",
+          "rechter_onderpaneel": "Bedienbaar (draai-kiep)"
+        },
+        "nearby_collision_risks": {
+          "binnen_dagkant": "Diepe nis beperkt montage-opties",
+          "greep_uitsteek": "Grepen steken ca. 4-5 cm uit bij gesloten stand",
+          "kiepstand_obstructie": "Bij kiepventilatie ca. 12 cm bovenaan naar binnen"
+        },
+        "glazing_type": "Enkel of oud dubbelglas, helder",
+        "stack_height_clearance_cm": 18,
+        "window_type_classification": "Multi-pane met vast bovenlicht en twee draai-kiep vleugels",
+        "exact_glass_section_count": 3
+      },
+      "mounting_implications": {
+        "aanbevolen_montage": "In-de-dag montage binnen de diepe nis",
+        "reden": "Diepe dagkanten (22 cm) bieden uitstekende ruimte voor in-de-dag montage zonder grepen te hinderen",
+        "alternatief": "Op-de-dag montage op de muur boven de nis indien volledige lichtafsluiting gewenst",
+        "aandachtspunten": [
+          "Grepen vereisen minimaal 5 cm vrije ruimte aan weerszijden",
+          "Kiepfunctie vereist vrijheid bovenaan het glas",
+          "Aparte jaloezieën per glassectie aanbevolen voor volledige functionaliteit draairamen"
+        ]
+      }
+    }
+  },
+  "6": {
+    "phase": 6,
+    "mounting_strategy": {
+      "gekozen_montagetype": "In de dag",
+      "montage_locatie": "Binnen de diepe dagkant, bevestigd aan de bovenzijde van de nis",
+      "regel_evaluatie": {
+        "regel_1_diepte": {
+          "van_toepassing": false,
+          "dagkant_diepte_cm": 22,
+          "minimaal_vereist_cm": 5,
+          "resultaat": "PASS - Ruim voldoende diepte voor in-de-dag montage"
+        },
+        "regel_2_uitsteek": {
+          "van_toepassing": true,
+          "greep_aanwezig": true,
+          "greep_uitsteek_cm": 5,
+          "dagkant_diepte_cm": 22,
+          "resultaat": "PASS - Greepuitsteek (5 cm) ruimschoots binnen dagkantdiepte (22 cm)"
+        },
+        "regel_3_kinematisch": {
+          "van_toepassing": true,
+          "raamtype": "Draai-kiep",
+          "kiepstand_uitsteek_cm": 12,
+          "beschikbare_stapelhoogte_cm": 18,
+          "resultaat": "PASS - Voldoende stapelruimte (18 cm) voor kiepventilatie (12 cm vereist)"
+        },
+        "regel_4_hoek": {
+          "van_toepassing": false,
+          "reden": "In-de-dag montage gekozen, zijspeling niet kritiek"
+        },
+        "regel_5_default": {
+          "van_toepassing": true,
+          "resultaat": "IN DE DAG - Alle voorgaande regels passeren"
+        }
+      },
+      "configuratie_per_sectie": {
+        "bovenlicht": {
+          "type": "Vast paneel",
+          "aanbeveling": "Één aparte jaloezie, in-de-dag gemonteerd",
+          "greep_conflict": false
+        },
+        "linker_draaikiepraam": {
+          "type": "Bedienbaar draai-kiep",
+          "aanbeveling": "Aparte jaloezie, in-de-dag gemonteerd binnen glassectie",
+          "greep_zijde": "Rechts",
+          "greep_conflict_risico": "Geen - jaloezie eindigt boven greephoogte"
+        },
+        "rechter_draaikiepraam": {
+          "type": "Bedienbaar draai-kiep",
+          "aanbeveling": "Aparte jaloezie, in-de-dag gemonteerd binnen glassectie",
+          "greep_zijde": "Links",
+          "greep_conflict_risico": "Geen - jaloezie eindigt boven greephoogte"
+        }
+      },
+      "totaal_aantal_jaloezieën": 3,
+      "montage_vrijheid": {
+        "boven_cm": 18,
+        "zijkanten_cm": 22,
+        "greep_speling_cm": 17
+      },
+      "speciale_overwegingen": [
+        "Drie aparte jaloezieën garanderen onafhankelijke bediening van elk draai-kiepraam",
+        "Kiepventilatie blijft volledig functioneel bij opgetrokken jaloezieën",
+        "Diepe nis biedt natuurlijke lichtafdichting aan zijkanten"
+      ],
+      "alternatieve_optie": {
+        "type": "Op de dag (buiten de nis)",
+        "wanneer_overwegen": "Bij wens voor volledige verduistering of uniform aanzicht",
+        "nadeel": "Verlies van karakteristieke diepe nis-esthetiek, extra boorwerk in gestucte muur"
+      },
+      "fysieke_haalbaarheid": "BEVESTIGD",
+      "installatie_complexiteit": "Gemiddeld - vereist nauwkeurige uitlijning van drie units"
+    }
+  },
+  "7": {
+    "phase": 7,
+    "lighting_conditions": {
+      "lichtbron_analyse": {
+        "primaire_bron": "Natuurlijk daglicht",
+        "natuurlijk_percentage": 95,
+        "kunstmatig_percentage": 5,
+        "kunstlicht_opmerking": "Minimale indirecte verlichting uit aangrenzende ruimte of bouwverlichting"
+      },
+      "lichtrichting": {
+        "invalshoek": "Frontaal-lateraal vanuit het westen of noordwesten",
+        "hoogte_inschatting": "Middagzon of vroege namiddag, licht valt onder hoek van circa 35-45 graden",
+        "schaduwwerping": "Zachte schaduwen zichtbaar op vloer en dagkanten, wijzend op diffuus bewolkt of licht gefilterd daglicht"
+      },
+      "lichtintensiteit": {
+        "geschatte_lux_bij_raam": 8000,
+        "geschatte_lux_ruimte_centrum": 1200,
+        "classificatie": "Helder diffuus daglicht",
+        "opmerking": "Geen directe zonnestralen zichtbaar, wijst op bewolkte hemel of noordelijke oriëntatie"
+      },
+      "lichttemperatuur": {
+        "geschatte_kelvin": 5800,
+        "classificatie": "Neutraal daglicht",
+        "sfeer_effect": "Koelwit met lichte warmte door reflectie van gepleisterde muren en houten vloer"
+      },
+      "lichtkwaliteit": {
+        "hardheid_zachtheid": "Zacht diffuus",
+        "contrast_niveau": "Laag tot gemiddeld",
+        "schaduw_scherpte": "Zachte gradiënt-schaduwen zonder harde randen"
+      },
+      "reflectie_analyse": {
+        "glas_reflectie": {
+          "aanwezig": true,
+          "intensiteit": "Mild",
+          "beschrijving": "Subtiele spiegeling van buitenomgeving en hemel in glasoppervlak"
+        },
+        "kozijn_reflectie": {
+          "donker_buitenkozijn": "Absorbeert licht, minimale reflectie",
+          "licht_binnenkozijn": "Warme houttinten reflecteren zacht goudachtig licht terug de ruimte in"
+        },
+        "muur_reflectie": {
+          "gepleisterde_muren": "Hoge reflectiecoëfficiënt (circa 0.75), versterkt lichtverspreiding",
+          "kleur_effect": "Warme crèmetint voegt subtiele gele ondertoon toe aan gereflecteerd licht"
+        },
+        "vloer_reflectie": {
+          "houten_planken": "Gemiddelde reflectie (circa 0.35), mat oppervlak",
+          "kleur_effect": "Warme aardtinten versterken gezellige sfeer"
+        }
+      },
+      "schaduwgedrag": {
+        "huidige_schaduwen": "Zachte schaduwvlakken in hoeken en onder vensterbank",
+        "dagkant_schaduw": "Diepe nis creëert natuurlijke gradiënt van licht naar schaduw",
+        "verwacht_met_jaloezie": {
+          "gesloten_stand": "Horizontale lichtstrepen afhankelijk van lamelhoek",
+          "halfopen_stand": "Gelaagde schaduwpatronen op vloer en muren",
+          "volledig_open": "Minimale schaduwimpact van opgestapelde lamellen"
+        }
+      },
+      "seizoens_daglicht_overwegingen": {
+        "zomer": "Langere blootstelling aan daglicht, mogelijke oververhitting",
+        "winter": "Lager zonnestand, diepere lichtinval in ruimte",
+        "aanbeveling": "Verstelbare lamellen essentieel voor seizoensregulatie"
+      },
+      "materiaal_lichtintegratie": {
+        "hout_jaloezie": {
+          "geschiktheid": "Uitstekend",
+          "reden": [
+            "Warme houttinten harmoniëren met diffuus noordelijk daglicht",
+            "Natuurlijke houtnerf verzacht koele lichttinten",
+            "Reflecteert warm licht terug, versterkt gezellige sfeer",
+            "Past bij bestaand houten kozijnwerk en vloer",
+            "Industriële renovatiestijl vraagt om authentieke materialen"
+          ],
+          "lichtfiltering": "Organische lichtdiffusie, zachte schaduwranden",
+          "kleurweergave_effect": "Verwarmt de neutrale muurkleuren subtiel"
+        },
+        "aluminium_jaloezie": {
+          "geschiktheid": "Goed met voorwaarden",
+          "reden": [
+            "Moderne uitstraling kan contrasteren met rauwe renovatie-esthetiek",
+            "Glanzende afwerking kan ongewenste reflecties geven bij direct zonlicht",
+            "Matte afwerkingen zoals Goed Grijs of Stevig Taupe kunnen werken"
+          ],
+          "lichtfiltering": "Scherpere schaduwlijnen, meer geometrisch",
+          "kleurweergave_effect": "Neutraler, minder warmte-toevoeging"
+        },
+        "definitieve_materiaal_voorkeur": "Houten Jaloezieën",
+        "onderbouwing": "De zachte, diffuse lichtomstandigheden in combinatie met de warme, gepleisterde muren en houten elementen vragen om een materiaal dat warmte toevoegt zonder te contrasteren. Hout absorbeert en reflecteert licht op een organische manier die de industriële renovatiestijl versterkt."
+      },
+      "lamelbreedte_lichteffect": {
+        "aanbevolen_breedte_mm": 50,
+        "reden": "Bredere lamellen (50mm) passen bij de robuuste, industriële schaal van het raam en creëren substantiëlere lichtstrepen die de ruimtelijkheid benadrukken"
+      },
+      "lichtregulatie_vereisten": {
+        "primaire_behoefte": "Flexibele lichtfiltering",
+        "privacy_overdag": "Matig belangrijk - bouwfase suggereert tijdelijke situatie",
+        "verduistering": "Niet primair - geen slaapkamerfunctie waarneembaar",
+        "warmteregulatie": "Relevant bij westelijke oriëntatie in zomermaanden"
+      }
+    }
+  },
+  "8": {
+    "phase": 8,
+    "catalog_match": {
+      "primaire_aanbeveling": {
+        "product_lijn": "Houten Jaloezieën",
+        "product_naam": "De Naturist",
+        "hex_code": "#D2B48C",
+        "materiaal": "Hout",
+        "subtype": "Paulownia",
+        "lamelbreedte_mm": 50,
+        "selectie_rationale": [
+          "Directe kleurmatch met geëxtraheerde vloerkleur (#C9BBA8)",
+          "Warme natuurlijke houttint harmoniëert met diffuus daglicht",
+          "Paulownia hout is lichtgewicht, ideaal voor draai-kiepramen",
+          "Authentiek materiaal past bij industriële renovatie-esthetiek",
+          "Organische lichtfiltering versterkt gezellige sfeer"
+        ],
+        "kleur_harmonie_score": 0.92,
+        "stijl_compatibiliteit": "Uitstekend - natuurlijke materialen bij rauwe renovatie"
+      },
+      "alternatieve_aanbeveling_1": {
+        "product_lijn": "Houten Jaloezieën",
+        "product_naam": "Oak Mooi",
+        "hex_code": "#C3A376",
+        "materiaal": "Hout",
+        "subtype": "Abachi",
+        "lamelbreedte_mm": 50,
+        "selectie_rationale": [
+          "Exacte match met houten kozijnrand binnenzijde (#B8A078)",
+          "Iets rijkere houttint voor meer karakter",
+          "Abachi hout biedt duurzaamheid en vochtbestendigheid",
+          "Creëert visuele continuïteit met bestaand houtwerk"
+        ],
+        "kleur_harmonie_score": 0.89,
+        "stijl_compatibiliteit": "Uitstekend - versterkt bestaande houttinten"
+      },
+      "alternatieve_aanbeveling_2": {
+        "product_lijn": "Houten Jaloezieën",
+        "product_naam": "Teder Taupe",
+        "hex_code": "#D8CCBB",
+        "materiaal": "Hout",
+        "subtype": "Bamboo",
+        "lamelbreedte_mm": 50,
+        "selectie_rationale": [
+          "Harmoniëert met gepleisterde muurkleur (#E8E4D9)",
+          "Neutrale taupetint verbindt muren met vloer",
+          "Bamboo is duurzaam en milieuvriendelijk",
+          "Subtiele kleur laat raamarchitectuur spreken"
+        ],
+        "kleur_harmonie_score": 0.86,
+        "stijl_compatibiliteit": "Zeer goed - ondersteunend zonder dominant"
+      },
+      "configuratie_details": {
+        "aantal_units": 3,
+        "unit_specificaties": [
+          {
+            "positie": "Bovenlicht (vast)",
+            "geschatte_breedte_cm": 90,
+            "geschatte_hoogte_cm": 30,
+            "montage": "In de dag"
+          },
+          {
+            "positie": "Linker draai-kiepraam",
+            "geschatte_breedte_cm": 43,
+            "geschatte_hoogte_cm": 95,
+            "montage": "In de dag"
+          },
+          {
+            "positie": "Rechter draai-kiepraam",
+            "geschatte_breedte_cm": 43,
+            "geschatte_hoogte_cm": 95,
+            "montage": "In de dag"
+          }
+        ],
+        "bediening": "Koord en stokbediening",
+        "ladderband_optie": "Beschikbaar voor premium uitstraling"
+      },
+      "uitgesloten_opties": {
+        "aluminium_jaloezieën": {
+          "reden_uitsluiting": [
+            "Industriële renovatiestijl vraagt authentieke materialen",
+            "Glanzende aluminium afwerking conflicteert met matte, rauwe oppervlakken",
+            "Houten elementen domineren de bestaande architectuur",
+            "Zachte lichtomstandigheden vragen warme materiaalreflectie"
+          ],
+          "mogelijke_uitzondering": "Stevig Taupe (#483C32) zou kunnen werken als budgetoptie, maar verliest warmte en authenticiteit"
+        }
+      },
+      "kleurverificatie": {
+        "primair_product_in_catalog": true,
+        "alternatief_1_in_catalog": true,
+        "alternatief_2_in_catalog": true,
+        "geen_verzonnen_producten": true
+      },
+      "fysieke_haalbaarheid_bevestigd": {
+        "greep_conflict": false,
+        "kiep_functie_behouden": true,
+        "dagkant_ruimte_voldoende": true,
+        "montage_uitvoerbaar": true
+      }
+    }
+  },
+  "9": {
+    "phase": 9,
+    "render_instruction": {
+      "scene_description": "Een atmosferische visualisatie van een industriële renovatieruimte in volle transformatie, gezien vanuit een licht verhoogd oogpunt dat de monumentale raampartij centraal stelt. Het rechthoekige raamkozijn, ingebed in een karakteristieke diepe dagkant van tweeëntwintig centimeter, vormt het dramatische middelpunt van de compositie. De driedelige raamstructuur bestaat uit een vast bovenlicht en twee onderliggende draai-kiepramen, elk nu voorzien van prachtige houten jaloezieën in de warme, natuurlijke tint 'De Naturist' met hexkleur D2B48C. De vijftig millimeter brede Paulownia houten lamellen zijn in een halfopen stand gepositioneerd, waardoor ze een betoverende interactie creëren met het zachte, diffuse noordwestelijke daglicht dat door het raam naar binnen stroomt. De lamellen werpen subtiele, horizontale schaduwstrepen op de vers gepleisterde muren in hun warme gebroken witte tint, waarbij de schaduwranden zacht vervagen door de diffuse lichtomstandigheden. De diepe nisconstructie creëert een natuurlijke gradiënt van licht naar schaduw langs de dagkanten, wat de driedimensionale diepte van de architectuur benadrukt. Het donkere buitenkozijn in bijna zwarte afwerking contrasteert dramatisch met de warme houttinten van zowel het binnenkozijn als de nieuwe jaloezieën, waardoor een visueel anker ontstaat dat de compositie verankert. De verweerde houten vloerplanken met hun patina van verf en gebruik reflecteren het gefilterde licht in zachte, goudachtige tinten die de gezellige sfeer versterken. De klassieke houten trap aan de linkerzijde van het beeld werpt zijn eigen zachte schaduw en voegt diepte toe aan de ruimtelijke compositie. Bouwmaterialen en gereedschap zijn subtiel zichtbaar in de periferie, wat de authentieke renovatiefase benadrukt zonder af te leiden van de centrale raamvisualisatie. De jaloezieën zijn gemonteerd binnen de diepe nis, precies aan de bovenzijde van elke glassectie bevestigd, met zichtbare ruimte voor de draai-kiepgrepen die elegant onder de onderrand van de lamellen uitsteken. De organische houtnerf van de Paulownia lamellen is subtiel zichtbaar en vangt het daglicht op een manier die warmte en textuur toevoegt aan de industriële ruwheid van de omgeving. Het licht dat door de halfopen lamellen filtert, creëert een patroon van lichte en schaduwrijke banden die over de gepleisterde muur dansen en de ruimte een levendige, dynamische kwaliteit geven. De koord- en stokbediening hangt elegant aan de rechterzijde van elke jaloezie-unit, functioneel maar onopvallend geïntegreerd in het geheel. De algehele sfeer is er een van warmte, authenticiteit en vakmanschap, waarbij de nieuwe houten jaloezieën naadloos integreren met de bestaande materialen en de rauwe schoonheid van de renovatieruimte complementeren zonder deze te overheersen.",
+      "product_visualization": {
+        "product_lijn": "Houten Jaloezieën",
+        "product_naam": "De Naturist",
+        "hex_code": "#D2B48C",
+        "materiaal": "Paulownia hout",
+        "lamelbreedte_mm": 50,
+        "lamel_afwerking": "Mat naturel met zichtbare houtnerf",
+        "lamel_positie": "Halfopen, circa 45 graden gekanteld",
+        "ladderband": "Optioneel, niet gevisualiseerd in basisrender"
+      },
+      "mounting_visualization": {
+        "montage_type": "In de dag",
+        "positie": "Bovenzijde van elke nissectie",
+        "aantal_units": 3,
+        "unit_1": {
+          "locatie": "Bovenlicht vast paneel",
+          "breedte_cm": 90,
+          "hoogte_cm": 30
+        },
+        "unit_2": {
+          "locatie": "Linker draai-kiepraam",
+          "breedte_cm": 43,
+          "hoogte_cm": 95
+        },
+        "unit_3": {
+          "locatie": "Rechter draai-kiepraam",
+          "breedte_cm": 43,
+          "hoogte_cm": 95
+        },
+        "zichtbare_greep_speling": true,
+        "bediening_zijde": "Rechts per unit"
+      },
+      "lighting_rendering": {
+        "primaire_lichtbron": "Natuurlijk diffuus daglicht",
+        "lichtrichting": "Frontaal-lateraal vanuit noordwesten",
+        "lichttemperatuur_kelvin": 5800,
+        "lichtintensiteit": "Helder diffuus, circa 8000 lux bij raam",
+        "schaduw_type": "Zachte gradiënt-schaduwen",
+        "schaduw_scherpte": "Lage hardheid, vervagend naar randen",
+        "lamel_schaduwpatroon": "Horizontale lichtstrepen op muur en vloer",
+        "reflectie_op_lamellen": "Subtiele matte glans, geen harde highlights",
+        "muur_reflectie": "Warme crèmetint kaatst licht terug",
+        "vloer_reflectie": "Goudachtige warmte van verweerd hout"
+      },
+      "camera_specifications": {
+        "camera_angle": "Licht verhoogd oogpunt, circa 1.5 meter hoogte",
+        "perspectief": "Driekwart frontaal, lichte hoek naar links",
+        "focal_length_equivalent": "35mm voor natuurlijke ruimtelijke weergave",
+        "depth_of_field": "Gemiddelde scherptediepte, focus op raampartij",
+        "vertical_alignment": "Horizontale lijnen parallel, geen perspective distortie"
+      },
+      "material_rendering": {
+        "lamel_hout_textuur": {
+          "nerf_zichtbaarheid": "Subtiel zichtbaar",
+          "oppervlak": "Mat naturel",
+          "kleurvariatie": "Minimale natuurlijke variatie binnen lamellen"
+        },
+        "kozijn_materialen": {
+          "buitenkozijn": "Donker gelakt metaal, mat",
+          "binnenkozijn": "Warm gebeitst hout, lichte glans"
+        },
+        "muur_textuur": "Vers pleisterwerk met subtiele oneffenheden",
+        "vloer_textuur": "Verweerd hout met verfsporen en patina"
+      },
+      "atmosphere_rendering": {
+        "sfeer": "Warm industrieel, authentiek en ongepolijst",
+        "kleurtemperatuur_beeld": "Neutraal met warme ondertonen",
+        "contrast_niveau": "Laag tot gemiddeld, zachte overgangen",
+        "verzadiging": "Natuurlijk, niet oversatureerd"
+      },
+      "negative_prompt": "Glanzende aluminium lamellen, verticale lamellen, rolgordijnen, gordijnen, shutters, harde directe zonnestralen, overbelichte vlakken, onderbelichte hoeken, onnatuurlijke kleuren, oversaturatie, plastic uitstraling, zichtbare render-artefacten, aliasing op lamelranden, onrealistische schaduwen, zwevende objecten, incorrecte perspectief, verkeerde lamelhoek, gesloten lamellen, volledig opgetrokken jaloezieën, zichtbare bevestigingsschroeven, beschadigde lamellen, stoffige oppervlakken, moderne minimalistische afwerking, witte kunststof onderdelen, chromen details, LED-verlichting, kunstmatige lichtbronnen, nachtelijke setting, buitenaanzicht, verkeerde raamverhoudingen, ontbrekende dagkant, vlakke tweedimensionale weergave, cartoon-achtige rendering, fotorealistische mensen, meubels die het raam blokkeren, onjuiste schaal van lamellen, te dunne of te dikke lamellen, horizontale montage op verticale positie, ontbrekende bedieningskoorden, verkeerde houtkleur, grijze of koele houttinten, vergeelde lamellen, onnatuurlijke houtnerf, repetitieve textuur zonder variatie"
+    }
+  }
+}

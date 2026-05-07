@@ -33,15 +33,18 @@ def _encode_image(image_path: str) -> tuple[str, str]:
         return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
 
 
-def _call_claude(system_prompt: str, user_content: list, model: str) -> str:
+def _call_claude(system_prompt: str, user_content: list, model: str, timeout: float = 90.0) -> str:
     """Call Claude with retry logic. Returns raw text response."""
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    client = anthropic.Anthropic(
+        api_key=os.environ["ANTHROPIC_API_KEY"],
+        timeout=timeout,
+    )
     last_error = None
     for attempt in range(MAX_RETRIES):
         try:
             response = client.messages.create(
                 model=model,
-                max_tokens=4096,
+                max_tokens=2048,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_content}],
             )
@@ -109,12 +112,25 @@ def run_pipeline(
     accumulated[2] = result2
 
     # ── PHASES 3–9: Analysis ───────────────────────────────────────────────────
+    # Use faster sonnet for text-only phases (6-9) — 4x faster than opus
+    TEXT_MODEL = core.FALLBACK_MODEL  # claude-sonnet-4-5
+
     for phase in range(3, 10):
         _report(phase)
         system_p = core.get_phase_prompt(phase)
+        phase_model = model if phase in VISION_PHASES else TEXT_MODEL
+
+        # Trim accumulated context: only send phase 2 + last 2 phases
+        # Prevents token bloat that slows Claude on late phases
+        keys = list(accumulated.keys())
+        trimmed = {}
+        if 2 in accumulated:
+            trimmed[2] = accumulated[2]
+        for k in keys[-2:]:
+            trimmed[k] = accumulated[k]
 
         context_text = (
-            f"ACCUMULATED ANALYSIS SO FAR:\n{json.dumps(accumulated, ensure_ascii=False, indent=2)}\n\n"
+            f"ACCUMULATED ANALYSIS SO FAR:\n{json.dumps(trimmed, ensure_ascii=False, indent=2)}\n\n"
             "Voer deze fase uit en retourneer alleen geldige JSON."
         )
 
@@ -127,15 +143,18 @@ def run_pipeline(
             user_content = [{"type": "text", "text": context_text}]
 
         try:
-            raw = _call_claude(system_p, user_content, model)
+            raw = _call_claude(system_p, user_content, phase_model)
             result = _parse_json_response(raw)
         except json.JSONDecodeError:
-            # Retry with correction prompt
             correction = user_content + [
                 {"type": "text", "text": "Je vorige antwoord was geen geldige JSON. Geef ALLEEN geldige JSON terug."}
             ]
-            raw = _call_claude(system_p, correction, fallback)
+            raw = _call_claude(system_p, correction, core.FALLBACK_MODEL)
             result = _parse_json_response(raw)
+        except Exception as e:
+            # Phase failure is non-fatal: log and continue with empty result
+            print(f"[analyse] Phase {phase} failed: {e}")
+            result = {}
 
         accumulated[phase] = result
 
