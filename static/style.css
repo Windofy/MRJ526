@@ -3,10 +3,54 @@
    Palette: Rose-blush background, white surfaces, dark text, red accent
 ────────────────────────────────────────────────────────────────────────────── */
 
+/* ── LOCAL FONTS ───────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'MrGintoNord';
+  src: url('/fonts/MrGintoNord-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MrGintoNord';
+  src: url('/fonts/MrGintoNord-Ultra.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MrGintoNord';
+  src: url('/fonts/MrGintoNord-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/font-poppins-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/font-poppins-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/font-poppins-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── CUSTOM PROPERTIES ─────────────────────────────────────────────────────── */
 :root {
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'MrGintoNord', Georgia, serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
 
   --clr-bg:          #F2C3B8;   /* rose blush */
   --clr-surface:     #FFFFFF;
@@ -107,10 +151,10 @@ a { color: inherit; }
 
 .landing__headline {
   font-family: var(--font-display);
-  font-size: clamp(32px, 6vw, 52px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
   color: var(--clr-text);
 }
 
