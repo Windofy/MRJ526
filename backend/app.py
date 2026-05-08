@@ -6,6 +6,7 @@ import os
 import uuid
 import threading
 import json
+import base64
 import tempfile
 from pathlib import Path
 from flask import Flask, request, jsonify, send_from_directory
@@ -26,7 +27,7 @@ _sessions: dict = {}
 _lock = threading.Lock()
 
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
-MAX_FILE_SIZE = 4 * 1024 * 1024  # 4MB
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 
 def _get_session(session_id: str) -> dict | None:
@@ -50,7 +51,19 @@ def health():
 
 @app.route("/")
 def index():
-    return send_from_directory(STATIC_DIR, "index.html")
+    resp = send_from_directory(STATIC_DIR, "index.html")
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+    return resp
+
+
+@app.after_request
+def no_cache_static(response):
+    """Disable caching for all static assets during development."""
+    if request.path.startswith("/static") or request.path.endswith((".js", ".css", ".html")):
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 
 
 @app.route("/upload", methods=["POST"])
@@ -68,7 +81,7 @@ def upload():
     size = file.tell()
     file.seek(0)
     if size > MAX_FILE_SIZE:
-        return jsonify({"error": "Bestand te groot. Maximaal 4MB toegestaan."}), 400
+        return jsonify({"error": "Bestand te groot. Maximaal 10MB toegestaan."}), 400
 
     session_id = str(uuid.uuid4())
     local_path = os.path.join(UPLOAD_DIR, f"{session_id}{ext}")
@@ -145,7 +158,8 @@ def preview():
 
     render_instruction = state.get("render_instruction")
     if not render_instruction:
-        return jsonify({"error": "Nog geen render instructie beschikbaar."}), 400
+        # Analysis still in progress — tell the caller to retry later
+        return jsonify({"error": "Analyse nog bezig. Probeer opnieuw als het resultaat klaar is.", "status": state.get("status")}), 503
 
     image_local = state.get("image_local")
     if not image_local or not os.path.exists(image_local):
@@ -154,7 +168,6 @@ def preview():
     # Run synchronously (previews are user-triggered, acceptable latency)
     try:
         from watermark import apply_watermark
-        from upload_supabase import upload_render, insert_render
 
         with open(image_local, "rb") as f:
             img_bytes = f.read()
@@ -170,13 +183,18 @@ def preview():
         render_index = state.get("render_count", 0) + 1
         _set_session(session_id, {"render_count": render_index})
 
-        upload_result = upload_render(watermarked, session_id, render_index)
-        render_url = upload_result["public_url"]
-
         try:
-            insert_render(session_id, render_url, config_override, method)
-        except Exception:
-            pass
+            from upload_supabase import upload_render as _up_render, insert_render as _ins_render
+            upload_result = _up_render(watermarked, session_id, render_index)
+            render_url = upload_result["public_url"]
+            try:
+                _ins_render(session_id, render_url, config_override, method)
+            except Exception:
+                pass
+        except Exception as upload_err:
+            print(f"[PREVIEW] Supabase upload failed ({upload_err}), using data URI fallback")
+            b64 = base64.b64encode(watermarked).decode()
+            render_url = f"data:image/png;base64,{b64}"
 
         _set_session(session_id, {"render_url": render_url})
         return jsonify({"render_url": render_url, "render_method": method})
@@ -266,7 +284,6 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
         # Phase 9+: SAM2 segmentation → inpainting (Gemini fallback)
         _set_session(session_id, {"status": "rendering", "step": 5})
         from watermark import apply_watermark
-        from upload_supabase import upload_render, insert_render
         from segment_sam2 import segment_window
 
         with open(local_path, "rb") as f:
@@ -284,14 +301,22 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
             img_bytes, render_instruction, mask_bytes
         )
         watermarked = apply_watermark(render_bytes)
-        upload_result = upload_render(watermarked, session_id, 0)
-        render_url = upload_result["public_url"]
 
+        # Upload render (non-fatal — fall back to data URI if Supabase is unavailable)
+        render_url = None
         try:
-            insert_render(session_id, render_url, {}, method)
-            upsert_session(session_id, {"status": "done"})
-        except Exception:
-            pass
+            from upload_supabase import upload_render, insert_render
+            upload_result = upload_render(watermarked, session_id, 0)
+            render_url = upload_result["public_url"]
+            try:
+                insert_render(session_id, render_url, {}, method)
+                upsert_session(session_id, {"status": "done"})
+            except Exception:
+                pass
+        except Exception as upload_err:
+            print(f"[{session_id}] Supabase upload failed ({upload_err}), using data URI fallback")
+            b64 = base64.b64encode(watermarked).decode()
+            render_url = f"data:image/png;base64,{b64}"
 
         _set_session(session_id, {
             "status": "done",

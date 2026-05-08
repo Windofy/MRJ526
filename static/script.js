@@ -6,6 +6,8 @@ const API = '';  // same-origin; change to 'http://localhost:5000' for dev
 // ── STATE ──────────────────────────────────────────────────────────────────
 let sessionId = null;
 let pollTimer = null;
+let pollTimeout = null;   // hard stop after MAX_POLL_MS
+const MAX_POLL_MS = 8 * 60 * 1000;  // 8 minutes
 let currentStep = 0;
 let analysisData = null;
 let renderInstruction = null;
@@ -54,10 +56,10 @@ uploadZone.addEventListener('drop', e => {
 fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
 
 function handleFile(file) {
-  const MAX = 4 * 1024 * 1024;
+  const MAX = 10 * 1024 * 1024;
   const TYPES = ['image/png', 'image/jpeg', 'image/webp'];
   if (!TYPES.includes(file.type)) { showToast('Alleen PNG, JPG of WEBP is toegestaan.', true); return; }
-  if (file.size > MAX) { showToast('Bestand te groot. Maximaal 4MB.', true); return; }
+  if (file.size > MAX) { showToast('Bestand te groot. Maximaal 10MB.', true); return; }
 
   originalImageUrl = URL.createObjectURL(file);
   $('slider-before').src = originalImageUrl;
@@ -86,7 +88,13 @@ async function uploadFile(file) {
 // ── POLLING ────────────────────────────────────────────────────────────────
 function startPolling() {
   clearInterval(pollTimer);
+  clearTimeout(pollTimeout);
   pollTimer = setInterval(pollStatus, 1500);
+  // Hard timeout: if still pending after MAX_POLL_MS, abort with a message
+  pollTimeout = setTimeout(() => {
+    clearInterval(pollTimer);
+    handleError('De analyse duurt te lang. Controleer je API sleutels en probeer opnieuw.');
+  }, MAX_POLL_MS);
 }
 
 async function pollStatus() {
@@ -98,9 +106,11 @@ async function pollStatus() {
 
     if (json.status === 'done') {
       clearInterval(pollTimer);
+      clearTimeout(pollTimeout);
       await fetchResult();
     } else if (json.status === 'error') {
       clearInterval(pollTimer);
+      clearTimeout(pollTimeout);
       handleError(json.error || 'Er is een fout opgetreden.');
     }
   } catch (e) { /* network hiccup, keep polling */ }
@@ -387,6 +397,7 @@ $('btn-close').addEventListener('click', resetToLanding);
 
 function resetToLanding() {
   clearInterval(pollTimer);
+  clearTimeout(pollTimeout);
   sessionId = null; analysisData = null; renderInstruction = null;
   selectedColor = null; renderUrl = null; originalImageUrl = null;
   fileInput.value = '';

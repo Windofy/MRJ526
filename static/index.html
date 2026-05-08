@@ -28,8 +28,7 @@
       <div class="upload-zone" id="upload-zone" tabindex="0" role="button" aria-label="Klik of sleep een afbeelding">
         <div class="upload-zone__icon" aria-hidden="true">📷</div>
         <p class="upload-zone__label">Sleep <strong>een foto van jouw ramen</strong><br>of klik om te selecteren</p>
-        <p class="upload-zone__hint">PNG, JPG of WEBP (Max. 4MB)</p>
-        <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" aria-hidden="true" tabindex="-1" />
+        <p class="upload-zone__hint">PNG, JPG of WEBP (Max. 10MB)</p>
       </div>
 
       <p class="disclaimer">
@@ -214,6 +213,7 @@
     <button class="toast__close" id="btn-close-toast" type="button" aria-label="Melding sluiten">×</button>
   </div>
 
+  <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" aria-hidden="true" tabindex="-1" style="display:none" />
   <script src="script.js"></script>
 </body>
 </html>
