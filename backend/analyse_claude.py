@@ -21,11 +21,10 @@ load_dotenv()
 # Phase → UI step mapping for progress tracking
 PHASE_TO_STEP = {2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 4, 9: 5}
 
-# Hybrid model strategy:
-# - Haiku for quality gate (fast, cheap, pass/fail only)
-# - Sonnet for analysis (needs precision for colors, window detection, catalog matching)
-MODEL_FAST = "claude-3-5-haiku-latest"   # ~1-2s per call
-MODEL_ANALYSIS = "claude-sonnet-4-5"  # ~8-10s per call
+# Single model for all calls — Sonnet is fast enough at 3 consolidated calls
+# Quality check is only 256 tokens so speed difference with Haiku is negligible
+MODEL_FAST = "claude-sonnet-4-5"
+MODEL_ANALYSIS = "claude-sonnet-4-5"
 
 MAX_RETRIES = 2
 RETRY_DELAY = 1.5
