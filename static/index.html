@@ -13,11 +13,8 @@
   <!-- ── TOPBAR ─────────────────────────────────────────────────────────────── -->
   <header class="topbar" id="topbar">
     <div class="topbar__logo" id="topbar-logo">
-      <div class="logo-badge">
-        <span class="logo-heart">♥</span><span class="logo-j">J</span>
-      </div>
+      <img src="/img/speechbubble-logo.png" alt="Mr. Jealousy" class="topbar__logo-img">
     </div>
-    <button class="topbar__close" id="btn-close" aria-label="Sluiten">Sluiten ×</button>
   </header>
 
   <!-- ── SCREEN 1: LANDING ──────────────────────────────────────────────────── -->
@@ -75,11 +72,10 @@
               <span class="slider__arrows" aria-hidden="true">‹ ›</span>
             </div>
           </div>
-        </div>
-
-        <div class="result__visual-actions">
-          <button class="btn-ghost" id="btn-retry" type="button">🗑 Opnieuw</button>
-          <button class="btn-ghost" id="btn-save" type="button">💾 Opslaan</button>
+          <div class="result__visual-actions">
+            <button class="btn-overlay" id="btn-retry" type="button">Opnieuw</button>
+            <button class="btn-overlay" id="btn-save" type="button">Opslaan</button>
+          </div>
         </div>
       </section>
 
@@ -111,13 +107,11 @@
           <div class="suggestions" id="suggestions" role="list"></div>
         </section>
 
-        <button class="btn-primary" id="btn-viz-top" type="button">✨ Resultaat visualiseren</button>
+        <button class="btn-primary" id="btn-viz-top" type="button">Resultaat visualiseren</button>
 
         <!-- Ladder -->
         <section class="config-section">
-          <p class="config-label">Ladder<span class="required" aria-hidden="true">*</span>
-            <button class="info-btn" type="button" aria-label="Info over ladder">ⓘ</button>
-          </p>
+          <p class="config-label">Ladder<span class="required" aria-hidden="true">*</span></p>
           <div class="radio-group" role="radiogroup" aria-label="Ladder type">
             <label class="radio-item"><input type="radio" name="ladder" value="ladderband" checked /> Ladderband</label>
             <label class="radio-item"><input type="radio" name="ladder" value="ladderkoord" /> Ladderkoord</label>
@@ -126,9 +120,7 @@
 
         <!-- Slat width -->
         <section class="config-section">
-          <p class="config-label">Lamelbreedte<span class="required" aria-hidden="true">*</span>
-            <button class="info-btn" type="button" aria-label="Info over lamelbreedte">ⓘ</button>
-          </p>
+          <p class="config-label">Lamelbreedte<span class="required" aria-hidden="true">*</span></p>
           <div class="radio-group" role="radiogroup" aria-label="Lamelbreedte">
             <label class="radio-item"><input type="radio" name="slat" value="25mm" /> 25mm</label>
             <label class="radio-item"><input type="radio" name="slat" value="50mm" checked /> 50mm</label>
@@ -137,9 +129,7 @@
 
         <!-- Tilt -->
         <section class="config-section">
-          <p class="config-label">Kantelstand<span class="required" aria-hidden="true">*</span>
-            <button class="info-btn" type="button" aria-label="Info over kantelstand">ⓘ</button>
-          </p>
+          <p class="config-label">Kantelstand<span class="required" aria-hidden="true">*</span></p>
           <div class="radio-group" role="radiogroup" aria-label="Kantelstand">
             <label class="radio-item"><input type="radio" name="tilt" value="open" checked /> Open</label>
             <label class="radio-item"><input type="radio" name="tilt" value="gesloten" /> Gesloten</label>
@@ -148,9 +138,7 @@
 
         <!-- Time of day -->
         <section class="config-section">
-          <p class="config-label">Dagdeel<span class="required" aria-hidden="true">*</span>
-            <button class="info-btn" type="button" aria-label="Info over dagdeel">ⓘ</button>
-          </p>
+          <p class="config-label">Dagdeel<span class="required" aria-hidden="true">*</span></p>
           <div class="radio-group radio-group--2col" role="radiogroup" aria-label="Dagdeel">
             <label class="radio-item"><input type="radio" name="daytime" value="Ochtend (Koel)" checked /> Ochtend</label>
             <label class="radio-item"><input type="radio" name="daytime" value="Middag (Helder)" /> Middag</label>
@@ -175,7 +163,7 @@
           <p class="bijzonderheden" id="bijzonderheden">—</p>
         </section>
 
-        <button class="btn-primary" id="btn-viz-bottom" type="button">✨ Resultaat visualiseren</button>
+        <button class="btn-primary" id="btn-viz-bottom" type="button">Resultaat visualiseren</button>
         <div class="link-row">
           <a href="#" class="btn-link" id="btn-sample-2">Kleurstaal bestellen</a>
           <a href="#" class="btn-link" id="btn-blind-2">Jaloezie bestellen</a>
@@ -194,7 +182,7 @@
   <aside class="flyout" id="color-flyout" role="dialog" aria-modal="true" aria-label="Kies jaloeziekleur" aria-hidden="true">
     <div class="flyout__header">
       <h2 class="flyout__title">Kies jaloeziekleur</h2>
-      <button class="info-btn" type="button" aria-label="Info over kleuren">ⓘ</button>
+
       <button class="flyout__close" id="btn-close-flyout" type="button" aria-label="Sluiten">×</button>
     </div>
 

@@ -7,13 +7,14 @@ const API = '';  // same-origin; change to 'http://localhost:5000' for dev
 let sessionId = null;
 let pollTimer = null;
 let pollTimeout = null;   // hard stop after MAX_POLL_MS
-const MAX_POLL_MS = 8 * 60 * 1000;  // 8 minutes
+const MAX_POLL_MS = 5 * 60 * 1000;  // 5 minutes (pipeline is now 3 calls)
 let currentStep = 0;
 let analysisData = null;
 let renderInstruction = null;
 let selectedColor = null;
 let originalImageUrl = null;
 let renderUrl = null;
+let toastTimer = null;  // declared early to avoid temporal dead zone
 
 // Catalog populated from analysis suggestions + config
 const CATALOG = {
@@ -89,7 +90,7 @@ async function uploadFile(file) {
 function startPolling() {
   clearInterval(pollTimer);
   clearTimeout(pollTimeout);
-  pollTimer = setInterval(pollStatus, 1500);
+  pollTimer = setInterval(pollStatus, 3000);
   // Hard timeout: if still pending after MAX_POLL_MS, abort with a message
   pollTimeout = setTimeout(() => {
     clearInterval(pollTimer);
@@ -393,7 +394,8 @@ $('btn-save').addEventListener('click', () => {
 
 // ── RETRY ──────────────────────────────────────────────────────────────────
 $('btn-retry').addEventListener('click', resetToLanding);
-$('btn-close').addEventListener('click', resetToLanding);
+const btnClose = $('btn-close');
+if (btnClose) btnClose.addEventListener('click', resetToLanding);
 
 function resetToLanding() {
   clearInterval(pollTimer);
@@ -411,7 +413,7 @@ function handleError(msg) {
 }
 
 // ── TOAST ──────────────────────────────────────────────────────────────────
-let toastTimer = null;
+// toastTimer is declared at top of file to avoid temporal dead zone
 function showToast(msg, isError = false) {
   const toast = $('toast');
   $('toast-message').textContent = msg;

@@ -281,21 +281,25 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
         except Exception:
             pass
 
-        # Phase 9+: SAM2 segmentation → inpainting (Gemini fallback)
+        # Phase 9+: Rendering (SAM2 segmentation if available, else Gemini direct)
         _set_session(session_id, {"status": "rendering", "step": 5})
         from watermark import apply_watermark
-        from segment_sam2 import segment_window
 
         with open(local_path, "rb") as f:
             img_bytes = f.read()
 
-        # SAM2: detect window mask (non-fatal if it fails)
-        mask_bytes = segment_window(img_bytes)
-        _set_session(session_id, {"mask_bytes": mask_bytes})
-        if mask_bytes:
-            print(f"[{session_id}] SAM2 mask obtained ({len(mask_bytes)} bytes)")
+        # SAM2: only attempt if FAL_KEY is configured (saves ~5-10s when unavailable)
+        mask_bytes = None
+        if os.environ.get("FAL_KEY"):
+            from segment_sam2 import segment_window
+            mask_bytes = segment_window(img_bytes)
+            _set_session(session_id, {"mask_bytes": mask_bytes})
+            if mask_bytes:
+                print(f"[{session_id}] SAM2 mask obtained ({len(mask_bytes)} bytes)")
+            else:
+                print(f"[{session_id}] SAM2 returned no mask — using Gemini pipeline")
         else:
-            print(f"[{session_id}] SAM2 skipped — using Gemini pipeline")
+            print(f"[{session_id}] SAM2 skipped (no FAL_KEY) — using Gemini pipeline")
 
         render_bytes, method = _render_with_fallback(
             img_bytes, render_instruction, mask_bytes
@@ -327,15 +331,20 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
     except RuntimeError as e:
         err_str = str(e)
         if err_str.startswith("QUALITY_FAIL:"):
+            # Extract the reason safely — don't re-parse potentially truncated JSON
+            payload = err_str[len("QUALITY_FAIL:"):]
             try:
-                error_data = json.loads(err_str[len("QUALITY_FAIL:"):])
-                _set_session(session_id, {"status": "error", "error": json.dumps(error_data)})
-            except Exception:
-                _set_session(session_id, {"status": "error", "error": err_str})
+                error_data = json.loads(payload)
+                reason = error_data.get("reason", "Foto voldoet niet aan de kwaliteitseisen.")
+            except (json.JSONDecodeError, Exception):
+                reason = payload if len(payload) < 300 else "Foto voldoet niet aan de kwaliteitseisen."
+            _set_session(session_id, {"status": "error", "error": reason})
         else:
-            _set_session(session_id, {"status": "error", "error": err_str})
+            print(f"[{session_id}] RuntimeError: {err_str[:200]}")
+            _set_session(session_id, {"status": "error", "error": err_str[:500]})
     except Exception as e:
-        _set_session(session_id, {"status": "error", "error": str(e)})
+        print(f"[{session_id}] Unexpected error: {e}")
+        _set_session(session_id, {"status": "error", "error": str(e)[:500]})
 
 
 if __name__ == "__main__":

@@ -1,8 +1,12 @@
 """
-analyse_claude.py — 9-phase Claude Vision pipeline for MRJ3.0
-Phases 2–5 use image vision; phases 6–9 use accumulated text context.
+analyse_claude.py — Optimised 3-call Claude Vision pipeline for MRJ3.0
+Consolidated from 8 sequential calls → 3 calls:
+  Call 1: Quality check (fast gate)
+  Call 2: Vision analysis — phases 3+4+5 merged (single image send)
+  Call 3: Text reasoning — phases 6+7+8+9 merged (no image needed)
 """
 import os
+import re
 import json
 import time
 import base64
@@ -17,10 +21,14 @@ load_dotenv()
 # Phase → UI step mapping for progress tracking
 PHASE_TO_STEP = {2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 4, 9: 5}
 
-VISION_PHASES = {2, 3, 4, 5}  # phases that need the image
+# Hybrid model strategy:
+# - Haiku for quality gate (fast, cheap, pass/fail only)
+# - Sonnet for analysis (needs precision for colors, window detection, catalog matching)
+MODEL_FAST = "claude-3-5-haiku-latest"   # ~1-2s per call
+MODEL_ANALYSIS = "claude-sonnet-4-5"  # ~8-10s per call
 
-MAX_RETRIES = 3
-RETRY_DELAY = 2.0
+MAX_RETRIES = 2
+RETRY_DELAY = 1.5
 
 
 def _encode_image(image_path: str) -> tuple[str, str]:
@@ -33,18 +41,18 @@ def _encode_image(image_path: str) -> tuple[str, str]:
         return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
 
 
-def _call_claude(system_prompt: str, user_content: list, model: str, timeout: float = 90.0) -> str:
+def _call_claude(system_prompt: str, user_content: list, model: str = MODEL_ANALYSIS, max_tokens: int = 4096) -> str:
     """Call Claude with retry logic. Returns raw text response."""
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
-        timeout=timeout,
+        timeout=120.0,
     )
     last_error = None
     for attempt in range(MAX_RETRIES):
         try:
             response = client.messages.create(
                 model=model,
-                max_tokens=2048,
+                max_tokens=max_tokens,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_content}],
             )
@@ -60,15 +68,159 @@ def _call_claude(system_prompt: str, user_content: list, model: str, timeout: fl
     raise RuntimeError(f"Claude call failed after {MAX_RETRIES} retries: {last_error}")
 
 
-def _parse_json_response(text: str) -> dict:
-    """Extract and parse JSON from a Claude response."""
-    # Strip markdown code fences if present
+def _extract_json(text: str) -> dict:
+    """Robustly extract JSON from Claude response, handling truncation and markdown."""
     text = text.strip()
+
+    # Strip markdown code fences
     if text.startswith("```"):
         lines = text.split("\n")
-        text = "\n".join(lines[1:-1]) if lines[-1].strip() == "```" else "\n".join(lines[1:])
-    return json.loads(text.strip())
+        # Remove first line (```json) and last line (```) if present
+        if lines[-1].strip() == "```":
+            text = "\n".join(lines[1:-1])
+        else:
+            text = "\n".join(lines[1:])
+        text = text.strip()
 
+    # Try direct parse first
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Try to find JSON object in text (handles extra text before/after)
+    match = re.search(r'\{[\s\S]*\}', text)
+    if match:
+        try:
+            return json.loads(match.group())
+        except json.JSONDecodeError:
+            pass
+
+    # Handle truncated JSON: try to close open braces/brackets
+    # Count unclosed braces
+    if '{' in text:
+        json_start = text.index('{')
+        fragment = text[json_start:]
+        open_braces = fragment.count('{') - fragment.count('}')
+        open_brackets = fragment.count('[') - fragment.count(']')
+
+        # Remove trailing incomplete string (cut at last complete value)
+        # Find last complete key-value pair
+        fixed = fragment.rstrip()
+        if fixed.endswith(','):
+            fixed = fixed[:-1]
+
+        # Close any unclosed strings
+        if fixed.count('"') % 2 != 0:
+            fixed += '"'
+
+        # Close brackets and braces
+        fixed += ']' * max(0, open_brackets) + '}' * max(0, open_braces)
+
+        try:
+            return json.loads(fixed)
+        except json.JSONDecodeError:
+            pass
+
+    raise json.JSONDecodeError(f"Could not extract JSON from response", text, 0)
+
+
+# ── CONSOLIDATED PROMPTS ───────────────────────────────────────────────────────
+
+def _quality_prompt() -> str:
+    """Phase 2: Quick quality gate."""
+    return (
+        "You are a quality-check agent for interior room photos.\n"
+        "Check: alignment, framing (window visible), lighting, focus, resolution, angle.\n"
+        "If ALL pass: return {\"quality_pass\": true}\n"
+        "If ANY fail: return {\"quality_pass\": false, \"reason\": \"<specific Dutch feedback>\"}\n"
+        "Return ONLY valid JSON. No explanation."
+    )
+
+
+def _vision_analysis_prompt() -> str:
+    """Phases 3+4+5 merged: extract style, colors, and window architecture in ONE call."""
+    catalog_text = core.get_catalog_as_text()
+    return f"""You are a World-Class Interior Vision Architect for Mr. Jealousy venetian blinds.
+Analyse the uploaded room photo and return ONE JSON object with ALL of the following sections:
+
+SECTION 1 — INTERIOR STYLE:
+- "style": single style label (e.g. "Japandi", "Industrial", "Scandinavisch")
+- "styleSummary": max 2 sentences in Dutch
+- "styleDescription": 3-5 sentences in Dutch describing the interior character
+- "roomMood": mood description in Dutch
+
+SECTION 2 — COLOR DNA:
+- "colour_palette": array of exactly 5 objects, each with:
+  - "hex_code": actual hex of a visible color in the room
+  - "extracted_source": where in the room this color comes from (Dutch)
+  - "matched_catalog_color": closest match from the Mr. Jealousy catalog below
+
+SECTION 3 — WINDOW ARCHITECTURE:
+- "windowCheck": object with:
+  - "windowType": type classification (Dutch)
+  - "detectedWindowCount": integer number of glass sections
+  - "recommendation": mounting recommendation ("in de dag" or "op de dag") (Dutch)
+  - "reasoning": why this mounting (Dutch, max 2 sentences)
+  - "specialConsiderations": any obstacles, handles, vents (Dutch)
+  - "obstacles": boolean
+  - "recess_depth_cm": estimated depth in cm
+  - "frame_material": detected material
+
+{catalog_text}
+
+Return ONLY valid JSON. No markdown. No code fences. All text values in Dutch."""
+
+
+def _text_reasoning_prompt() -> str:
+    """Phases 6+7+8+9 merged: mounting, lighting, catalog match, render planning."""
+    catalog_text = core.get_catalog_as_text()
+    return f"""You are a Window Treatment Configurator and Render Planner for Mr. Jealousy.
+Based on the analysis provided, determine the final configuration and render instructions.
+
+Return ONE JSON object with ALL of the following sections:
+
+SECTION 1 — MOUNTING STRATEGY:
+- "mountingStrategy": object with:
+  - "mount_type": "in de dag" or "op de dag"
+  - "reasoning": Dutch explanation
+
+SECTION 2 — LIGHTING CONDITIONS:
+- "lightingConditions": description of detected lighting (Dutch)
+
+SECTION 3 — PRODUCT SUGGESTIONS:
+- "suggestions": array of exactly 3 objects, each with:
+  - "productType": "Aluminium Jaloezieën" or "Houten Jaloezieën"
+  - "material": "Aluminium" or "Hout"
+  - "colorName": exact name from catalog
+  - "colorHex": exact hex from catalog
+  - "suitabilityScore": 1-100
+  - "reasoning": why this color fits (Dutch, max 2 sentences)
+- "materialSuggestions": array of recommended material types
+
+SECTION 4 — RENDER INSTRUCTION (most important):
+- "render_instruction": object conforming to RenderInstruction schema:
+  - "product_type": selected product type
+  - "color_name": exact catalog color name
+  - "hex_code": exact hex from catalog
+  - "mount_type": "inside mount" or "outside mount"
+  - "window_sections": integer
+  - "lighting_condition": detected lighting condition
+  - "state": "fully lowered" or "half lowered"
+  - "slat_width": "25mm" or "50mm"
+  - "ladder_tape": boolean
+  - "scene_description": 3-5 sentences describing the scene (Dutch)
+  - "negative_prompt": things to avoid in rendering
+  - "camera_angle": perspective description
+  - "room_context": brief room context (Dutch)
+
+ABSOLUTE PRODUCT LOCK — ONLY catalog colors allowed:
+{catalog_text}
+
+Return ONLY valid JSON. No markdown. No code fences. All text in Dutch where specified."""
+
+
+# ── MAIN PIPELINE ──────────────────────────────────────────────────────────────
 
 def run_pipeline(
     session_id: str,
@@ -76,96 +228,99 @@ def run_pipeline(
     progress_callback=None,
 ) -> dict:
     """
-    Run phases 2–9 sequentially. Returns dict with keys:
-      - analysis: AnalysisResult dict (merged phases 3–8)
-      - render_instruction: RenderInstruction dict (phase 9)
-    Raises RuntimeError on quality check failure (phase 2).
+    Run consolidated 3-call pipeline. Returns dict with keys:
+      - analysis: AnalysisResult dict
+      - render_instruction: RenderInstruction dict
+    Raises RuntimeError on quality check failure.
     """
-    model = core.ANALYSIS_MODEL
-    fallback = core.FALLBACK_MODEL
     img_b64, img_media = _encode_image(image_path)
-
-    accumulated: dict = {}  # phase number → parsed JSON
 
     def _report(phase: int):
         if progress_callback:
             step = PHASE_TO_STEP.get(phase, phase)
             progress_callback(phase=phase, step=step)
 
-    # ── PHASE 2: Quality check ─────────────────────────────────────────────────
+    image_block = {"type": "image", "source": {"type": "base64", "media_type": img_media, "data": img_b64}}
+
+    # ── CALL 1: Quality check (fast — small prompt, small output) ──────────
     _report(2)
-    system2 = core.get_phase_prompt(2)
-    content2 = [
-        {"type": "image", "source": {"type": "base64", "media_type": img_media, "data": img_b64}},
-        {"type": "text", "text": "Voer de kwaliteitscheck uit en retourneer alleen geldige JSON."},
-    ]
-    try:
-        raw2 = _call_claude(system2, content2, model)
-        result2 = _parse_json_response(raw2)
-    except Exception:
-        raw2 = _call_claude(system2, content2, fallback)
-        result2 = _parse_json_response(raw2)
+    print(f"[{session_id}] Call 1/3: Quality check...")
+    t0 = time.time()
 
-    if not result2.get("quality_pass", False):
-        raise RuntimeError(f"QUALITY_FAIL:{json.dumps(result2)}")
+    raw_quality = _call_claude(
+        _quality_prompt(),
+        [image_block, {"type": "text", "text": "Voer de kwaliteitscheck uit."}],
+        model=MODEL_FAST,
+        max_tokens=256,
+    )
+    quality_result = _extract_json(raw_quality)
+    print(f"[{session_id}] Call 1/3 done in {time.time()-t0:.1f}s")
 
-    accumulated[2] = result2
+    if not quality_result.get("quality_pass", False):
+        raise RuntimeError(f"QUALITY_FAIL:{json.dumps(quality_result)}")
 
-    # ── PHASES 3–9: Analysis ───────────────────────────────────────────────────
-    # Use faster sonnet for text-only phases (6-9) — 4x faster than opus
-    TEXT_MODEL = core.FALLBACK_MODEL  # claude-sonnet-4-5
+    # ── CALL 2: Vision analysis (phases 3+4+5 merged) ─────────────────────
+    _report(3)
+    print(f"[{session_id}] Call 2/3: Vision analysis (style + colors + window)...")
+    t1 = time.time()
 
-    for phase in range(3, 10):
-        _report(phase)
-        system_p = core.get_phase_prompt(phase)
-        phase_model = model if phase in VISION_PHASES else TEXT_MODEL
+    raw_vision = _call_claude(
+        _vision_analysis_prompt(),
+        [image_block, {"type": "text", "text": "Analyseer deze foto volledig. Retourneer ALLEEN geldige JSON."}],
+        model=MODEL_ANALYSIS,
+        max_tokens=4096,
+    )
+    vision_result = _extract_json(raw_vision)
+    _report(5)
+    print(f"[{session_id}] Call 2/3 done in {time.time()-t1:.1f}s")
 
-        # Trim accumulated context: only send phase 2 + last 2 phases
-        # Prevents token bloat that slows Claude on late phases
-        keys = list(accumulated.keys())
-        trimmed = {}
-        if 2 in accumulated:
-            trimmed[2] = accumulated[2]
-        for k in keys[-2:]:
-            trimmed[k] = accumulated[k]
+    # ── CALL 3: Text reasoning (phases 6+7+8+9 merged) ────────────────────
+    _report(7)
+    print(f"[{session_id}] Call 3/3: Config + render planning...")
+    t2 = time.time()
 
-        context_text = (
-            f"ACCUMULATED ANALYSIS SO FAR:\n{json.dumps(trimmed, ensure_ascii=False, indent=2)}\n\n"
-            "Voer deze fase uit en retourneer alleen geldige JSON."
-        )
+    context_text = (
+        f"VISION ANALYSIS RESULTS:\n{json.dumps(vision_result, ensure_ascii=False, indent=2)}\n\n"
+        "Based on this analysis, determine mounting, lighting, product suggestions, "
+        "and render instructions. Retourneer ALLEEN geldige JSON."
+    )
 
-        if phase in VISION_PHASES:
-            user_content = [
-                {"type": "image", "source": {"type": "base64", "media_type": img_media, "data": img_b64}},
-                {"type": "text", "text": context_text},
-            ]
-        else:
-            user_content = [{"type": "text", "text": context_text}]
+    raw_text = _call_claude(
+        _text_reasoning_prompt(),
+        [{"type": "text", "text": context_text}],
+        model=MODEL_ANALYSIS,
+        max_tokens=4096,
+    )
+    text_result = _extract_json(raw_text)
+    _report(9)
+    print(f"[{session_id}] Call 3/3 done in {time.time()-t2:.1f}s")
 
-        try:
-            raw = _call_claude(system_p, user_content, phase_model)
-            result = _parse_json_response(raw)
-        except json.JSONDecodeError:
-            correction = user_content + [
-                {"type": "text", "text": "Je vorige antwoord was geen geldige JSON. Geef ALLEEN geldige JSON terug."}
-            ]
-            raw = _call_claude(system_p, correction, core.FALLBACK_MODEL)
-            result = _parse_json_response(raw)
-        except Exception as e:
-            # Phase failure is non-fatal: log and continue with empty result
-            print(f"[analyse] Phase {phase} failed: {e}")
-            result = {}
-
-        accumulated[phase] = result
-
-    # ── Assemble output ────────────────────────────────────────────────────────
+    # ── Assemble output ────────────────────────────────────────────────────
     analysis = {}
-    for phase in range(3, 9):
-        analysis.update(accumulated.get(phase, {}))
+    # From vision call
+    for key in ("style", "styleSummary", "styleDescription", "roomMood",
+                "colour_palette", "windowCheck"):
+        if key in vision_result:
+            analysis[key] = vision_result[key]
 
-    render_instruction = accumulated.get(9, {})
+    # From text call
+    for key in ("suggestions", "materialSuggestions", "lightingConditions"):
+        if key in text_result:
+            analysis[key] = text_result[key]
 
-    # Cache to disk (as per core.py constants)
+    render_instruction = text_result.get("render_instruction", {})
+
+    # Merge mounting info into render_instruction if missing
+    if "mount_type" not in render_instruction and "mountingStrategy" in text_result:
+        ms = text_result["mountingStrategy"]
+        mount = ms.get("mount_type", "in de dag")
+        render_instruction["mount_type"] = "inside mount" if "in" in mount else "outside mount"
+
+    total = time.time() - t0
+    print(f"[{session_id}] Pipeline complete in {total:.1f}s (3 API calls)")
+
+    # Cache to disk
+    accumulated = {2: quality_result, "vision": vision_result, "text": text_result}
     os.makedirs("data", exist_ok=True)
     with open(core.JSON_CACHE_PATH, "w", encoding="utf-8") as f:
         json.dump(accumulated, f, ensure_ascii=False, indent=2)

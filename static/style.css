@@ -104,30 +104,22 @@ a { color: inherit; }
 .topbar > * { pointer-events: auto; }
 
 .logo-badge {
+  display: none; /* removed — logo is now bare text */
+}
+
+.topbar__logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 40px; height: 40px;
-  background: #fff;
-  border-radius: 50%;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
-  gap: 1px;
 }
-.logo-heart { color: var(--clr-accent); font-size: 13px; }
-.logo-j { font-weight: 700; }
+.topbar__logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
 
 .topbar__close {
-  background: none;
-  border: none;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--clr-text);
-  padding: 8px 4px;
-  transition: opacity var(--dur-fast) var(--ease);
+  display: none; /* removed from result UI */
 }
-.topbar__close:hover { opacity: 0.6; }
 
 /* ── SCREENS ───────────────────────────────────────────────────────────────── */
 .screen {
@@ -363,19 +355,49 @@ a { color: inherit; }
 .slider__arrows { letter-spacing: -2px; }
 
 .result__visual-actions {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  z-index: 10;
+}
+
+.btn-overlay {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-md);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast);
+  letter-spacing: 0.02em;
+}
+.btn-overlay:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transform: translateY(-1px);
+}
+.btn-overlay:active {
+  transform: translateY(0);
 }
 
 /* CONFIG PANEL */
 .result__config {
   background: var(--clr-surface);
-  border-left: 1px solid var(--clr-border);
+  border-left: none;
+  border-radius: var(--radius-xl);
+  margin: 16px 16px 16px 0;
   padding: 28px 24px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  box-shadow: var(--shadow-card);
+  max-height: calc(100vh - 72px - 32px);
 }
 
 .config-section { display: flex; flex-direction: column; gap: 10px; }
@@ -466,13 +488,13 @@ a { color: inherit; }
 /* Radio groups */
 .radio-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
 }
 .radio-group--2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 .radio-item {
   display: flex;
@@ -555,15 +577,8 @@ a { color: inherit; }
 .btn-ghost:hover { background: #fff; transform: translateY(-1px); }
 
 .info-btn {
-  background: none;
-  border: none;
-  color: var(--clr-text-muted);
-  font-size: 14px;
-  padding: 0;
-  line-height: 1;
-  transition: color var(--dur-fast);
+  display: none; /* removed from UI */
 }
-.info-btn:hover { color: var(--clr-accent); }
 
 /* ── COLOR FLYOUT ──────────────────────────────────────────────────────────── */
 .flyout-overlay {
@@ -736,7 +751,8 @@ a { color: inherit; }
   }
   .result__config {
     border-left: none;
-    border-top: 1px solid var(--clr-border);
+    border-top: none;
+    margin: 0 12px 12px;
     padding: 24px 20px;
   }
   .flyout { width: 100%; }

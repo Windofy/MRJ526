@@ -1,52 +1,105 @@
 """
-watermark.py — Resolution-aware PIL watermark for MRJ3.0
+watermark.py — "Windofy" text watermark for MRJ3.0
+Renders bold black sans-serif text in the bottom-right corner.
+No external PNG dependency — pure PIL text rendering.
 """
 import os
-from PIL import Image
 import io
+from PIL import Image, ImageDraw, ImageFont
+
+# Configuration
+WATERMARK_TEXT = "Windofy"
+WATERMARK_SCALE = 0.03       # text height = 3% of image height (subtle)
+WATERMARK_OPACITY = 153      # ~60% of 255
+WATERMARK_MARGIN = 0.03      # 3% margin from edges
+WATERMARK_COLOR = (26, 26, 26)  # #1A1A1A — dark black
+LETTER_SPACING = -1          # tight letter spacing (pixels, applied per char)
+
+# Try to load a bold TTF font for better rendering
+_FONT_SEARCH_PATHS = [
+    # Project local fonts
+    os.path.join(os.path.dirname(__file__), "..", "static", "fonts", "font-poppins-700.ttf"),
+    # Common system sans-serif bold fonts (Windows)
+    "C:/Windows/Fonts/arialbd.ttf",
+    "C:/Windows/Fonts/segoeui.ttf",
+    "C:/Windows/Fonts/calibrib.ttf",
+    # macOS / Linux
+    "/System/Library/Fonts/Helvetica.ttc",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+]
 
 
-WATERMARK_PATH = os.path.join(os.path.dirname(__file__), "..", "static", "watermark.png")
-WATERMARK_SCALE = 0.18   # watermark width = 18% of image width
-WATERMARK_OPACITY = 200  # 0–255
-WATERMARK_MARGIN = 0.02  # 2% margin from edges
+def _get_font(size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
+    """Load the best available bold sans-serif font at the given pixel size."""
+    for path in _FONT_SEARCH_PATHS:
+        if os.path.exists(path):
+            try:
+                return ImageFont.truetype(path, size)
+            except Exception:
+                continue
+    # Absolute fallback — PIL built-in bitmap font (small but functional)
+    return ImageFont.load_default()
+
+
+def _draw_text_with_spacing(
+    draw: ImageDraw.ImageDraw,
+    position: tuple[int, int],
+    text: str,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+    fill: tuple,
+    spacing: int = 0,
+) -> int:
+    """Draw text character by character with custom letter spacing. Returns total width."""
+    x, y = position
+    total_w = 0
+    for i, char in enumerate(text):
+        bbox = draw.textbbox((0, 0), char, font=font)
+        char_w = bbox[2] - bbox[0]
+        draw.text((x + total_w, y), char, font=font, fill=fill)
+        total_w += char_w + (spacing if i < len(text) - 1 else 0)
+    return total_w
 
 
 def apply_watermark(image_bytes: bytes) -> bytes:
     """
-    Overlay the MRJ watermark onto image_bytes (PNG).
-    Returns the watermarked image as PNG bytes.
+    Overlay "Windofy" text watermark onto the image.
+    Position: bottom-right corner, subtle but clearly visible.
+    Returns watermarked image as PNG bytes.
     """
     base = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
     bw, bh = base.size
 
-    if not os.path.exists(WATERMARK_PATH):
-        # No watermark asset yet — return original
-        buf = io.BytesIO()
-        base.convert("RGB").save(buf, format="PNG")
-        return buf.getvalue()
+    # Calculate font size relative to image
+    font_size = max(int(bh * WATERMARK_SCALE), 14)  # minimum 14px
+    font = _get_font(font_size)
 
-    wm = Image.open(WATERMARK_PATH).convert("RGBA")
+    # Create transparent overlay for the watermark text
+    overlay = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
 
-    # Scale watermark relative to base image
-    target_w = int(bw * WATERMARK_SCALE)
-    ratio = target_w / wm.width
-    target_h = int(wm.height * ratio)
-    wm = wm.resize((target_w, target_h), Image.LANCZOS)
+    # Measure text width with spacing
+    total_text_w = 0
+    for i, char in enumerate(WATERMARK_TEXT):
+        bbox = draw.textbbox((0, 0), char, font=font)
+        total_text_w += (bbox[2] - bbox[0]) + (LETTER_SPACING if i < len(WATERMARK_TEXT) - 1 else 0)
 
-    # Adjust opacity
-    r, g, b, a = wm.split()
-    a = a.point(lambda x: int(x * WATERMARK_OPACITY / 255))
-    wm.putalpha(a)
+    # Get text height
+    bbox_full = draw.textbbox((0, 0), WATERMARK_TEXT, font=font)
+    text_h = bbox_full[3] - bbox_full[1]
 
-    # Bottom-right position with margin
+    # Position: bottom-right with margin
     margin_x = int(bw * WATERMARK_MARGIN)
     margin_y = int(bh * WATERMARK_MARGIN)
-    pos = (bw - target_w - margin_x, bh - target_h - margin_y)
+    x = bw - total_text_w - margin_x
+    y = bh - text_h - margin_y
 
-    composite = Image.new("RGBA", base.size)
-    composite.paste(base, (0, 0))
-    composite.paste(wm, pos, mask=wm)
+    # Draw with custom letter spacing and semi-transparency
+    fill = (*WATERMARK_COLOR, WATERMARK_OPACITY)
+    _draw_text_with_spacing(draw, (x, y), WATERMARK_TEXT, font, fill, LETTER_SPACING)
+
+    # Composite and export
+    composite = Image.alpha_composite(base, overlay)
 
     buf = io.BytesIO()
     composite.convert("RGB").save(buf, format="PNG")
