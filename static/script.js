@@ -87,35 +87,89 @@ async function uploadFile(file) {
 }
 
 // ── POLLING ────────────────────────────────────────────────────────────────
-function startPolling() {
+const MAX_RETRIES = 5;          // consecutive network failures before abort
+let _pollRetries = 0;
+let _isPolling = false;         // guard: prevents concurrent poll executions
+
+function stopPolling() {
   clearInterval(pollTimer);
   clearTimeout(pollTimeout);
-  pollTimer = setInterval(pollStatus, 3000);
-  // Hard timeout: if still pending after MAX_POLL_MS, abort with a message
+  pollTimer = null;
+  pollTimeout = null;
+  _isPolling = false;
+  _pollRetries = 0;
+}
+
+function startPolling() {
+  stopPolling();                // always clear before starting
+  if (!sessionId) return;
+
+  // Hard timeout: abort after MAX_POLL_MS
   pollTimeout = setTimeout(() => {
-    clearInterval(pollTimer);
+    stopPolling();
     handleError('De analyse duurt te lang. Controleer je API sleutels en probeer opnieuw.');
   }, MAX_POLL_MS);
+
+  pollTimer = setInterval(pollStatus, 3000);
 }
 
 async function pollStatus() {
-  if (!sessionId) return;
+  if (!sessionId) { stopPolling(); return; }   // session was cleared (e.g. retry)
+  if (_isPolling) return;                       // previous call still in-flight → skip tick
+  _isPolling = true;
+
   try {
     const res = await fetch(`${API}/status/${sessionId}`);
+
+    // 404 = session expired / not found → terminal
+    if (res.status === 404) {
+      console.warn('[poll] 404 — sessie niet gevonden, stop polling');
+      stopPolling();
+      handleError('Sessie verlopen. Upload opnieuw je foto.');
+      return;
+    }
+
+    // 5xx = server fout → count retries
+    if (!res.ok) {
+      _pollRetries++;
+      console.warn(`[poll] HTTP ${res.status} (${_pollRetries}/${MAX_RETRIES})`);
+      if (_pollRetries >= MAX_RETRIES) {
+        stopPolling();
+        handleError('Server reageert niet. Probeer later opnieuw.');
+      }
+      return;
+    }
+
+    _pollRetries = 0;  // reset on success
     const json = await res.json();
+
+    // Debug log — remove in production
+    console.log(`[poll] status=${json.status} step=${json.step} error=${json.error || '-'}`);
+
     updateLoadingUI(json);
 
     if (json.status === 'done') {
-      clearInterval(pollTimer);
-      clearTimeout(pollTimeout);
+      stopPolling();
       await fetchResult();
     } else if (json.status === 'error') {
-      clearInterval(pollTimer);
-      clearTimeout(pollTimeout);
+      stopPolling();
       handleError(json.error || 'Er is een fout opgetreden.');
     }
-  } catch (e) { /* network hiccup, keep polling */ }
+    // 'uploading' | 'analysing' | 'rendering' → keep polling
+
+  } catch (e) {
+    // Network hiccup — increment retry counter
+    _pollRetries++;
+    console.warn(`[poll] network error (${_pollRetries}/${MAX_RETRIES}):`, e.message);
+    if (_pollRetries >= MAX_RETRIES) {
+      stopPolling();
+      handleError('Verbinding verbroken. Controleer je internet en probeer opnieuw.');
+    }
+  } finally {
+    _isPolling = false;
+  }
 }
+
 
 // Phase messages shown as progress advances
 const PHASE_MESSAGES = [
@@ -398,8 +452,7 @@ const btnClose = $('btn-close');
 if (btnClose) btnClose.addEventListener('click', resetToLanding);
 
 function resetToLanding() {
-  clearInterval(pollTimer);
-  clearTimeout(pollTimeout);
+  stopPolling();
   sessionId = null; analysisData = null; renderInstruction = null;
   selectedColor = null; renderUrl = null; originalImageUrl = null;
   fileInput.value = '';

@@ -4,96 +4,97 @@
   },
   "vision": {
     "style": "Scandinavisch",
-    "styleSummary": "Deze ruimte ademt een frisse, minimalistische Scandinavische sfeer met warme gele accenten. De combinatie van natuurlijk hout en strakke lijnen creëert een rustgevende en lichtrijke omgeving.",
-    "styleDescription": "Het interieur kenmerkt zich door een heldere, zonnige gele muurkleur die de ruimte opvrolijkt en energie geeft. De lichte houten vloer en open boekenkasten in naturel hout versterken het Scandinavische karakter. Het minimalistische meubilair, waaronder een elegante houten stoel met organische vormen, benadrukt de focus op functionaliteit en eenvoud. De witte kozijnen en deur zorgen voor een frisse contrasten. Een kleine groene plant voegt een natuurlijk element toe dat typisch is voor Scandinavisch design.",
-    "roomMood": "Licht, optimistisch en sereen met een energieke maar rustgevende uitstraling",
+    "styleSummary": "Een lichte, minimalistische Scandinavische ruimte met warme gele accenten en natuurlijke houtentinten. De inrichting ademt rust en functionaliteit.",
+    "styleDescription": "Deze ruimte kenmerkt zich door een typisch Scandinavische aanpak met een focus op licht, eenvoud en functionaliteit. De warme mosterdgele muren creëren een vrolijke en uitnodigende sfeer, terwijl het lichte houtwerk en de neutrale vloer zorgen voor balans en rust. Het minimalistische meubilair met strakke lijnen en natuurlijke materialen past perfect bij de Scandinavische designfilosofie. De open boekenkast in licht hout voegt praktische opbergruimte toe zonder de ruimte te overweldigen. De combinatie van warme en koele tinten, natuurlijk licht en doordachte meubelselectie maakt dit een harmonieuze en uitnodigende werkruimte.",
+    "roomMood": "Sereen, optimistisch en energiek met een gevoel van rust en helderheid",
     "colour_palette": [
       {
-        "hex_code": "#E8C547",
-        "extracted_source": "Hoofdmuurkleur - de dominante gele wand die de hele ruimte karakter geeft",
+        "hex_code": "#E6B84D",
+        "extracted_source": "De dominante mosterdgele muurkleur",
         "matched_catalog_color": "Butter Geel"
       },
       {
         "hex_code": "#F5F5DC",
-        "extracted_source": "Vloer - de lichte beige/crème vloer die de basis vormt",
-        "matched_catalog_color": "Flat White"
+        "extracted_source": "De lichte beige/crème vloer",
+        "matched_catalog_color": "Haver Milk"
       },
       {
-        "hex_code": "#D9A05B",
-        "extracted_source": "Stoelzitting - het warme oranje-bruine leer van de stoel",
+        "hex_code": "#FFFFFF",
+        "extracted_source": "Het witte raamkozijn en deuromlijsting",
+        "matched_catalog_color": "Like RAL9010"
+      },
+      {
+        "hex_code": "#D4A574",
+        "extracted_source": "De natuurlijke houtkleur van de boekenkast en stoel",
+        "matched_catalog_color": "Mister Sandman"
+      },
+      {
+        "hex_code": "#E89A3C",
+        "extracted_source": "Het oranje/gele kussen op de stoel",
         "matched_catalog_color": "Crazy Karamel"
-      },
-      {
-        "hex_code": "#F0E5D8",
-        "extracted_source": "Kozijn en deur - het witte/roomwitte houtwerk",
-        "matched_catalog_color": "Gebroken White"
-      },
-      {
-        "hex_code": "#C4A976",
-        "extracted_source": "Boekenkast en plantentafel - het natuurlijke lichte houtmateriaal",
-        "matched_catalog_color": "Oak Mooi"
       }
     ],
     "windowCheck": {
-      "windowType": "Traditioneel dubbel raam met horizontale roedes",
+      "windowType": "Dubbel schuifraam met horizontale roedenverdeling",
       "detectedWindowCount": 2,
       "recommendation": "in de dag",
-      "reasoning": "Het raam zit in een diepe dagopening met decoratieve omlijsting. Montage in de dag benut de bestaande dag optimaal en behoudt het strakke, minimalistische karakter van het Scandinavische interieur.",
-      "specialConsiderations": "Het raam heeft drie horizontale roedes per vleugel die de verdeling bepalen. Geen zichtbare belemmeringen zoals handgrepen of radiatoren. De diepe dagopening biedt voldoende ruimte voor montage.",
+      "reasoning": "Het raam heeft een diepe sponning met voldoende diepte voor montage in de dag. Dit zorgt voor een strakke, geïntegreerde uitstraling die perfect past bij de minimalistische Scandinavische stijl.",
+      "specialConsiderations": "Geen zichtbare obstakels. Let op de horizontale roedeverdeling bij het meten van de lamelhoogte.",
       "obstacles": false,
       "recess_depth_cm": 12,
-      "frame_material": "Gelakt hout in roomwit"
+      "frame_material": "Geschilderd hout (wit)"
     }
   },
   "text": {
     "mountingStrategy": {
       "mount_type": "in de dag",
-      "reasoning": "De diepe dagopening van 12 cm biedt uitstekende ruimte voor montage in de dag. Dit behoudt de strakke, minimalistische uitstraling van het Scandinavische interieur en benut de bestaande architectuur optimaal. De montage in de dag zorgt voor een geïntegreerde look die past bij de clean aesthetics van de ruimte."
+      "reasoning": "De raamopening heeft voldoende diepte (12cm) voor montage in de dag. Dit sluit perfect aan bij de minimalistische Scandinavische stijl en creëert een strakke, geïntegreerde uitstraling waarbij de jaloezieën naadloos in het raamkozijn verdwijnen."
     },
-    "lightingConditions": "Helder natuurlijk daglicht met zachte schaduwen. De ruimte heeft een luchtige, zonnige uitstraling door het grote raam. Het licht verspreidt zich gelijkmatig door de kamer en wordt weerspiegeld door de gele muurkleur, wat een warme en energieke sfeer creëert.",
+    "lightingConditions": "Helder natuurlijk daglicht met zachte schaduwen. De ruimte beschikt over uitstekende lichtinval door de grote raampartij, wat zorgt voor een lichte en energieke werksfeer gedurende de dag.",
     "suggestions": [
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Oak Mooi",
-        "colorHex": "#C3A376",
+        "colorName": "Mister Sandman",
+        "colorHex": "#C2B280",
         "suitabilityScore": 95,
-        "reasoning": "Deze warme houttint sluit perfect aan bij de bestaande houten meubels en boekenkast. De natuurlijke uitstraling versterkt het Scandinavische karakter en creëert een harmonieuze verbinding met de stoelzitting en de plantentafel."
+        "reasoning": "Deze warme houtkleur sluit perfect aan bij de natuurlijke materialen in de ruimte en de bestaande houten elementen. De tint harmonieert prachtig met de mosterdgele muren en creëert een warme, organische sfeer die de Scandinavische esthetiek versterkt."
       },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Gebroken White",
-        "colorHex": "#FDF5E6",
+        "colorName": "Haver Milk",
+        "colorHex": "#EFEBD8",
         "suitabilityScore": 92,
-        "reasoning": "Deze zachte off-white kleur matcht met het kozijn en deur, waardoor een samenhangende look ontstaat. Het versterkt de lichte, frisse Scandinavische sfeer zonder de ruimte visueel te verzwaren."
+        "reasoning": "Deze lichte, zachte tint komt perfect overeen met de vloerkleur en voegt extra lichtheid toe aan de ruimte. Ideaal voor het behouden van de open, luchtige sfeer terwijl toch privacy en lichtcontrole geboden wordt."
       },
       {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "Flat White",
-        "colorHex": "#FFFAF0",
+        "productType": "Aluminium Jaloezieën",
+        "material": "Aluminium",
+        "colorName": "Butter Geel",
+        "colorHex": "#F3E5AB",
         "suitabilityScore": 88,
-        "reasoning": "Een heldere witte jaloezie die de lichtrijke en luchtige sfeer maximaliseert. Past uitstekend bij het minimalistische karakter en laat de gele muur als eyecatcher fungeren zonder te concurreren."
+        "reasoning": "Een gedurfde keuze die de warme mosterdgele muurkleur subtiel weerspiegelt en extra energie toevoegt. Perfect voor wie de karakteristieke gele toon wil benadrukken en een speelse twist aan het Scandinavische interieur wil geven."
       }
     ],
     "materialSuggestions": [
-      "Hout"
+      "Hout",
+      "Aluminium"
     ],
     "render_instruction": {
       "product_type": "Houten Jaloezieën",
-      "color_name": "Oak Mooi",
-      "hex_code": "#C3A376",
+      "color_name": "Mister Sandman",
+      "hex_code": "#C2B280",
       "mount_type": "inside mount",
       "window_sections": 2,
       "lighting_condition": "bright natural daylight",
       "state": "half lowered",
       "slat_width": "50mm",
       "ladder_tape": true,
-      "scene_description": "Een Scandinavisch interieur met een levendige gele muur (#E8C547) die de ruimte domineert. Voor het dubbele raam hangt een houten jaloezie in Oak Mooi, half gesloten, die prachtig harmonieert met de lichte houten vloer en de natuurlijke boekenkast aan de rechterkant. Een elegante houten stoel met een warme karamelkleurige leren zitting staat naast een klein tafeltje met een groene plant. Het natuurlijke daglicht filtert door de lamellen en creëert zachte schaduwen op de roomwitte kozijnen. De jaloezie is gemonteerd in de dag, wat een strakke, geïntegreerde look geeft die perfect past bij de minimalistische Scandinavische esthetiek.",
-      "negative_prompt": "plastic materials, cold sterile atmosphere, cluttered space, dark shadows, artificial colors, modern industrial elements, metallic finishes, harsh lighting, busy patterns",
-      "camera_angle": "Eye-level perspective vanuit de kamer, licht diagonaal gericht op het raam, zodat zowel de jaloezie als de omringende ruimte met gele muur en houten meubels zichtbaar zijn",
-      "room_context": "Scandinavische woonruimte met gele accenten, natuurlijk hout en minimalistische inrichting"
+      "scene_description": "Een lichte Scandinavische werkruimte met karakteristieke mosterdgele muren en natuurlijke houtaccenten. De houten jaloezieën in Mister Sandman zijn halfhoog gepositioneerd in het dubbele schuifraam, waardoor zacht gefilterd daglicht de ruimte binnenstroomt. De warme houtkleur van de jaloezieën harmonieert mooi met de lichte houten boekenkast en stoelpoten, terwijl de ladder tape een klassieke, verfijnde uitstraling toevoegt. De lamellen in 50mm breedte bieden optimale lichtcontrole en privacy zonder de luchtige sfeer te verstoren. Het geheel ademt Scandinavische rust, warmte en functionaliteit.",
+      "negative_prompt": "plastic appearance, artificial materials, cold metal finish, overly modern sleek design, dark colors, heavy drapes, ornate details, cluttered space, harsh shadows, oversaturated colors",
+      "camera_angle": "Frontaal perspectief vanaf de werkplek, met focus op het raamgedeelte en de natuurlijke lichtinval. De camera vangt zowel de jaloezieën als de omringende Scandinavische elementen zoals de gele muur en houten meubels.",
+      "room_context": "Scandinavische thuiswerkplek met mosterdgele muren, licht houten vloer, minimalistische meubels en een open boekenkast. De ruimte heeft een warme, uitnodigende uitstraling met focus op natuurlijk licht en functioneel design."
     }
   }
 }
