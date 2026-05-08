@@ -288,16 +288,19 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
         with open(local_path, "rb") as f:
             img_bytes = f.read()
 
-        # SAM2: only attempt if FAL_KEY is configured (saves ~5-10s when unavailable)
+        # SAM2: only attempt if FAL_KEY is configured AND fal_client is installed
         mask_bytes = None
         if os.environ.get("FAL_KEY"):
-            from segment_sam2 import segment_window
-            mask_bytes = segment_window(img_bytes)
-            _set_session(session_id, {"mask_bytes": mask_bytes})
-            if mask_bytes:
-                print(f"[{session_id}] SAM2 mask obtained ({len(mask_bytes)} bytes)")
-            else:
-                print(f"[{session_id}] SAM2 returned no mask — using Gemini pipeline")
+            try:
+                from segment_sam2 import segment_window
+                mask_bytes = segment_window(img_bytes)
+                _set_session(session_id, {"mask_bytes": mask_bytes})
+                if mask_bytes:
+                    print(f"[{session_id}] SAM2 mask obtained ({len(mask_bytes)} bytes)")
+                else:
+                    print(f"[{session_id}] SAM2 returned no mask — using Gemini pipeline")
+            except (ImportError, ModuleNotFoundError) as e:
+                print(f"[{session_id}] SAM2 skipped (fal_client not installed: {e}) — using Gemini pipeline")
         else:
             print(f"[{session_id}] SAM2 skipped (no FAL_KEY) — using Gemini pipeline")
 
