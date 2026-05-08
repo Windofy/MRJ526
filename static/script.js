@@ -225,7 +225,7 @@ async function fetchResult() {
   }
 }
 
-function populateResultScreen() {
+async function populateResultScreen() {
   // Before/after images
   if (originalImageUrl) $('slider-before').src = originalImageUrl;
   if (renderUrl) {
@@ -233,17 +233,22 @@ function populateResultScreen() {
     initSlider();
   }
 
+  // Pre-load catalog so suggestions + color-hero can use sampleUrls immediately
+  await loadCatalog();
+
   // Suggestions
   const suggs = analysisData.suggestions || [];
   renderSuggestions(suggs);
 
-  // Auto-select top suggestion
+  // Auto-select top suggestion (try to match with catalog to get sampleUrl)
   if (suggs.length > 0) {
-    selectColor({
-      name: suggs[0].colorName,
-      hex: suggs[0].colorHex,
-      material: suggs[0].material,
-      productType: suggs[0].productType,
+    const top = suggs[0];
+    // Try catalog match first for real sample image
+    const catalogMatch = findCatalogColor(top.colorName);
+    selectColor(catalogMatch || {
+      name: top.colorName,
+      hex: top.colorHex,
+      material: `${top.material} ${top.productType}`,
       sampleUrl: '',
     });
   }
@@ -259,40 +264,68 @@ function populateResultScreen() {
   populateFlyout();
 }
 
+
 // ── SUGGESTIONS ────────────────────────────────────────────────────────────
 function renderSuggestions(suggs) {
   const container = $('suggestions');
   container.innerHTML = '';
   suggs.slice(0, 3).forEach(s => {
+    const catalogItem = findCatalogColor(s.colorName);
+    const sampleUrl   = catalogItem?.sampleUrl || '';
     const el = document.createElement('div');
     el.className = 'suggestion-item';
     el.setAttribute('role', 'listitem');
-    el.innerHTML = `
-      <div class="suggestion-item__swatch flyout-color-item__fallback" style="background:${s.colorHex}"></div>
-      <div class="suggestion-item__info">
-        <span class="suggestion-item__name">${s.colorName}</span>
-        <span class="suggestion-item__material">${s.material} ${s.productType}</span>
-      </div>`;
+
+    if (sampleUrl) {
+      el.innerHTML = `
+        <img class="suggestion-item__swatch" src="${sampleUrl}" alt="${s.colorName}" loading="lazy" />
+        <div class="suggestion-item__info">
+          <span class="suggestion-item__name">${s.colorName}</span>
+          <span class="suggestion-item__material">${s.material} ${s.productType}</span>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="suggestion-item__swatch flyout-color-item__swatch" style="background:${s.colorHex}"></div>
+        <div class="suggestion-item__info">
+          <span class="suggestion-item__name">${s.colorName}</span>
+          <span class="suggestion-item__material">${s.material} ${s.productType}</span>
+        </div>`;
+    }
+
     el.addEventListener('click', () => selectColor({
-      name: s.colorName, hex: s.colorHex,
+      name: s.colorName,
+      hex: s.colorHex,
       material: `${s.material} ${s.productType}`,
-      productType: s.productType, sampleUrl: '',
+      sampleUrl,
     }));
     container.appendChild(el);
   });
 }
 
+
 // ── COLOR SELECTION ────────────────────────────────────────────────────────
 function selectColor(color) {
   selectedColor = color;
-  // Hero
+  const hero   = $('color-hero');
+  const heroImg = $('color-hero-img');
+
   if (color.sampleUrl) {
-    $('color-hero-img').src = color.sampleUrl;
-    $('color-hero-img').style.display = '';
+    heroImg.src = color.sampleUrl;
+    heroImg.style.display = 'block';
+    hero.classList.remove('color-hero--hex-only');
   } else {
-    $('color-hero-img').style.display = 'none';
-    $('color-hero').style.background = color.hex || '#ccc';
+    // Fallback: show hex-colored swatch div
+    heroImg.style.display = 'none';
+    hero.classList.add('color-hero--hex-only');
+    let swatchEl = hero.querySelector('.color-hero__swatch');
+    if (!swatchEl) {
+      swatchEl = document.createElement('div');
+      swatchEl.className = 'color-hero__swatch';
+      hero.insertBefore(swatchEl, hero.firstChild);
+    }
+    swatchEl.style.background = color.hex || '#ccc';
   }
+
   $('color-hero-name').textContent = color.name;
   $('color-hero-material').textContent = color.material || color.productType || '';
 
@@ -302,16 +335,41 @@ function selectColor(color) {
   });
 }
 
-// ── FLYOUT ─────────────────────────────────────────────────────────────────
-function populateFlyout() {
-  // Build catalog from analysis + hardcoded structure
-  // The backend serves color data via the analysis JSON; we reconstruct from suggestions
-  // Full catalog is served from core.py; here we use what we have from analysis
-  const aluSuggs = (analysisData.suggestions || []).filter(s => s.productType === 'Aluminium Jaloezieën');
-  const houtSuggs = (analysisData.suggestions || []).filter(s => s.productType === 'Houten Jaloezieën');
+// ── FLYOUT & CATALOG ────────────────────────────────────────────────────────
+let _catalog = null;  // { 'Aluminium Jaloezieën': [...], 'Houten Jaloezieën': [...] }
 
-  renderFlyoutList('tabpanel-alu', aluSuggs.length ? aluSuggs : (analysisData.suggestions || []));
-  renderFlyoutList('tabpanel-hout', houtSuggs);
+async function loadCatalog() {
+  if (_catalog) return _catalog;
+  try {
+    const res = await fetch(`${API}/catalogus`);
+    _catalog = await res.json();
+  } catch (e) {
+    console.warn('[catalog] kon niet laden:', e);
+    _catalog = {};
+  }
+  return _catalog;
+}
+
+function findCatalogColor(name) {
+  if (!_catalog) return null;
+  for (const items of Object.values(_catalog)) {
+    const match = items.find(c => c.name.toLowerCase() === name.toLowerCase());
+    if (match) return { name: match.name, hex: match.hex, material: match.material, sampleUrl: match.sampleUrl };
+  }
+  return null;
+}
+
+async function populateFlyout() {
+  const cat = await loadCatalog();
+  const aluItems  = cat['Aluminium Jaloezieën'] || [];
+  const houtItems = cat['Houten Jaloezieën'] || [];
+
+  // Update tab count badges
+  $('tab-alu').innerHTML  = `Aluminium <span class="flyout__tab-count">${aluItems.length}</span>`;
+  $('tab-hout').innerHTML = `Hout &amp; Bamboe <span class="flyout__tab-count">${houtItems.length}</span>`;
+
+  renderFlyoutList('tabpanel-alu',  aluItems);
+  renderFlyoutList('tabpanel-hout', houtItems);
 }
 
 function renderFlyoutList(panelId, items) {
@@ -320,15 +378,27 @@ function renderFlyoutList(panelId, items) {
   items.forEach(item => {
     const el = document.createElement('div');
     el.className = 'flyout-color-item';
-    el.dataset.colorName = item.colorName || item.name;
-    el.innerHTML = `
-      <div class="flyout-color-item__fallback" style="background:${item.colorHex || item.hex || '#ccc'};border-radius:8px"></div>
-      <div class="flyout-color-item__info">
-        <span class="flyout-color-item__name">${item.colorName || item.name}</span>
-        <span class="flyout-color-item__material">${item.material} ${item.productType || ''}</span>
-      </div>`;
+    el.dataset.colorName = item.name;
+
+    if (item.sampleUrl) {
+      el.innerHTML = `
+        <img class="flyout-color-item__img" src="${item.sampleUrl}" alt="${item.name}" loading="lazy" />
+        <div class="flyout-color-item__footer">
+          <div class="flyout-color-item__name">${item.name}</div>
+          <div class="flyout-color-item__material">${item.material}</div>
+        </div>`;
+    } else {
+      // Hex-only fallback
+      el.innerHTML = `
+        <div class="flyout-color-item__swatch" style="background:${item.hex || '#ccc'}"></div>
+        <div class="flyout-color-item__footer">
+          <div class="flyout-color-item__name">${item.name}</div>
+          <div class="flyout-color-item__material">${item.material}</div>
+        </div>`;
+    }
+
     el.addEventListener('click', () => {
-      selectColor({ name: item.colorName || item.name, hex: item.colorHex || item.hex, material: item.material, productType: item.productType, sampleUrl: item.sampleUrl || '' });
+      selectColor({ name: item.name, hex: item.hex, material: item.material, sampleUrl: item.sampleUrl || '' });
       closeFlyout();
     });
     panel.appendChild(el);

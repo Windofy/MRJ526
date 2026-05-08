@@ -49,6 +49,18 @@ def health():
     return jsonify({"status": "ok"})
 
 
+@app.route("/catalogus")
+def catalogus():
+    """Serve the full color catalog JSON from disk."""
+    catalog_path = os.path.join(os.path.dirname(__file__), "data", "catalogus.json")
+    try:
+        with open(catalog_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except FileNotFoundError:
+        return jsonify({"error": "Catalogus niet gevonden."}), 404
+
+
 @app.route("/")
 def index():
     resp = send_from_directory(STATIC_DIR, "index.html")

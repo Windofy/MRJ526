@@ -3,99 +3,99 @@
     "quality_pass": true
   },
   "vision": {
-    "style": "Scandinavisch",
-    "styleSummary": "Een heldere Scandinavische ruimte met warme gele muren en lichte houten meubels die zorgen voor een vriendelijke en uitnodigende sfeer.",
-    "styleDescription": "Deze ruimte ademt de typische Scandinavische designfilosofie met zijn focus op licht, functionaliteit en natuurlijke materialen. De dominante warme gele muurkleur creëert een zonnige en optimistische sfeer, terwijl het lichte houtwerk van de boekenkast en stoel de natuurlijke, minimalistische esthetiek versterkt. De witte kozijnen en deur benadrukken de helderheid en openheid die kenmerkend zijn voor Noord-Europese interieurs. De eenvoudige lijnen en het gebrek aan onnodige decoratie tonen de typische 'lagom' benadering van het Scandinavische design.",
-    "roomMood": "Zonnig, sereen en intellectueel met een warme, uitnodigende uitstraling die uitnodigt tot lezen en ontspanning",
+    "style": "Scandinavisch Modern",
+    "styleSummary": "Een verfijnde Scandinavische ruimte met warme houtaccenten en strakke lijnen. De ruimte ademt minimalisme met een subtiele Japanse invloed.",
+    "styleDescription": "Deze eetkamer combineert Scandinavisch minimalisme met warme, organische elementen. De slanke houten meubels in walnoottinten contrasteren prachtig met het lichte interieur en de betonlook vloer. De sculptuurachtige hanglamp met koperen ringen vormt een statement piece die functionaliteit met kunst verenigt. Grote raampartijen met donkere profielen zorgen voor een sterke verbinding met buiten en maximale lichtinval. De neutrale kleurpalette van crème, taupe en warme houtaccenten creëert een serene, tijdloze sfeer.",
+    "roomMood": "Sereen, minimalistisch en verfijnd met een warme, uitnodigende uitstraling door natuurlijke materialen",
     "colour_palette": [
       {
-        "hex_code": "#E8B84D",
-        "extracted_source": "Hoofdmuurkleur - de dominante gele wanden",
-        "matched_catalog_color": "Butter Geel"
-      },
-      {
-        "hex_code": "#F5F5F0",
-        "extracted_source": "Raamkozijn en deurwerk - het witte houtwerk",
+        "hex_code": "#F5F5DC",
+        "extracted_source": "plafond en bovenwanden",
         "matched_catalog_color": "Parel White"
       },
       {
-        "hex_code": "#E8D5B7",
-        "extracted_source": "Boekenkastelement - het lichte hout van de wandkast",
-        "matched_catalog_color": "Teder Taupe"
+        "hex_code": "#8B4513",
+        "extracted_source": "houten eettafel en bank",
+        "matched_catalog_color": "Cowboy Koper"
       },
       {
-        "hex_code": "#D9A066",
-        "extracted_source": "Stoelrugleuning - het warme oranje-bruine leer van de fauteuil",
-        "matched_catalog_color": "Crazy Karamel"
+        "hex_code": "#D2B48C",
+        "extracted_source": "gordijnen en warme accenten",
+        "matched_catalog_color": "De Naturist"
       },
       {
-        "hex_code": "#F0E6D2",
-        "extracted_source": "Vloer - de lichte beige vloerbedekking",
-        "matched_catalog_color": "Gebroken White"
+        "hex_code": "#2F2F2F",
+        "extracted_source": "raamkozijnen en donkere accenten",
+        "matched_catalog_color": "Donker Brown"
+      },
+      {
+        "hex_code": "#E5E4E2",
+        "extracted_source": "betonlook vloer",
+        "matched_catalog_color": "Like RAL9010"
       }
     ],
     "windowCheck": {
-      "windowType": "Dubbel draairaam met horizontale verdeling",
-      "detectedWindowCount": 2,
-      "recommendation": "in de dag",
-      "reasoning": "Het raam heeft een traditioneel wit kozijn met voldoende diepte in de dag. Montage in de dag geeft de strakste en meest geïntegreerde uitstraling die past bij het minimalistische Scandinavische karakter van de ruimte.",
-      "specialConsiderations": "Het raam heeft horizontale verdeling met meerdere glasvlakken. De plant op de vensterbank moet bij opmeten in overweging genomen worden.",
+      "windowType": "Grote moderne raampartijen met stalen kozijnen in industriële stijl",
+      "detectedWindowCount": 3,
+      "recommendation": "op de dag",
+      "reasoning": "De raampartijen hebben strakke, donkere profielen die deel uitmaken van het architectonische concept. Montage op de dag behoudt de karakteristieke lijnen en maximaliseert de lichtinval, terwijl het designstatement intact blijft.",
+      "specialConsiderations": "Draaikiepramen met handgrepen aan de zijkant; let op vrije draairuimte. De gordijnen zijn al gemonteerd boven de ramen, dus jaloezieën kunnen perfect binnen het kozijn of vlak ervoor geplaatst worden.",
       "obstacles": true,
-      "recess_depth_cm": 12,
-      "frame_material": "Hout met witte lak"
+      "recess_depth_cm": 8,
+      "frame_material": "staal/aluminium (donker gecoat)"
     }
   },
   "text": {
     "mountingStrategy": {
-      "mount_type": "in de dag",
-      "reasoning": "Het traditionele houten kozijn heeft voldoende dagdiepte (12cm) en de strakke montage in de dag past perfect bij het minimalistische Scandinavische karakter. Dit geeft de meest geïntegreerde en opgeruimde uitstraling die aansluit bij de 'lagom' filosofie van het interieur."
+      "mount_type": "op de dag",
+      "reasoning": "De strakke, donkere stalen kozijnen zijn een essentieel onderdeel van het architectonische karakter van deze Scandinavische ruimte. Montage op de dag behoudt de industriële lijnen, maximaliseert de lichtinval en voorkomt conflicten met de draaikiepramen en bestaande gordijnrails. Dit sluit perfect aan bij de minimalistische, strakke designfilosofie van het interieur."
     },
-    "lightingConditions": "Natuurlijk daglicht met heldere, gelijkmatige belichting die de warme gele muren extra laat stralen. De ruimte heeft een zonnige, optimistische sfeer met goede lichtverdeling.",
+    "lightingConditions": "Ruime natuurlijke lichtinval door grote raampartijen met noordelijk/zacht daglicht. De ruimte heeft een heldere, gelijkmatige belichting zonder harde schaduwen, typisch voor Scandinavische interieurs. Ideaal voor subtiele kleuraccenten die het warme houtkarakter ondersteunen.",
     "suggestions": [
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Teder Taupe",
-        "colorHex": "#D8CCBB",
+        "colorName": "De Naturist",
+        "colorHex": "#D2B48C",
         "suitabilityScore": 95,
-        "reasoning": "Deze zachte taupe tint matcht perfect met het lichte hout van de boekenkast en creëert een harmonieuze, natuurlijke uitstraling die de Scandinavische esthetiek versterkt. De warme ondertoon complementeert de gele muren zonder te contrasteren."
+        "reasoning": "Deze warme, natuurlijke houtkleur sluit naadloos aan bij de bestaande walnoottinten van de meubels en creëert een harmonische, organische sfeer. De kleur complementeert perfect de Scandinavische esthetiek met zijn zachte, ongebleekte uitstraling."
+      },
+      {
+        "productType": "Houten Jaloezieën",
+        "material": "Hout",
+        "colorName": "Eigenlijk Eiken",
+        "colorHex": "#A0785A",
+        "suitabilityScore": 92,
+        "reasoning": "Een subtiel warmere variant die prachtig contrasteert met de lichte wanden en de betonlook vloer. Deze eikenkleur versterkt het natuurlijke materialenpalette en voegt extra warmte toe aan de serene ruimte."
       },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
         "colorName": "Parel White",
         "colorHex": "#F5F5F5",
-        "suitabilityScore": 92,
-        "reasoning": "Sluit naadloos aan bij het witte kozijn en deurwerk, waardoor een optisch rustgevend en luchtig effect ontstaat dat typisch is voor Scandinavisch design. Maximaliseert de lichtinval in de ruimte."
-      },
-      {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "Haver Milk",
-        "colorHex": "#EFEBD8",
         "suitabilityScore": 88,
-        "reasoning": "Een warme, melkachtige tint die de zachte beige vloer weerspiegelt en een serene, monochrome laag toevoegt aan het interieur. Past uitstekend bij de intellectuele, kalme sfeer van de leeshoek."
+        "reasoning": "Voor wie de lichte, luchtige Scandinavische sfeer wil maximaliseren biedt deze parelwitte optie een strakke, minimalistische uitstraling. Het versterkt de ruimtelijkheid en laat de donkere kozijnen als architectonisch statement domineren."
       }
     ],
     "materialSuggestions": [
-      "Houten Jaloezieën met 50mm lamellen voor optimale lichtregeling",
-      "Laddertape in naturel of wit voor extra Scandinavische uitstraling",
-      "25mm lamellen indien subtielere look gewenst"
+      "Houten Jaloezieën met 50mm lamellen voor optimale lichtregulatie en Scandinavisch karakter",
+      "Kies voor een natuurlijke houtstructuur zonder ladder tape voor een strakke, minimalistische look",
+      "Overweeg een matte afwerking om de organische, warme uitstraling te behouden"
     ],
     "render_instruction": {
       "product_type": "Houten Jaloezieën",
-      "color_name": "Teder Taupe",
-      "hex_code": "#D8CCBB",
-      "mount_type": "inside mount",
-      "window_sections": 2,
-      "lighting_condition": "Helder natuurlijk daglicht met warme sfeer",
+      "color_name": "De Naturist",
+      "hex_code": "#D2B48C",
+      "mount_type": "outside mount",
+      "window_sections": 3,
+      "lighting_condition": "bright natural daylight",
       "state": "half lowered",
       "slat_width": "50mm",
-      "ladder_tape": true,
-      "scene_description": "Een serene Scandinavische leeshoek met warme gele muren (#E8B84D) en een dubbel draairaam met horizontale verdeling. De houten jaloezieën in Teder Taupe (#D8CCBB) zijn half gesloten en gemonteerd in de dag, waardoor zacht gefilterd daglicht de ruimte vult. Op de voorgrond staat een lichte houten boekenkast (#E8D5B7) met boeken en decoratie, links een klassieke fauteuil met oranje-bruin leer (#D9A066). De witte kozijnen contrasteren subtiel met de warme muren, terwijl een plant op de vensterbank een natuurlijk accent toevoegt. De sfeer is rustig, intellectueel en uitnodigend.",
-      "negative_prompt": "Donkere kleuren, drukke patronen, moderne strakke meubels, koude tinten, metalen accenten, minimalisme zonder warmte, te veel decoratie, rommelige opstelling",
-      "camera_angle": "Frontaal perspectief vanaf ongeveer 1,5 meter hoogte, gericht op het raam met zicht op de boekenkast links en de fauteuil aan de linkerzijde van het frame",
-      "room_context": "Scandinavische leeshoek met gele muren, wit houtwerk en natuurlijke materialen die een warme, intellectuele sfeer creëren"
+      "ladder_tape": false,
+      "scene_description": "Een serene Scandinavische eetkamer met grote raampartijen voorzien van houten jaloezieën in de warme natuurtint 'De Naturist'. De jaloezieën zijn half gesloten waardoor zachte lichtstrepen over de betonlook vloer en walnouten eettafel vallen. De donkere stalen kozijnen vormen een sterk contrast met de lichte jaloezieën en creëren grafische lijnen. De sculptuurachtige koperen hanglamp werpt subtiele schaduwen terwijl het gefilterde daglicht een warme, uitnodigende sfeer creëert. De jaloezieën complementeren perfect de bestaande crème gordijnen en het organische materialenpalette van hout, beton en textiel.",
+      "negative_prompt": "plastic appearance, glossy finish, cold white colors, harsh shadows, cluttered space, bright artificial lighting, modern colorful accents, busy patterns, ladder tape visible",
+      "camera_angle": "Perspectief vanuit de eethoek kijkend naar de raampartijen, met zicht op alle drie de ramen en de manier waarop het gefilterde licht door de half gesloten lamellen speelt. De compositie toont de harmonie tussen de houten jaloezieën, stalen kozijnen en de warme meubels.",
+      "room_context": "Verfijnde Scandinavische eetkamer met minimalistische inrichting, walnouten meubels, betonlook vloer en statement verlichting. De ruimte ademt rust en natuurlijke elegantie."
     }
   }
 }
