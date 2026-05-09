@@ -1,63 +1,438 @@
 {
   "Aluminium Jaloezieën": [
-    { "name": "Like RAL9002",      "hex": "#E9E5CE", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1npCEKOYmRX6q-SIIfM9Kg9taNSvqrzpW" },
-    { "name": "Like RAL9010",      "hex": "#F7F9EF", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1Ltpk7_q5VuaYFrrhRLirp2eDVe0KrwVx" },
-    { "name": "Moody Munt",        "hex": "#98FF98", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1K0Ml69KUuz3NOnGjQJca3d8-UHd768YK" },
-    { "name": "Naughty Aubergine", "hex": "#472C4C", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1dyBO0LzaZVfUZjRO4xF80sH6sztUr_BC" },
-    { "name": "Oud Green",         "hex": "#8F9779", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1J2WStj1_WpWu55ob057rzdPf05Ihva4q" },
-    { "name": "Peachy Pink",       "hex": "#FFDAB9", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1OYYGOlp0DhkPRl8H0FiJuZoCkimKoHY1" },
-    { "name": "Poolside Blue",     "hex": "#00BFFF", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1lXxMCPpm8RucSNQhrrCMKYXRZrydnMjh" },
-    { "name": "Purple Grey",       "hex": "#6D6875", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1by_eY1sag0ApQtYvpp2l7lnsRnkMijZB" },
-    { "name": "Rocky Rood",        "hex": "#8B0000", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1HGC-Fvf9jc2Zh_xeU-bobzbzzuUOdwma" },
-    { "name": "Rusty Retro",       "hex": "#B7410E", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1f2mWCEgmnPE6uWaPpBossX28VaYitVbb" },
-    { "name": "Silk Zwart",        "hex": "#050505", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1pddq-b5ofTr8vp7gMvgZ2kXBteCf9ZCU" },
-    { "name": "Skinny Dip",        "hex": "#F4C2C2", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1XDXRuSbUBHsT0DLwcQr4AwxnCQXKzDv7" },
-    { "name": "Smokey Grey",       "hex": "#708090", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1YWw3CTzuEKUdb-iSTQKr-5cfjb85U_PX" },
-    { "name": "Soft Naakt",        "hex": "#E3BC9A", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1Z3piQot3qZQ_duHk-CXlfAKwlfhvBScS" },
-    { "name": "Soft Terra",        "hex": "#E2725B", "material": "Aluminium", "sampleUrl": "/img-proxy?id=13uze5MJsPFlkFsYuzv_L4Y8ZIblfLcwy" },
-    { "name": "Stevig Taupe",      "hex": "#483C32", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1TlO-rqhdqaF2vlM9x8gWHVBvt1B0mYBa" },
-    { "name": "Stormy Taupe",      "hex": "#5C5552", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1TqtZY8z9SwEA3EEVLwHfb1hOxmHHvmV5" },
-    { "name": "Twijfel Taupe",     "hex": "#876C5E", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1VNt4uDJvsfXAKfkVn3Y1NrtQNCbNKn2M" },
-    { "name": "Velvet Brown",      "hex": "#4B3621", "material": "Aluminium", "sampleUrl": "/img-proxy?id=18Q9K6ZvSgkdI482VESFKrCas1mcT7tzt" },
-    { "name": "Bold Bruin",        "hex": "#654321", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1xamLfbxMFgA95kIc_wDqEodQOi3Ln5wY" },
-    { "name": "Butter Geel",       "hex": "#F3E5AB", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1Ygu0MgyHxSXk15j6_vTdJ86_Q-16Amgj" },
-    { "name": "Cherry Pop",        "hex": "#D2042D", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1TmmcRskrkm_6FEp5jD8Cy8dG6l7dq_va" },
-    { "name": "Cool Grey",         "hex": "#A9A9A9", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1BcG9FAbnpuIGBbVqUtDeKUszOto5aqmc" },
-    { "name": "Cosmic Blauw",      "hex": "#000080", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1v4dpvs9QxmgdWeSgAd5Q00pFdPywBg07" },
-    { "name": "Crazy Karamel",     "hex": "#C68E17", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1qagtJbBXzATyno0-ZTLzbybzOj4HYj3g" },
-    { "name": "Drop Zwart",        "hex": "#1A1A1A", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1H7YJmrI3xwQv2x_bFLJ0wfsgEmdFu3Ab" },
-    { "name": "Fluffy Naakt",      "hex": "#F5DEB3", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1_B4IxYY1hUz6Vukcvi_VSOdEbawZeaFs" },
-    { "name": "Brushed Nikkel",    "hex": "#B0C4DE", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1GXLrjmILXVcKuoP-5H7CRcFgBRRiPVcZ" },
-    { "name": "Koffie Koper",      "hex": "#B87333", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1QPnzotTikdkvh_PTLrtvyLYiLmGwR3Tp" },
-    { "name": "Glitter Gold",      "hex": "#FFD700", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1Ygu0MgyHxSXk15j6_vTdJ86_Q-16Amgj" },
-    { "name": "Goed Grijs",        "hex": "#808080", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1AYB8xQtVe541ufG1fb-L7WFOuUkYukqc" },
-    { "name": "Jet Black",         "hex": "#050505", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1H7YJmrI3xwQv2x_bFLJ0wfsgEmdFu3Ab" },
-    { "name": "Juicy Olive",       "hex": "#808000", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1V5Zg3vAaof_g1BgR8eIDrTUdknnlrtM_" },
-    { "name": "Koel Blue",         "hex": "#AEC6CF", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1ruvPfp2LtzBYrQlrXuEhRN2F_p9kAFlJ" },
-    { "name": "Like RAL9001",      "hex": "#FDF4E3", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1_HG2A85gyte4X1UdhtvbI4Ls364oxpnQ" },
-    { "name": "Cowboy Koper",      "hex": "#8B4513", "material": "Aluminium", "sampleUrl": "/img-proxy?id=17n6PC6IJoeZVIQrvjjc4KgNSlWS0zV7r" }
+    {
+      "name": "Like RAL9002",
+      "hex": "#E9E5CE",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1npCEKOYmRX6q-SIIfM9Kg9taNSvqrzpW",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_0590_Looks-Like-9002_MAT_MRJEALOUSY_TOP_1024x1024_7446caaa-9d15-4069-92d6-3ddf710f0a1d.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_0590_Looks-Like-9002_MAT_MRJEALOUSY_BOTTOM_1024x1024_a22d3749-45da-4df4-8676-06da0e901b25.png"
+    },
+    {
+      "name": "Like RAL9010",
+      "hex": "#F7F9EF",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1Ltpk7_q5VuaYFrrhRLirp2eDVe0KrwVx",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_0159_Looks-Like-9010_SILK-GLOSS_MRJEALOUSY_TOP_1024x1024_33190785-a985-4025-856b-b85a1db94ff3.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_0159_Looks-Like-9010_SILK-GLOSS_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_0007.png"
+    },
+    {
+      "name": "Moody Munt",
+      "hex": "#98FF98",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1K0Ml69KUuz3NOnGjQJca3d8-UHd768YK",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_3790_Moody-Munt_MAT_MRJEALOUSY_TOP_SWATCH_1024x1024_8535d7ee-4547-44c7-a665-0c1643a00f23.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_3790_Moody-Munt_MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_6e679809-fc4f-4ad3-a97c-e50892859f29.png"
+    },
+    {
+      "name": "Naughty Aubergine",
+      "hex": "#472C4C",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1dyBO0LzaZVfUZjRO4xF80sH6sztUr_BC",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8222_Naughty-Aubergine_v2_SUPER-MAT_MRJEALOUSY_TOP_1024x1024_dfb711a6-8dbb-476f-8ef0-4325ca6aebcb.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8222_Naughty-Aubergine_v2_SUPER-MAT_MRJEALOUSY_BOTTOM_1024x1024_b3ff4bc7-2b4f-4beb-ad8e-909b66951a83.png"
+    },
+    {
+      "name": "Oud Green",
+      "hex": "#8F9779",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1J2WStj1_WpWu55ob057rzdPf05Ihva4q",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_1229_Oud-Green_MAT_MRJEALOUSY_TOP_SWATCH_1024x1024_a17e59a2-9de3-463b-84af-44f9c0181caa.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_1229_Oud-Green_MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_b6b5d93a-1a6a-4014-bacb-b39b5193680d.png"
+    },
+    {
+      "name": "Peachy Pink",
+      "hex": "#FFDAB9",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1OYYGOlp0DhkPRl8H0FiJuZoCkimKoHY1"
+    },
+    {
+      "name": "Poolside Blue",
+      "hex": "#00BFFF",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1lXxMCPpm8RucSNQhrrCMKYXRZrydnMjh",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8234_Poolside-Blue_SUPER-MAT_MRJEALOUSY_TOP_1024x1024_9d9b6b8c-cdae-4863-8614-262eb018bae2.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8234_Poolside-Blue_SUPER-MAT_MRJEALOUSY_BOTTOM_1024x1024_66dc2517-5efc-44b7-9f6d-4ec588c32a3a.png"
+    },
+    {
+      "name": "Purple Grey",
+      "hex": "#6D6875",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1by_eY1sag0ApQtYvpp2l7lnsRnkMijZB"
+    },
+    {
+      "name": "Rocky Rood",
+      "hex": "#8B0000",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1HGC-Fvf9jc2Zh_xeU-bobzbzzuUOdwma",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_5699_Rocky-Rood_MAT_MRJEALOUSY_TOP_1024x1024_ac382d4b-f64d-4298-94b7-294bd1c4169b.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_5699_Rocky-Rood_MAT_MRJEALOUSY_BOTTOM_1024x1024_cd22d5fe-c694-49e1-a3c6-445e115f3802.png"
+    },
+    {
+      "name": "Rusty Retro",
+      "hex": "#B7410E",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1f2mWCEgmnPE6uWaPpBossX28VaYitVbb"
+    },
+    {
+      "name": "Silk Zwart",
+      "hex": "#050505",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1pddq-b5ofTr8vp7gMvgZ2kXBteCf9ZCU",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_9020_Silk-Zwart_SPARKLY_MRJEALOUSY_TOP_1024x1024_4db5d3d8-81a1-4ddb-aa32-fd02f440f111.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_9020_Silk-Zwart_SPARKLY_MRJEALOUSY_BOTTOM_1024x1024_882b494e-6a35-437b-a05d-b81e1c0ae832.png"
+    },
+    {
+      "name": "Skinny Dip",
+      "hex": "#F4C2C2",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1XDXRuSbUBHsT0DLwcQr4AwxnCQXKzDv7",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8266_Skinny-Dip_MAT-SPARKLE_MRJEALOUSY_TOP_1024x1024_24199bb3-01ae-408c-aba3-17951f4779f0.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8266_Skinny-Dip_MAT-SPARKLE_MRJEALOUSY_BOTTOM_1024x1024_10602c61-e85a-41d7-9154-40b5098f87c1.png"
+    },
+    {
+      "name": "Smokey Grey",
+      "hex": "#708090",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1YWw3CTzuEKUdb-iSTQKr-5cfjb85U_PX",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_9018_Smokey-Grey_SPARKLE_MRJEALOUSY_TOP_1024x1024-min.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_9018_Smokey-Grey_SPARKLE_MRJEALOUSY_BOTTOM_SWATCH_1024x1024-min.png"
+    },
+    {
+      "name": "Soft Naakt",
+      "hex": "#E3BC9A",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1Z3piQot3qZQ_duHk-CXlfAKwlfhvBScS"
+    },
+    {
+      "name": "Soft Terra",
+      "hex": "#E2725B",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=13uze5MJsPFlkFsYuzv_L4Y8ZIblfLcwy",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_9019_Soft-Terra_SUPER-MAT_MRJEALOUSY_TOP_1024x1024_9efef89b-3beb-49eb-b813-63163f31e65d.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_9019_Soft-Terra_SUPER-MAT_MRJEALOUSY_BOTTOM_1024x1024_b03cc0bb-fde0-4a71-a3fd-ff4cf700f30b.png"
+    },
+    {
+      "name": "Stevig Taupe",
+      "hex": "#483C32",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1TlO-rqhdqaF2vlM9x8gWHVBvt1B0mYBa",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_4544_Stevig-Taupe_SILK-GLOSS_MRJEALOUSY_TOP_1024x1024_edccec80-7465-4fa0-ab11-2dbc70268240.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4544_Stevig-Taupe_SILK-GLOSS_MRJEALOUSY_BOTTOM_1024x1024_370e22ee-eab0-4c52-b688-f13df5c2cdf7.png"
+    },
+    {
+      "name": "Stormy Taupe",
+      "hex": "#5C5552",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1TqtZY8z9SwEA3EEVLwHfb1hOxmHHvmV5",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8236_Stormy-Taupe_SUPER-MAT_MRJEALOUSY_TOP_1024x1024_43cec98d-7761-4198-b3a5-397dada8c168.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8236_Stormy-Taupe_SUPER-MAT_MRJEALOUSY_BOTTOM_1024x1024_72e8603c-c564-4efe-b29b-91f188673875.png"
+    },
+    {
+      "name": "Twijfel Taupe",
+      "hex": "#876C5E",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1VNt4uDJvsfXAKfkVn3Y1NrtQNCbNKn2M",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_9014_Twijfel-Taupe_SUPER-MAT_MRJEALOUSY_TOP_SWATCH_1024x1024_0922c812-a426-4442-839b-6ac86d2d9d17.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_9014_Twijfel-Taupe_SUPER-MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_9aefb16a-cc06-4988-b015-42d512cb8fe8.png"
+    },
+    {
+      "name": "Velvet Brown",
+      "hex": "#4B3621",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=18Q9K6ZvSgkdI482VESFKrCas1mcT7tzt"
+    },
+    {
+      "name": "Bold Bruin",
+      "hex": "#654321",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1xamLfbxMFgA95kIc_wDqEodQOi3Ln5wY",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_4798_Bold-Bruin_SUPER-MAT_MRJEALOUSY_TOP_SWATCH_1024x1024_00484251-98bc-431c-b3dc-b7f0fbc195e0.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4798_Bold-Bruin_SUPER-MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_31585a8f-4760-43e6-a0a3-feb2f2a1a80d.png"
+    },
+    {
+      "name": "Butter Geel",
+      "hex": "#F3E5AB",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1Ygu0MgyHxSXk15j6_vTdJ86_Q-16Amgj",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_4315_Butter-Geel_MAT_MRJEALOUSY_TOP_1024x1024_3fc145b7-bab0-46a2-8ec4-5fdf093d60e5.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4315_Butter-Geel_MAT_MRJEALOUSY_BOTTOM_1024x1024_a9626fd3-ca26-41b4-9a56-81264128fdb9.png"
+    },
+    {
+      "name": "Cherry Pop",
+      "hex": "#D2042D",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1TmmcRskrkm_6FEp5jD8Cy8dG6l7dq_va",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8261_Cherry-Pop_VELVET_MRJEALOUSY_TOP_1024x1024_4a77b5fb-2d23-44c8-a169-93c0b16ef2ee.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8261_Cherry-Pop_VELVET_MRJEALOUSY_BOTTOM_1024x1024_145f4b5c-f83d-4c8b-99f7-6138a634c298.png"
+    },
+    {
+      "name": "Cool Grey",
+      "hex": "#A9A9A9",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1BcG9FAbnpuIGBbVqUtDeKUszOto5aqmc"
+    },
+    {
+      "name": "Cosmic Blauw",
+      "hex": "#000080",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1v4dpvs9QxmgdWeSgAd5Q00pFdPywBg07",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8235_Cosmic-Blauw_SUPER-MAT_MRJEALOUSY_TOP_1024x1024_69979c25-1f00-4fd8-a15a-dc55ccd644fd.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8235_Cosmic-Blauw_SUPER-MAT_MRJEALOUSY_BOTTOM_1024x1024_49af73a6-f649-47d1-8789-d77abc317ec0.png"
+    },
+    {
+      "name": "Crazy Karamel",
+      "hex": "#C68E17",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1qagtJbBXzATyno0-ZTLzbybzOj4HYj3g",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4394_Crazy-Karamel_MAT_MRJEALOUSY_TOP_1024x1024_b07e1559-0f17-4419-aaf6-7d93199d04de.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4394_Crazy-Karamel_MAT_MRJEALOUSY_BOTTOM_1024x1024_62cee04c-66eb-44ca-9baa-77196dc654ee.png"
+    },
+    {
+      "name": "Drop Zwart",
+      "hex": "#1A1A1A",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1H7YJmrI3xwQv2x_bFLJ0wfsgEmdFu3Ab",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_1861_Drop-Zwart_MAT_MRJEALOUSY_TOP_1024x1024-min.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_1861_Drop-Zwart_MAT_MRJEALOUSY_BOTTOM_1024x1024_0007.png"
+    },
+    {
+      "name": "Fluffy Naakt",
+      "hex": "#F5DEB3",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1_B4IxYY1hUz6Vukcvi_VSOdEbawZeaFs"
+    },
+    {
+      "name": "Brushed Nikkel",
+      "hex": "#B0C4DE",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1GXLrjmILXVcKuoP-5H7CRcFgBRRiPVcZ"
+    },
+    {
+      "name": "Koffie Koper",
+      "hex": "#B87333",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1QPnzotTikdkvh_PTLrtvyLYiLmGwR3Tp"
+    },
+    {
+      "name": "Glitter Gold",
+      "hex": "#FFD700",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1Ygu0MgyHxSXk15j6_vTdJ86_Q-16Amgj",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_7529_Glitter-Gold_SUPER-SPARKLY_MRJEALOUSY_TOP_SWATCH_1024x1024_d1f70df8-b2d5-421f-b24b-f4ba569148fc.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_7529_Glitter-Gold_SUPER-SPARKLY_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_d4d57987-65d7-4a24-88b8-7d183996b3dc.png"
+    },
+    {
+      "name": "Goed Grijs",
+      "hex": "#808080",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1AYB8xQtVe541ufG1fb-L7WFOuUkYukqc"
+    },
+    {
+      "name": "Jet Black",
+      "hex": "#050505",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1H7YJmrI3xwQv2x_bFLJ0wfsgEmdFu3Ab"
+    },
+    {
+      "name": "Juicy Olive",
+      "hex": "#808000",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1V5Zg3vAaof_g1BgR8eIDrTUdknnlrtM_",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8268_Juicy-Olive_MAT-SPARKLE_MRJEALOUSY_TOP_1024x1024_7ab5c983-4630-4b2c-9759-3d8399503a62.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_8268_Juicy-Olive_MAT-SPARKLE_MRJEALOUSY_BOTTOM_1024x1024_e1f02b86-0ba6-4d8e-8ee8-8b8f9ca79fca.png"
+    },
+    {
+      "name": "Koel Blue",
+      "hex": "#AEC6CF",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1ruvPfp2LtzBYrQlrXuEhRN2F_p9kAFlJ",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_0990_Koel-Blue_MAT_MRJEALOUSY_TOP_1024x1024_3e77190b-3a49-4aed-a2ab-a9d138197647.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_0990_Koel-Blue_MAT_MRJEALOUSY_BOTTOM_1024x1024_e1ad97fd-0dcb-4356-8964-7d8e1f2236e3.png"
+    },
+    {
+      "name": "Like RAL9001",
+      "hex": "#FDF4E3",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=1_HG2A85gyte4X1UdhtvbI4Ls364oxpnQ",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_4491_Looks-Like-9001_MAT_MRJEALOUSY_TOP_SWATCH_1024x1024_27219bd1-3726-49e7-977b-fe3d6f2d2dea.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_4491_Looks-Like-9001_MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_9d013eca-fec9-447d-a0e4-c7e7ae51bc34.png"
+    },
+    {
+      "name": "Cowboy Koper",
+      "hex": "#8B4513",
+      "material": "Aluminium",
+      "sampleUrl": "/img-proxy?id=17n6PC6IJoeZVIQrvjjc4KgNSlWS0zV7r",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_7381_Cowboy-Koper_BRUSHED_MRJEALOUSY_TOP_1024x1024-min_d9fb02e3-0257-4a3b-903e-33ddcf125f7b.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_7381_Cowboy-Koper_BRUSHED_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_8c41166e-922c-470a-8d34-807c5885ca36.png"
+    }
   ],
   "Houten Jaloezieën": [
-    { "name": "Like RAL9016",    "hex": "#F0F8FF", "material": "Hout", "sampleUrl": "/img-proxy?id=10PyCy1pxyt6BjROKyEHcj-g8BwYCsL0m" },
-    { "name": "Mister Sandman",  "hex": "#C2B280", "material": "Hout", "sampleUrl": "/img-proxy?id=1R498iTXRTjvFUMJglCftC4wQPvGutlsv" },
-    { "name": "Misty Bamboo",    "hex": "#DCC098", "material": "Hout", "sampleUrl": "/img-proxy?id=1GWD532hc4ZnH4iJ61RypmJrkE-bqjeU0" },
-    { "name": "Oak Mooi",        "hex": "#C3A376", "material": "Hout", "sampleUrl": "/img-proxy?id=10EO1t75NxYFaLrq_bncakK1XiRon8Nri" },
-    { "name": "Parel White",     "hex": "#F5F5F5", "material": "Hout", "sampleUrl": "/img-proxy?id=1-ppuRfo2-G52buV4A9iOLi-HSJKxCiWl" },
-    { "name": "Shades of Grey",  "hex": "#808080", "material": "Hout", "sampleUrl": "/img-proxy?id=13zOCzb9_yU5vGP06VGTHjVweSqZRNH1h" },
-    { "name": "Smokey Taupe",    "hex": "#9E958C", "material": "Hout", "sampleUrl": "/img-proxy?id=1uU1IankZMIy1nGRDrlTHlSbYQukR-E6t" },
-    { "name": "Teder Taupe",     "hex": "#D8CCBB", "material": "Hout", "sampleUrl": "/img-proxy?id=15H-YsVVlj-GiLdvdzbCydCHCmRIHKTIV" },
-    { "name": "Tiki Taupe",      "hex": "#A69686", "material": "Hout", "sampleUrl": "/img-proxy?id=1NSmvWkQ4zTOlbKHscRbwJ07oeiJuSUch" },
-    { "name": "BBQ Black",       "hex": "#111111", "material": "Hout", "sampleUrl": "/img-proxy?id=14m6w-7g4FwzLWH5P2amtnFzhqE9-X5wr" },
-    { "name": "Behoorlijk Black","hex": "#222222", "material": "Hout", "sampleUrl": "/img-proxy?id=1yT1mCZFW6-_kIjS0Agt15LQv_weyO_7A" },
-    { "name": "Bonsai Bamboo",   "hex": "#6B8E23", "material": "Hout", "sampleUrl": "/img-proxy?id=10TbGnbnt7vthDpddO3Mjdwu0t0C1EVcs" },
-    { "name": "Bourbon Bamboo",  "hex": "#654321", "material": "Hout", "sampleUrl": "/img-proxy?id=1T3L8cIDC2aA5zolQwhMoeucEKrgKZlYR" },
-    { "name": "De Naturist",     "hex": "#D2B48C", "material": "Hout", "sampleUrl": "/img-proxy?id=1VXvlENuoM7LSjIf_lVUGbxl5clUXoIR-" },
-    { "name": "Donker Brown",    "hex": "#3B2F2F", "material": "Hout", "sampleUrl": "/img-proxy?id=1QwAY8fZPejHq57iMk3Rhj--Ws4JOqeyR" },
-    { "name": "Eigenlijk Eiken", "hex": "#A0785A", "material": "Hout", "sampleUrl": "/img-proxy?id=1acT6rAEIge5F2MHSg6hhbusOQJ7hUXVs" },
-    { "name": "Flat White",      "hex": "#FFFAF0", "material": "Hout", "sampleUrl": "/img-proxy?id=1grNaNBPSC_nbZAd1aSuSpxyNZmLb5SC9" },
-    { "name": "Gebroken White",  "hex": "#FDF5E6", "material": "Hout", "sampleUrl": "/img-proxy?id=1gyvbrmqUEzk6PMA1nS_U3H9MHuSZ_ns9" },
-    { "name": "Haver Milk",      "hex": "#EFEBD8", "material": "Hout", "sampleUrl": "/img-proxy?id=1_sOvyqxCsRcTxwOJN6aLFbR7b1zu7xZS" },
-    { "name": "Smokey Bamboo",   "hex": "#4A4A4A", "material": "Hout", "sampleUrl": "/img-proxy?id=11Lcmv30DBVgKQ0cJ3jnZC9ZOT9WjUFxd" },
-    { "name": "Deep Zwart",      "hex": "#080808", "material": "Hout", "sampleUrl": "/img-proxy?id=1uM2WYHTvbE74z_OVZG18KcpJSUGizj4c" }
+    {
+      "name": "Like RAL9016",
+      "hex": "#F0F8FF",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=10PyCy1pxyt6BjROKyEHcj-g8BwYCsL0m",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/ALU_0192_Looks-Like-9016_MAT_MRJEALOUSY_TOP_1024x1024_aeacec1c-70b0-479c-a0d8-d048b181bfea.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/ALU_0192_Looks-Like-9016_MAT_MRJEALOUSY_BOTTOM_SWATCH_1024x1024_917cf4fb-bc55-4e84-a1e1-e760da8e3ddd.png"
+    },
+    {
+      "name": "Mister Sandman",
+      "hex": "#C2B280",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1R498iTXRTjvFUMJglCftC4wQPvGutlsv",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/HOUTEN-JALOEZIE_SAND_MRJEALOUSY_TOP_1024x1024_a2104e33-e8fd-4208-a950-fd9410a6ffec.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_SAND_MRJEALOUSY_BOTTOM_1024x1024_95ad8365-3028-4d47-a2c2-49e016278039.png"
+    },
+    {
+      "name": "Misty Bamboo",
+      "hex": "#DCC098",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1GWD532hc4ZnH4iJ61RypmJrkE-bqjeU0",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_MISTYBAMBOO_MRJEALOUSY_TOP_1024x1024_d2cdecce-6caa-4a2e-b561-c98317cf8bb7.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_MISTYBAMBOO_MRJEALOUSY_BOTTOM_1024x1024_a383b305-f0f4-493a-ba1d-0f413f891ed7.png"
+    },
+    {
+      "name": "Oak Mooi",
+      "hex": "#C3A376",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=10EO1t75NxYFaLrq_bncakK1XiRon8Nri",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_OAKMOOI_MRJEALOUSY_TOP_1024x1024_ecb7730f-9b85-4ce5-8167-d208a6aa3988.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_OAKMOOI_MRJEALOUSY_BOTTOM_1024x1024_2fc28334-a281-45ab-98c9-c05f72ea46a0.png"
+    },
+    {
+      "name": "Parel White",
+      "hex": "#F5F5F5",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1-ppuRfo2-G52buV4A9iOLi-HSJKxCiWl",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/BAMBOE-JALOEZIE_WHITE_MRJEALOUSY_TOP_1024x1024_3a9ec5e3-5817-4ba3-926b-3ce016a53848.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_WHITE_MRJEALOUSY_BOTTOM_1024x1024_02d4729f-af88-4f8a-8beb-1b8216eed448.png"
+    },
+    {
+      "name": "Shades of Grey",
+      "hex": "#808080",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=13zOCzb9_yU5vGP06VGTHjVweSqZRNH1h",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/HOUTEN-JALOEZIE_GREY_MRJEALOUSY_TOP_1024x1024_0007.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_GREY_MRJEALOUSY_BOTTOM_1024x1024_046f1e21-26c9-4143-9665-a3dfd57d4a01.png"
+    },
+    {
+      "name": "Smokey Taupe",
+      "hex": "#9E958C",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1uU1IankZMIy1nGRDrlTHlSbYQukR-E6t",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_SMOKEYTAUPE_MRJEALOUSY_TOP_1024x1024_97efbb13-2042-427a-a937-6bc943e1f229.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_SMOKEYTAUPE_MRJEALOUSY_BOTTOM_1024x1024_4dacecdc-b8e1-4f5b-92ea-de5a9c8431f0.png"
+    },
+    {
+      "name": "Teder Taupe",
+      "hex": "#D8CCBB",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=15H-YsVVlj-GiLdvdzbCydCHCmRIHKTIV",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_TEDERTAUPE_MRJEALOUSY_TOP_1024x1024_2578dad8-ff02-4f28-b676-b6654bfae63d.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_TEDERTAUPE_MRJEALOUSY_BOTTOM_1024x1024_cfca047f-8a4a-48e2-acc1-528c69299582.png"
+    },
+    {
+      "name": "Tiki Taupe",
+      "hex": "#A69686",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1NSmvWkQ4zTOlbKHscRbwJ07oeiJuSUch",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_TIKITAUPE_MRJEALOUSY_TOP_1024x1024_ed38ae1f-ecb9-48ab-8e65-718852621047.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_TIKITAUPE_MRJEALOUSY_BOTTOM_1024x1024_1eb35d99-b34a-4f5d-95a2-be1f071200b6.png"
+    },
+    {
+      "name": "BBQ Black",
+      "hex": "#111111",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=14m6w-7g4FwzLWH5P2amtnFzhqE9-X5wr",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BBQBLACK_MRJEALOUSY_TOP_1024x1024_bc3e5dfa-d2dc-4369-9521-6b9111bb065f.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BBQBLACK_MRJEALOUSY_BOTTOM_1024x1024_cb8b3246-81f5-4950-abb6-8781f8a7b907.png"
+    },
+    {
+      "name": "Behoorlijk Black",
+      "hex": "#222222",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1yT1mCZFW6-_kIjS0Agt15LQv_weyO_7A",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_5072_BLACK_MRJEALOUSY_TOP_1024x1024_V2_ec3f1a13-1c0a-421f-8b6e-e7f5011247e9.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_5072_BLACK_MRJEALOUSY_TOP_1024x1024_V2_190cf3e5-1251-45c9-8a07-921478cc79b3.png"
+    },
+    {
+      "name": "Bonsai Bamboo",
+      "hex": "#6B8E23",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=10TbGnbnt7vthDpddO3Mjdwu0t0C1EVcs",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BONZAI_MRJEALOUSY_TOP_1024x1024_a228178d-b3db-43e0-bfc2-499f5b300fe8.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BONZAI_MRJEALOUSY_BOTTOM_1024x1024_95b38caa-252b-454a-9533-877436b27136.png"
+    },
+    {
+      "name": "Bourbon Bamboo",
+      "hex": "#654321",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1T3L8cIDC2aA5zolQwhMoeucEKrgKZlYR",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BOURBON_MRJEALOUSY_TOP_1024x1024_2296697f-301d-4c6b-8f51-66a794bd23f9.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_BOURBON_MRJEALOUSY_BOTTOM_1024x1024_746c4713-82fb-4d0e-8f6e-4454211bf19d.png"
+    },
+    {
+      "name": "De Naturist",
+      "hex": "#D2B48C",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1VXvlENuoM7LSjIf_lVUGbxl5clUXoIR-",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/BAMBOE-JALOEZIE_5072_NATURAL_MRJEALOUSY_TOP_1024x1024_33e795d8-36b6-4d8f-ac00-615bd5f125c3.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_5072_NATURAL_MRJEALOUSY_BOTTOM_1024x1024_6a7da477-da9b-43f4-aabb-5f270ee11466.png"
+    },
+    {
+      "name": "Donker Brown",
+      "hex": "#3B2F2F",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1QwAY8fZPejHq57iMk3Rhj--Ws4JOqeyR",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/BAMBOE-JALOEZIE_5072_DARK-BROWN_MRJEALOUSY_TOP_1024x1024_69e83443-54db-481e-b5e4-2add59424b09.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_5072_DARK-BROWN_MRJEALOUSY_BOTTOM_1024x1024_102d8125-9406-48a5-981e-c334f898c1f1.png"
+    },
+    {
+      "name": "Eigenlijk Eiken",
+      "hex": "#A0785A",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1acT6rAEIge5F2MHSg6hhbusOQJ7hUXVs",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/BAMBOE-JALOEZIE_5072_OAK_MRJEALOUSY_TOP_1024x1024_1b007a52-dfb7-4314-84fb-712283ea8316.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_5072_OAK_MRJEALOUSY_BOTTOM_1024x1024_e6cbd77b-cae6-479c-ba59-83a6f8640f87.png"
+    },
+    {
+      "name": "Flat White",
+      "hex": "#FFFAF0",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1grNaNBPSC_nbZAd1aSuSpxyNZmLb5SC9",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/HOUTEN-JALOEZIE_WHITE_MRJEALOUSY_TOP_1024x1024_d267c130-2222-4df6-baf2-b4c7625d2d36.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_WHITE_MRJEALOUSY_BOTTOM_1024x1024_c380b827-af4e-4ac0-94ed-ff61c55f8a1e.png"
+    },
+    {
+      "name": "Gebroken White",
+      "hex": "#FDF5E6",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1gyvbrmqUEzk6PMA1nS_U3H9MHuSZ_ns9",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/HOUTEN-JALOEZIE_GEBROKEN-WHITE_MRJEALOUSY_TOP_1024x1024_14cba5b8-3343-4ff3-b83c-601695dfea6c.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_GEBROKEN-WHITE_MRJEALOUSY_BOTTOM_1024x1024_53656cec-7f78-4638-91ea-e951a8b0d5e1.png"
+    },
+    {
+      "name": "Haver Milk",
+      "hex": "#EFEBD8",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1_sOvyqxCsRcTxwOJN6aLFbR7b1zu7xZS",
+      "topUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_HAVERMILK_MRJEALOUSY_TOP_1024x1024_e650e3b3-4d92-4516-87d6-e91acad2d713.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/BAMBOE-JALOEZIE_HAVERMILK_MRJEALOUSY_BOTTOM_1024x1024_d37f7142-2c0c-4df4-a1ce-6cf84827e1ee.png"
+    },
+    {
+      "name": "Smokey Bamboo",
+      "hex": "#4A4A4A",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=11Lcmv30DBVgKQ0cJ3jnZC9ZOT9WjUFxd"
+    },
+    {
+      "name": "Deep Zwart",
+      "hex": "#080808",
+      "material": "Hout",
+      "sampleUrl": "/img-proxy?id=1uM2WYHTvbE74z_OVZG18KcpJSUGizj4c",
+      "topUrl": "https://mrjealousy.com/cdn/shop/products/HOUTEN-JALOEZIE_BLACK_MRJEALOUSY_TOP_1024x1024_6b18106c-e4d4-47e3-9e75-0d487e7cc8f6.png",
+      "bottomUrl": "https://mrjealousy.com/cdn/shop/files/HOUTEN-JALOEZIE_BLACK_MRJEALOUSY_BOTTOM_1024x1024_b4b35833-ca0e-482a-8053-286703208a97.png"
+    }
   ]
 }

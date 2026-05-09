@@ -4,97 +4,98 @@
   },
   "vision": {
     "style": "Scandinavisch",
-    "styleSummary": "Deze ruimte ademt een lichte, minimalistische Scandinavische sfeer met warme accenten. De combinatie van natuurlijke materialen en heldere kleuren zorgt voor een rustige, uitnodigende werkruimte.",
-    "styleDescription": "Het interieur kenmerkt zich door een verfijnde balans tussen functionaliteit en esthetiek, typisch Scandinavisch. De warme mosterdgele wand vormt een gedurfd maar harmonieus contrast met de lichte houten meubels en de neutrale vloer. De minimalistische inrichting met strakke lijnen, de grote open boekenkast in naturel hout en de elegante loungestoel tonen de typische Nordic liefde voor eenvoud en kwaliteit. De ruimte straalt rust uit door het beperkte kleurenpallet en de zorgvuldige selectie van meubels. Natuurlijk licht speelt een centrale rol, versterkt door het grote raam met wit kozijn.",
-    "roomMood": "Sereen, warm en intellectueel - een vredige werkruimte die inspiratie uitnodigt",
+    "styleSummary": "Een lichte, minimalistische Scandinavische ruimte met natuurlijke accenten en functioneel design.",
+    "styleDescription": "Deze ruimte ademt de essentie van Scandinavisch design met zijn neutrale kleurenpalet, strakke lijnen en functionele meubels. De combinatie van het zwarte fluwelen bankje en de lichte houten ladekast creëert een subtiel contrast. Natuurlijke elementen zoals de kamerplant en de droogbloemen brengen warmte en textuur in de verder sobere ruimte. De zwarte staande lamp fungeert als sculptuurachtig element dat de moderne esthetiek versterkt.",
+    "roomMood": "Rustig, opgeruimd en sereen met een gevoel van ruimtelijkheid en helderheid",
     "colour_palette": [
       {
-        "hex_code": "#D4A840",
-        "extracted_source": "Hoofdwand achter raam - warme mosterdgele muurkleur",
-        "matched_catalog_color": "Butter Geel"
-      },
-      {
-        "hex_code": "#E8D5B8",
-        "extracted_source": "Boekenkast en loungestoel - licht naturel hout",
-        "matched_catalog_color": "Teder Taupe"
-      },
-      {
-        "hex_code": "#F5F0E8",
-        "extracted_source": "Vloer - crèmewitte gladde afwerking",
+        "hex_code": "#F5F5F5",
+        "extracted_source": "De lichte muurkleur die de hele ruimte domineert",
         "matched_catalog_color": "Parel White"
       },
       {
-        "hex_code": "#FFFFFF",
-        "extracted_source": "Raamkozijn en deurkozijn - helder wit",
-        "matched_catalog_color": "Like RAL9016"
+        "hex_code": "#1A1A1A",
+        "extracted_source": "Het zwarte fluwelen bankje en de metalen staande lamp",
+        "matched_catalog_color": "Drop Zwart"
       },
       {
-        "hex_code": "#CD8B3F",
-        "extracted_source": "Loungestoel - oranje-bruine zitting en rug",
-        "matched_catalog_color": "Crazy Karamel"
+        "hex_code": "#D2B48C",
+        "extracted_source": "De natuurlijke houttint van de ladekast",
+        "matched_catalog_color": "De Naturist"
+      },
+      {
+        "hex_code": "#DCC098",
+        "extracted_source": "De warme tint van de droogbloemen in de vaas",
+        "matched_catalog_color": "Misty Bamboo"
+      },
+      {
+        "hex_code": "#808080",
+        "extracted_source": "De grijze accenten in de lamp en ladekasten handgrepen",
+        "matched_catalog_color": "Goed Grijs"
       }
     ],
     "windowCheck": {
-      "windowType": "Dubbel openslaand raam met horizontale roedes",
-      "detectedWindowCount": 2,
+      "windowType": "Niet zichtbaar in deze foto",
+      "detectedWindowCount": 0,
       "recommendation": "in de dag",
-      "reasoning": "Het raam heeft een diepe sponning met zichtbare witte omlijsting die perfect geschikt is voor montage in de dag. Dit behoudt de strakke architectuur en maximaliseert de lichtinval in deze werkruimte.",
-      "specialConsiderations": "Geen zichtbare obstakels zoals handvatten of ventilatiepunten die de montage belemmeren. De symmetrische verdeling met middenroede biedt ideale montagemogelijkheden.",
+      "reasoning": "Hoewel er geen raam zichtbaar is op deze foto, zou bij een Scandinavisch interieur een montage in de dag de voorkeur genieten voor een strakke, geïntegreerde look die past bij de minimalistische stijl.",
+      "specialConsiderations": "Geen raam aanwezig op deze foto om te analyseren",
       "obstacles": false,
-      "recess_depth_cm": 12,
-      "frame_material": "Hout met witte lakafwerking"
+      "recess_depth_cm": 0,
+      "frame_material": "Niet detecteerbaar"
     }
   },
   "text": {
     "mountingStrategy": {
       "mount_type": "in de dag",
-      "reasoning": "Het raam heeft een diepe sponning van 12 cm met witte omlijsting die perfect geschikt is voor montage in de dag. Dit behoudt de strakke Scandinavische architectuur, maximaliseert de lichtinval en integreert de jaloezieën naadloos in het kozijn. De symmetrische verdeling met middenroede biedt ideale montagemogelijkheden zonder obstakels."
+      "reasoning": "Voor een Scandinavisch interieur is een montage in de dag ideaal. Dit creëert de strakke, minimalistische uitstraling die kenmerkend is voor deze stijl. De jaloezieën verdwijnen visueel in het raamkozijn, waardoor de clean lines behouden blijven en de focus op de ruimtelijkheid en lichttoetreding komt te liggen."
     },
-    "lightingConditions": "Natuurlijk daglicht - helder en diffuus, typisch voor een Scandinavische werkruimte met groot raam. De lichtinval creëert een serene, warme sfeer die de mosterdgele wand en naturel houten meubels benadrukt.",
+    "lightingConditions": "De ruimte kent natuurlijk, diffuus daglicht dat zorgt voor een zachte, gelijkmatige verlichting. De lichte muren reflecteren het licht optimaal, wat bijdraagt aan het open en luchtige karakter van het Scandinavische interieur.",
     "suggestions": [
-      {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "Teder Taupe",
-        "colorHex": "#D8CCBB",
-        "suitabilityScore": 98,
-        "reasoning": "Perfect match met het lichte naturel hout van de boekenkast en loungestoel. Deze warme, zachte taupe kleur versterkt de Scandinavische sereniteit en harmoniërt naadloos met het bestaande kleurenpallet."
-      },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
         "colorName": "Parel White",
         "colorHex": "#F5F5F5",
-        "suitabilityScore": 95,
-        "reasoning": "Sluit aan bij de crèmewitte vloer en het witte kozijn, waardoor een lichte, luchtige uitstraling behouden blijft. Ideaal voor maximale lichtreflectie in deze werkruimte."
+        "suitabilityScore": 98,
+        "reasoning": "Parel White sluit naadloos aan bij de lichte wandkleur en versterkt het luchtige, open karakter van het Scandinavische interieur. De houten structuur voegt warmte toe zonder afbreuk te doen aan de minimalistische esthetiek."
       },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Mister Sandman",
-        "colorHex": "#C2B280",
+        "colorName": "De Naturist",
+        "colorHex": "#D2B48C",
+        "suitabilityScore": 95,
+        "reasoning": "Deze warme houttint harmonieert perfect met de bestaande houten ladekast en de natuurlijke elementen in de ruimte. Het versterkt de organische, natuurgerichte filosofie van Scandinavisch design."
+      },
+      {
+        "productType": "Houten Jaloezieën",
+        "material": "Hout",
+        "colorName": "Misty Bamboo",
+        "colorHex": "#DCC098",
         "suitabilityScore": 92,
-        "reasoning": "Een warme zandkleur die de brug vormt tussen de mosterdgele wand en de naturel houten meubels. Behoudt de warme, intellectuele sfeer van deze Scandinavische werkruimte."
+        "reasoning": "Misty Bamboo biedt een subtiele warme tint die aansluit bij de droogbloemen en zorgt voor een zachte overgang tussen de lichte muren en natuurlijke accenten. Ideaal voor een serene, gebalanceerde uitstraling."
       }
     ],
     "materialSuggestions": [
-      "Houten Jaloezieën met 50mm lamellen voor robuuste Scandinavische uitstraling",
-      "Natuurlijke houtafwerking zonder laddertape voor minimalistische esthetiek"
+      "Houten Jaloezieën met 50mm lamellen voor maximale lichtcontrole",
+      "Ladderbandafwerking voor extra visuele verfijning",
+      "Natuurlijke houtstructuur die past bij Scandinavische materiaalgebruik"
     ],
     "render_instruction": {
       "product_type": "Houten Jaloezieën",
-      "color_name": "Teder Taupe",
-      "hex_code": "#D8CCBB",
+      "color_name": "Parel White",
+      "hex_code": "#F5F5F5",
       "mount_type": "inside mount",
-      "window_sections": 2,
-      "lighting_condition": "natural daylight",
+      "window_sections": 1,
+      "lighting_condition": "natural diffused daylight",
       "state": "half lowered",
       "slat_width": "50mm",
-      "ladder_tape": false,
-      "scene_description": "Render deze Scandinavische werkruimte met Houten Jaloezieën in Teder Taupe, half neergelaten in het dubbele openslaande raam. De warme, zachte taupe kleur van de jaloezieën harmonieert met de lichte houten boekenkast en loungestoel. De mosterdgele achterwand blijft zichtbaar en vormt een warm contrast. Natuurlijk daglicht filtert door de half geopende lamellen en creëert subtiele schaduwen op de crèmewitte vloer. De jaloezieën zitten perfect gemonteerd in de dag, waardoor het witte kozijn volledig zichtbaar blijft. De sfeer is sereen en warm, met focus op de natuurlijke materialen en minimalistische Scandinavische esthetiek.",
-      "negative_prompt": "geen plastic materialen, geen felle kleuren, geen moderne high-tech elementen, geen donkere schaduwen, geen rommelige details, geen laddertape, geen aluminium afwerking",
-      "camera_angle": "Frontaal perspectief vanuit de kamer, iets naar links gericht om beide raamhelften goed zichtbaar te maken inclusief de loungestoel en boekenkast",
-      "room_context": "Scandinavische werkruimte met mosterdgele achterwand, naturel houten meubels en crèmewitte vloer"
+      "ladder_tape": true,
+      "scene_description": "Een serene Scandinavische woonruimte met lichte, bijna witte muren en natuurlijk licht dat door het raam naar binnen stroomt. De Parel White houten jaloezieën zijn half neergelaten en geïntegreerd in het strakke raamkozijn, waardoor gefilterd daglicht zachte schaduwlijnen op de vloer werpt. De ruimte ademt minimalisme met een zwart fluwelen bankje, een natuurhouten ladekast en subtiele decoratieve elementen zoals een kamerplant en droogbloemen. De jaloezieën sluiten naadloos aan bij de lichte wandkleur en versterken het open, luchtige karakter van het interieur.",
+      "negative_prompt": "cluttered space, dark colors, heavy curtains, ornate details, baroque elements, busy patterns, warm yellow lighting, closed blinds, plastic materials, industrial aesthetic",
+      "camera_angle": "Frontaal perspectief op ooghoogte, licht vanuit de zijkant om de textuur van de houten lamellen te benadrukken en de interactie met het natuurlijke licht te tonen",
+      "room_context": "Een moderne Scandinavische woonkamer met focus op functionaliteit, natuurlijke materialen en een neutrale kleurenpalet dat rust en ruimtelijkheid uitstraalt"
     }
   }
 }

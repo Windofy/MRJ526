@@ -264,40 +264,65 @@ async function populateResultScreen() {
 }
 
 
-// ── SUGGESTIONS ────────────────────────────────────────────────────────────
+// ── SUGGESTIONS — 4-card animated swatch grid ──────────────────────────────
 function renderSuggestions(suggs) {
   const container = $('suggestions');
   container.innerHTML = '';
-  suggs.slice(0, 3).forEach(s => {
+
+  // Show up to 4 suggestions in 2×2 grid
+  suggs.slice(0, 4).forEach((s, idx) => {
     const catalogItem = findCatalogColor(s.colorName);
-    const sampleUrl   = catalogItem?.sampleUrl || '';
-    const el = document.createElement('div');
-    el.className = 'suggestion-item';
-    el.setAttribute('role', 'listitem');
+    const topUrl    = catalogItem?.topUrl    || catalogItem?.sampleUrl || '';
+    const bottomUrl = catalogItem?.bottomUrl || catalogItem?.sampleUrl || '';
+    const sampleUrl = catalogItem?.sampleUrl || topUrl || '';
+    const hex       = s.colorHex || catalogItem?.hex || '#ccc';
+    const material  = (s.material || catalogItem?.material || '').toUpperCase();
 
-    if (sampleUrl) {
-      el.innerHTML = `
-        <img class="suggestion-item__swatch" src="${sampleUrl}" alt="${s.colorName}" loading="lazy" />
-        <div class="suggestion-item__info">
-          <span class="suggestion-item__name">${s.colorName}</span>
-          <span class="suggestion-item__material">${s.material} ${s.productType}</span>
-        </div>`;
-    } else {
-      el.innerHTML = `
-        <div class="suggestion-item__swatch flyout-color-item__swatch" style="background:${s.colorHex}"></div>
-        <div class="suggestion-item__info">
-          <span class="suggestion-item__name">${s.colorName}</span>
-          <span class="suggestion-item__material">${s.material} ${s.productType}</span>
-        </div>`;
-    }
+    const card = document.createElement('div');
+    card.className = 'color-swatch-card';
+    card.setAttribute('role', 'listitem');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', s.colorName);
 
-    el.addEventListener('click', () => selectColor({
-      name: s.colorName,
-      hex: s.colorHex,
-      material: `${s.material} ${s.productType}`,
-      sampleUrl,
-    }));
-    container.appendChild(el);
+    // Mark first suggestion as selected by default
+    if (idx === 0) card.classList.add('is-selected');
+
+    // Build inner HTML — picture elements for the hover animation
+    const topImg    = topUrl    ? `<img src="${topUrl}"    alt="${s.colorName} voorkant" loading="lazy" />` : '';
+    const bottomImg = bottomUrl ? `<img src="${bottomUrl}" alt="${s.colorName} detail"   loading="lazy" />` : '';
+
+    const hasImages = topUrl || bottomUrl;
+
+    card.innerHTML = `
+      <div class="color-swatch">
+        ${hasImages ? `
+          <picture>${topImg}</picture>
+          <picture>${bottomImg}</picture>
+        ` : `
+          <div class="color-swatch__hex-block" style="background:${hex}"></div>
+        `}
+      </div>
+      <p class="color-swatch-card__name">${s.colorName}</p>
+      <p class="color-swatch-card__material">${material}</p>
+    `;
+
+    // Click / keyboard selection
+    const onSelect = () => {
+      // Remove selected state from all cards
+      container.querySelectorAll('.color-swatch-card').forEach(c => c.classList.remove('is-selected'));
+      card.classList.add('is-selected');
+      selectColor({
+        name:      s.colorName,
+        hex:       hex,
+        material:  `${s.material || ''} ${s.productType || ''}`.trim(),
+        sampleUrl: sampleUrl,
+      });
+    };
+
+    card.addEventListener('click', onSelect);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(); } });
+
+    container.appendChild(card);
   });
 }
 
