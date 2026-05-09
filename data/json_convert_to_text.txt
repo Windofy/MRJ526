@@ -4,97 +4,98 @@
   },
   "vision": {
     "style": "Modern Minimalistisch",
-    "styleSummary": "Een strak modern interieur met minimalistische inrichting en hoogwaardige materialen. Natuurlijk licht en open ruimtes vormen de kern van dit design.",
-    "styleDescription": "Deze ruimte ademt pure moderne elegantie met zijn open indeling en transparante architectuur. De combinatie van grote glaspartijen, gepolijste betonvloer en organisch gevormde houten meubels creëert een harmonieus geheel. Het sculptuurachtige hanglampje met koperen cirkels vormt een kunststuk dat industrieel design met ambachtelijk werk verbindt. De zwarte stalen kozijnen en subtiele gordijnen benadrukken de verticale lijnen en geven de ruimte een verfijnd karakter. Dit interieur balanceert perfect tussen warmte en koelte, waarbij natuurlijke materialen zorgen voor een toegankelijke uitstraling.",
-    "roomMood": "Sereen, verfijnd en artistiek met een subtiele luxe uitstraling",
+    "styleSummary": "Een strak modern interieur met minimalistische vormgeving en warme materiaalkeuzes. De ruimte combineert industriële elementen met organische houtaccenten.",
+    "styleDescription": "Dit interieur kenmerkt zich door een verfijnde balans tussen moderne architectuur en warme materialen. De grote raampartijen zorgen voor een open, lichte sfeer terwijl de zorgvuldig gekozen meubels en verlichtingselementen sculptural karakter toevoegen. De zwarte kozijnen en strakke lijnen contrasteren mooi met de zachte beige tinten van de vloer en wanden. Het organische meubilair in donker hout brengt warmte en karakter, terwijl de circulaire verlichtingssculptuur met koperen accenten een kunstzinnig statement maakt. De minimale inrichting laat de architectuur en materialen spreken.",
+    "roomMood": "Sereen, luchtig en verfijnd met een warme, uitnodigende ondertoon",
     "colour_palette": [
       {
-        "hex_code": "#F5F5F5",
-        "extracted_source": "Wanden en plafond in gebroken wit",
+        "hex_code": "#F5F5F0",
+        "extracted_source": "Wanden en plafond",
         "matched_catalog_color": "Parel White"
       },
       {
-        "hex_code": "#4A4A4A",
-        "extracted_source": "Zwarte stalen raamkozijnen en decoratieve elementen",
-        "matched_catalog_color": "Smokey Bamboo"
+        "hex_code": "#E3DCD0",
+        "extracted_source": "Gietvloer en zachte neutrale basis",
+        "matched_catalog_color": "Haver Milk"
       },
       {
-        "hex_code": "#A0785A",
-        "extracted_source": "Warme houttint van de eetbanken en tafel",
-        "matched_catalog_color": "Eigenlijk Eiken"
+        "hex_code": "#8B5A3C",
+        "extracted_source": "Donker hout van tafel, banken en details",
+        "matched_catalog_color": "Bourbon Bamboo"
+      },
+      {
+        "hex_code": "#2B2B2B",
+        "extracted_source": "Zwarte raamkozijnen en architectonische accenten",
+        "matched_catalog_color": "Behoorlijk Black"
       },
       {
         "hex_code": "#B87333",
-        "extracted_source": "Koperen ringen van het hanglampje",
+        "extracted_source": "Koperen accenten in de hanglamp",
         "matched_catalog_color": "Koffie Koper"
-      },
-      {
-        "hex_code": "#9E958C",
-        "extracted_source": "Taupe/grijze gordijnen",
-        "matched_catalog_color": "Smokey Taupe"
       }
     ],
     "windowCheck": {
-      "windowType": "Grote vaste glaspartijen met stalen kozijnen in moderne architectuur",
-      "detectedWindowCount": 3,
+      "windowType": "Grote moderne raampartijen met stalen kozijnen",
+      "detectedWindowCount": 4,
       "recommendation": "op de dag",
-      "reasoning": "Bij deze moderne stalen kozijnen met zeer smalle profielen is montage op de dag ideaal om de strakke lijnen te behouden en volledige lichtinval mogelijk te maken. De minimale dagmaat maakt montage in de dag minder geschikt.",
-      "specialConsiderations": "Links: hoog raam met draaikiepraam functie en raambediening. Midden: groot vast glaspartij zonder obstructies. Rechts: grote schuifpui naar terras met vloergeleiding.",
+      "reasoning": "Bij deze strakke, moderne stalen kozijnen met minimale dagmaat adviseren wij montage op de dag. Dit behoudt het architectonische karakter van de grote glasoppervlakken en zorgt voor optimale lichtinval wanneer de jaloezieën geopend zijn.",
+      "specialConsiderations": "Let op de raamgrepen aan de linkerzijde en de verschillende raamhoogtes. De hoekoplossing met wrap-around ramen vereist maatwerk afstemming.",
       "obstacles": true,
       "recess_depth_cm": 8,
-      "frame_material": "Staal/metaal met zwarte poedercoating"
+      "frame_material": "Staal/aluminium met zwarte poedercoating"
     }
   },
   "text": {
     "mountingStrategy": {
       "mount_type": "op de dag",
-      "reasoning": "Bij deze moderne stalen kozijnen met smalle profielen is montage op de dag de beste keuze. Dit behoudt de strakke architectonische lijnen en voorkomt interferentie met de raambediening van het draaikiepraam links en de schuifpui rechts. De dagmaat van 8cm is te beperkt voor comfortabele montage in de dag, zeker bij aanwezigheid van functionele elementen."
+      "reasoning": "Bij deze moderne stalen kozijnen met minimale dagmaat is montage op de dag de beste keuze. Dit behoudt het strakke architectonische karakter van de grote glaspartijen en maximaliseert lichtinval wanneer de jaloezieën geopend zijn. De aanwezige raamgrepen aan de linkerzijde en de verschillende raamhoogtes maken montage in de dag complex en minder wenselijk."
     },
-    "lightingConditions": "Overvloedig natuurlijk daglicht door grote glaspartijen met heldere, gelijkmatige belichting. Het licht creëert een open en luchtige sfeer in de ruimte.",
+    "lightingConditions": "Uitstekende natuurlijke lichtinval door grote raampartijen. De ruimte beschikt over veel daglicht met zachte, diffuse belichting. De hoekoplossing met wrap-around ramen zorgt voor lichtinval vanuit meerdere richtingen, wat de open en luchtige sfeer versterkt.",
     "suggestions": [
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Smokey Taupe",
-        "colorHex": "#9E958C",
-        "suitabilityScore": 98,
-        "reasoning": "Deze kleur komt exact overeen met de bestaande gordijnen en vormt een perfecte brug tussen de warme houttinten en de donkere stalen kozijnen. De subtiele taupe past naadloos in het minimalistische kleurenpalet."
+        "colorName": "Bourbon Bamboo",
+        "colorHex": "#654321",
+        "suitabilityScore": 95,
+        "reasoning": "Deze warme donkerbruine houttint sluit perfect aan bij het donkere hout van het meubilair en creëert een harmonieuze, luxe uitstraling. De natuurlijke houtstructuur versterkt het organische karakter van het interieur."
       },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Eigenlijk Eiken",
-        "colorHex": "#A0785A",
-        "suitabilityScore": 95,
-        "reasoning": "Deze warme eikenkleur sluit aan bij de houten eetbanken en tafel, waardoor een harmonieus geheel ontstaat. Het natuurlijke houtkarakter versterkt de organische elementen in het interieur."
+        "colorName": "Haver Milk",
+        "colorHex": "#EFEBD8",
+        "suitabilityScore": 92,
+        "reasoning": "Deze zachte, warme off-white tint past naadloos bij de gietvloer en wanden, waardoor een lichte, serene sfeer behouden blijft. Ideaal voor maximale lichtdoorval bij gesloten lamellen."
       },
       {
         "productType": "Aluminium Jaloezieën",
         "material": "Aluminium",
-        "colorName": "Smokey Grey",
-        "colorHex": "#708090",
-        "suitabilityScore": 92,
-        "reasoning": "Een koele grijstint die perfect aansluit bij de industriële uitstraling van de zwarte stalen kozijnen. Het aluminium materiaal ondersteunt het moderne, strakke karakter van de architectuur."
+        "colorName": "Koffie Koper",
+        "colorHex": "#B87333",
+        "suitabilityScore": 88,
+        "reasoning": "Deze koperen tint echoot de sculptural hanglamp en voegt een warm, metallic accent toe dat het moderne karakter onderstreept. Perfect voor wie een statement wil maken zonder de minimalistische basis te verstoren."
       }
     ],
     "materialSuggestions": [
-      "Hout - voor warmte en aansluiting bij meubilair",
-      "Aluminium - voor industriële moderne uitstraling"
+      "Houten Jaloezieën 50mm voor maximale warmte en natuurlijke uitstraling",
+      "Aluminium Jaloezieën 50mm voor een industrieel-moderne touch",
+      "Ladderband in contrasterende kleur voor extra visueel detail"
     ],
     "render_instruction": {
       "product_type": "Houten Jaloezieën",
-      "color_name": "Smokey Taupe",
-      "hex_code": "#9E958C",
+      "color_name": "Bourbon Bamboo",
+      "hex_code": "#654321",
       "mount_type": "outside mount",
-      "window_sections": 3,
+      "window_sections": 4,
       "lighting_condition": "bright natural daylight",
       "state": "half lowered",
       "slat_width": "50mm",
       "ladder_tape": true,
-      "scene_description": "Een lichte moderne woonruimte met grote stalen raampartijen, gepolijste betonvloer en organische houten meubels. De houten jaloezieën in Smokey Taupe zijn op de dag gemonteerd en halfopen, waardoor subtiele lichtstrepen over de vloer vallen. Het artistieke koperen hanglampje werpt zachte schaduwen, terwijl de jaloezieën perfect aansluiten bij de bestaande taupe gordijnen. De ruimte ademt sereniteit met zijn verfijnde kleurenpalet van gebroken wit, warm hout en grafietgrijze accenten.",
-      "negative_prompt": "cheap materials, cluttered space, harsh shadows, overly bright colors, plastic finishes, busy patterns, dated furniture, poor lighting, low quality rendering",
-      "camera_angle": "Frontaal perspectief vanuit de woonruimte richting de raampartijen, op ooghoogte, met nadruk op de interactie tussen jaloezieën en natuurlijk licht",
-      "room_context": "Modern minimalistisch interieur met open indeling, stalen kozijnen, betonvloer en hoogwaardige natuurlijke materialen"
+      "scene_description": "Render een moderne, luchtige woonruimte met grote stalen raampartijen voorzien van warme Bourbon Bamboo houten jaloezieën in half-gesloten positie. De jaloezieën zijn op de dag gemonteerd en creëren een prachtig spel van licht en schaduw op de beige gietvloer. De ruimte bevat organisch gevormde donkerbruine houten meubels, waaronder een sculptural eettafel en moderne stoelen. Een opvallende circulaire hanglamp met koperen accenten hangt boven de tafel. De lamellen van de jaloezieën zijn zo gedraaid dat ze zacht gefilterd daglicht doorlaten, wat strepen en patronen op de vloer werpt. De warme houtkleur van de jaloezieën harmoniëert perfect met het donkere meubilair en contrasteert subtiel met de zwarte stalen kozijnen.",
+      "negative_prompt": "plastic appearance, cheap materials, cluttered space, dark room, closed blinds, artificial lighting only, mismatched colors, outdated furniture, busy patterns, ornate details",
+      "camera_angle": "Eye-level perspectief vanuit de woonruimte, licht diagonaal gericht naar de hoekoplossing van ramen, zodat zowel de jaloezieën als het lichtspel op de vloer en meubels goed zichtbaar zijn",
+      "room_context": "Modern minimalistisch wooninterieur met hoogwaardige materiaalkeuzes, grote raampartijen en verfijnde details. De ruimte ademt sereniteit en luxe door de balans tussen industriële elementen en warme natuurlijke materialen."
     }
   }
 }
