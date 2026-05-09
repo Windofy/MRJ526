@@ -504,6 +504,9 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  /* Ensure grid never overflows its container */
+  width: 100%;
+  min-width: 0;
 }
 
 /* ── Card wrapper ── */
@@ -513,6 +516,7 @@ a { color: inherit; }
   grid-template-rows: 1fr;
   width: 100%;
   min-width: 0;
+  /* Slightly more square: 9/8 ≈ 1.125, tighter than 1:1 */
   aspect-ratio: 1 / 1;
   cursor: pointer;
   border-radius: 10px;
@@ -522,12 +526,7 @@ a { color: inherit; }
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  overflow: hidden;
-}
-@media (min-width: 768px) {
-  .color-swatch-card {
-    max-width: 167px;
-  }
+  overflow: hidden;   /* HARD clip — samples can NEVER escape card frame */
 }
 
 /* Radio visually hidden — covers whole card */
@@ -572,105 +571,84 @@ a { color: inherit; }
   justify-content: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;   /* Clip guard — nothing escapes the card */
 }
 
 /* ── .color-swatch — grid stacks TOP and BOTTOM pictures ── */
 .color-swatch {
   position: relative;
   display: grid;        /* grid stacks children via grid-area: 1/1 */
-  max-width: 48px;
-  max-height: 58.8px;
+  width: 70%;           /* relative to holder — scales with card size */
+  max-width: 90px;
+  /* Height = width → square swatch */
+  aspect-ratio: 1 / 1.2;
   margin: 0 auto;
+  overflow: hidden;   /* Tertiary clip — absolutely nothing escapes */
 }
 .color-swatch.size--large {
-  max-width: 80px;
-  max-height: 100%;
-}
-@media (min-width: 768px) {
-  .color-swatch.size--large { max-width: 100%; }
+  width: 80%;
+  max-width: 110px;
 }
 
-/* Both pictures sit in the SAME grid cell → they stack */
+/* Both pictures sit in the SAME grid cell → they stack perfectly */
 .color-swatch picture {
   grid-area: 1 / 1;
   display: flex;
   place-self: center;
   justify-content: center;
   width: 100%;
-  height: auto;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 50%;          /* Each picture takes half the total height */
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
   transform: translateY(0);
 }
 
-/* TOP picture: z-index 2, rests slightly up */
+/* TOP picture: z-index 2, default slightly upward */
 .color-swatch picture:first-child {
   z-index: 2;
-  transform: translateY(-4px);
-}
-@media (min-width: 768px) {
-  .color-swatch picture:first-child { transform: translateY(-11px); }
+  align-self: start;    /* anchored to top of grid cell */
+  transform: translateY(-3px);
 }
 
-/* BOTTOM picture: z-index 1, rests slightly down */
+/* BOTTOM picture: z-index 1, default slightly downward */
 .color-swatch picture:last-of-type {
   z-index: 1;
-  transform: translateY(4px);
-}
-@media (min-width: 768px) {
-  .color-swatch picture:last-of-type { transform: translateY(11px); }
+  align-self: end;      /* anchored to bottom of grid cell */
+  transform: translateY(3px);
 }
 
-/* Images fill their picture */
+/* Images fill their picture element */
 .color-swatch picture img,
 .color-swatch .swatch-material {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
 /* Hex fallback tile */
 .swatch-hex-fallback {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
 }
 
-/* ── HOVER — card-level trigger slides both pictures ── */
+/* ── HOVER — only the hovered card animates, no siblings ── */
 .color-swatch-card:hover .color-swatch picture:first-child {
-  transform: translateY(-4px);
+  transform: translateY(-10px);
 }
 .color-swatch-card:hover .color-swatch picture:last-of-type {
-  transform: translateY(20%);
-}
-@media (min-width: 768px) {
-  .color-swatch-card:hover .color-swatch picture:first-child {
-    transform: translateY(-20px);
-  }
-  .color-swatch-card:hover .color-swatch picture:last-of-type {
-    transform: translateY(20px);
-  }
+  transform: translateY(10px);
 }
 
-/* ── SELECTED — same animation stays locked ── */
+/* ── SELECTED — animation locked in place ── */
 .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:first-child,
 .color-swatch-card.is-selected .color-swatch picture:first-child {
-  transform: translateY(-4px);
+  transform: translateY(-10px);
 }
 .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:last-of-type,
 .color-swatch-card.is-selected .color-swatch picture:last-of-type {
-  transform: translateY(20%);
-}
-@media (min-width: 768px) {
-  .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:first-child,
-  .color-swatch-card.is-selected .color-swatch picture:first-child {
-    transform: translateY(-20px);
-  }
-  .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:last-of-type,
-  .color-swatch-card.is-selected .color-swatch picture:last-of-type {
-    transform: translateY(20px);
-  }
+  transform: translateY(10px);
 }
 
 /* ── Checkmark icon ── */
@@ -698,15 +676,20 @@ a { color: inherit; }
   align-items: flex-end;
   justify-content: center;
   text-align: center;
-  padding: 0 4px 4px;
+  padding: 0 4px 6px;
+  flex-shrink: 0;
 }
 .color-swatch-card .title-holder h5 {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   color: var(--clr-text, #111);
-  line-height: 1.3;
+  line-height: 1.25;
   margin: 0;
   word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 
@@ -742,19 +725,12 @@ a { color: inherit; }
   transform-origin: bottom center;
 }
 
-/* Hover: omhoog + schaal (Dock-effect) */
+/* Hover: alleen het item waar je over hoverd gaat omhoog (geen sibling-leakage) */
 .flyout-color-item:hover {
-  transform: translateY(-10px) scale(1.06);
-  box-shadow: 0 16px 36px rgba(0,0,0,0.18);
-  z-index: 2;
-}
-
-/* Buurman-effect: directe siblings schalen iets mee */
-.flyout-color-item:hover + .flyout-color-item {
-  transform: translateY(-5px) scale(1.03);
-}
-.flyout-color-item:has(+ .flyout-color-item:hover) {
-  transform: translateY(-5px) scale(1.03);
+  transform: translateY(-12px) scale(1.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+  z-index: 10;
+  border-color: rgba(255,255,255,0.4);
 }
 
 /* Geselecteerd */
@@ -792,17 +768,20 @@ a { color: inherit; }
   min-height: 0;
 }
 
-/* Naam-overlay: altijd zichtbaar onderaan, voller bij hover */
+/* Naam-overlay: bij hover volledig zichtbaar, default bijna transparant */
 .flyout-color-item__footer {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 20px 8px 8px;
-  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
-  transition: background 0.22s ease;
+  padding: 24px 8px 8px;
+  /* Default: gradient staat laag, naam is zichtbaar maar subtiel */
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.0) 100%);
+  transition: background 0.22s ease, padding 0.22s ease;
   flex-shrink: 0;
 }
 .flyout-color-item:hover .flyout-color-item__footer {
-  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+  /* Hover: dieper gradient zodat naam perfect leesbaar is */
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.0) 100%);
+  padding: 28px 10px 10px;
 }
 .flyout-color-item__name {
   font-size: 11px;
@@ -812,13 +791,15 @@ a { color: inherit; }
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.3;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  /* Naam is altijd zichtbaar */
+  opacity: 1;
 }
 .flyout-color-item__material {
   font-size: 9px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.8);
   margin-top: 1px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 

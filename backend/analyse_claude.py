@@ -242,7 +242,7 @@ SECTION 2 — LIGHTING CONDITIONS:
 - "lightingConditions": description of detected lighting (Dutch)
 
 SECTION 3 — PRODUCT SUGGESTIONS:
-- "suggestions": array of exactly 3 objects, each with:
+- "suggestions": array of exactly 4 objects, each with:
   - "productType": "Aluminium Jaloezieën" or "Houten Jaloezieën"
   - "material": "Aluminium" or "Hout"
   - "colorName": exact name from catalog
