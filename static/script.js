@@ -143,8 +143,7 @@ async function pollStatus() {
     _pollRetries = 0;  // reset on success
     const json = await res.json();
 
-    // Debug log — remove in production
-    console.log(`[poll] status=${json.status} step=${json.step} error=${json.error || '-'}`);
+
 
     updateLoadingUI(json);
 

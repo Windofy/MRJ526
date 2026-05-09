@@ -61,6 +61,47 @@ def catalogus():
         return jsonify({"error": "Catalogus niet gevonden."}), 404
 
 
+@app.route("/img-proxy")
+def img_proxy():
+    """
+    Server-side proxy for Google Drive image URLs.
+    Usage: /img-proxy?id=<gdrive_file_id>
+    Fetches the image from GDrive server-side and streams it back,
+    avoiding CORS/redirect blocking in the browser.
+    """
+    import httpx
+    from flask import Response
+
+    file_id = request.args.get("id", "").strip()
+    if not file_id:
+        return jsonify({"error": "Missing id parameter"}), 400
+
+    gdrive_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
+    try:
+        with httpx.Client(follow_redirects=True, timeout=15) as client:
+            upstream = client.get(
+                gdrive_url,
+                headers={"User-Agent": "Mozilla/5.0 (compatible; MRJ-proxy/1.0)"},
+            )
+        content_type = upstream.headers.get("content-type", "image/jpeg")
+        # GDrive sometimes returns a warning HTML page for large files
+        if "text/html" in content_type:
+            return jsonify({"error": "GDrive returned HTML — check file permissions or size"}), 502
+
+        return Response(
+            upstream.content,
+            status=upstream.status_code,
+            content_type=content_type,
+            headers={
+                "Cache-Control": "public, max-age=86400",
+                "Access-Control-Allow-Origin": "*",
+            },
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 502
+
+
 @app.route("/")
 def index():
     resp = send_from_directory(STATIC_DIR, "index.html")
