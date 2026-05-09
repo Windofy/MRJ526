@@ -497,20 +497,21 @@ a { color: inherit; }
 }
 .btn-link:hover { color: var(--clr-accent); }
 
-/* ── SUGGESTIONS — Shopify color-swatch-card structure ────────────────────── */
+/* ── SUGGESTIONS — exact Shopify color-swatch-card structure ──────────────── */
 .suggestions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-/* ── Card wrapper — mirrors .color-swatch-card ── */
+/* ── Card wrapper ── */
 .color-swatch-card {
   position: relative;
   display: grid;
+  grid-template-rows: 1fr;
   width: 100%;
-  min-width: 80px;
-  height: 100%;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
   cursor: pointer;
   border-radius: 10px;
   background-color: transparent;
@@ -518,9 +519,15 @@ a { color: inherit; }
   transition: background-color 0.3s, border-color 0.25s, box-shadow 0.25s;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .color-swatch-card {
+    max-width: 167px;
+  }
 }
 
-/* Radio visually hidden — label covers the whole card */
+/* Radio visually hidden — covers whole card */
 .color-swatch-card .swatch-radio {
   position: absolute;
   inset: 0;
@@ -532,16 +539,16 @@ a { color: inherit; }
   margin: 0;
 }
 
-/* Label fills the card, uses the same Shopify grid layout */
+/* Label fills card */
 .color-swatch-card .swatch-label {
   display: grid;
-  grid-template-rows: 1.5fr 0.75fr;
+  grid-template-rows: 1fr auto;
   cursor: pointer;
-  padding: 8px 8px 12px;
-  gap: 6px;
+  padding: 6px 6px 8px;
+  height: 100%;
 }
 
-/* Card hover → roze achtergrond */
+/* Hover → roze achtergrond, geen rand */
 .color-swatch-card:hover {
   background-color: rgb(251, 233, 232);
   border-color: transparent;
@@ -549,58 +556,69 @@ a { color: inherit; }
 
 /* Selected state */
 .color-swatch-card.is-selected {
-  border-color: var(--clr-accent, #e76e7a);
-  box-shadow: 0 0 0 2px var(--clr-accent, #e76e7a);
   background-color: rgb(251, 233, 232);
+  border-color: var(--clr-accent, #e04b2a);
+  box-shadow: 0 0 0 1.5px var(--clr-accent, #e04b2a);
 }
 
-/* ── color-swatch-holder — wraps swatch + checkmark ── */
+/* ── color-swatch-holder: flex wrapper for swatch + checkmark ── */
 .color-swatch-holder {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-/* ── .color-swatch — the grid that stacks TOP and BOTTOM ── */
+/* ── .color-swatch — grid stacks TOP and BOTTOM pictures ── */
 .color-swatch {
-  display: grid;          /* key: grid stacks children on grid-area 1/1 */
-  width: 100%;
-  max-width: 80px;
+  position: relative;
+  display: grid;        /* grid stacks children via grid-area: 1/1 */
+  max-width: 48px;
+  max-height: 58.8px;
   margin: 0 auto;
 }
 .color-swatch.size--large {
-  max-width: 90px;
+  max-width: 80px;
+  max-height: 100%;
 }
 @media (min-width: 768px) {
-  .color-swatch.size--large { max-width: 120px; }
+  .color-swatch.size--large { max-width: 100%; }
 }
 
-/* Both pictures on the same grid cell, stacked on top of each other */
+/* Both pictures sit in the SAME grid cell → they stack */
 .color-swatch picture {
-  grid-area: 1 / 1;      /* ← Shopify trick: same cell = stacked */
+  grid-area: 1 / 1;
   display: flex;
   place-self: center;
   justify-content: center;
   width: 100%;
   height: auto;
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
+  transform: translateY(0);
 }
 
 /* TOP picture: z-index 2, rests slightly up */
 .color-swatch picture:first-child {
   z-index: 2;
-  transform: translateY(-6px);
+  transform: translateY(-4px);
+}
+@media (min-width: 768px) {
+  .color-swatch picture:first-child { transform: translateY(-11px); }
 }
 
 /* BOTTOM picture: z-index 1, rests slightly down */
 .color-swatch picture:last-of-type {
   z-index: 1;
-  transform: translateY(6px);
+  transform: translateY(4px);
+}
+@media (min-width: 768px) {
+  .color-swatch picture:last-of-type { transform: translateY(11px); }
 }
 
-/* Images fill their picture element */
+/* Images fill their picture */
 .color-swatch picture img,
 .color-swatch .swatch-material {
   width: 100%;
@@ -609,29 +627,47 @@ a { color: inherit; }
   display: block;
 }
 
-/* Hex fallback when no image URL */
+/* Hex fallback tile */
 .swatch-hex-fallback {
   width: 80px;
   height: 80px;
   border-radius: 8px;
 }
 
-/* ── Hover on card → pictures animate (mirrors Shopify card-level hover) ── */
+/* ── HOVER — card-level trigger slides both pictures ── */
 .color-swatch-card:hover .color-swatch picture:first-child {
-  transform: translateY(-20%);
+  transform: translateY(-4px);
 }
 .color-swatch-card:hover .color-swatch picture:last-of-type {
   transform: translateY(20%);
 }
+@media (min-width: 768px) {
+  .color-swatch-card:hover .color-swatch picture:first-child {
+    transform: translateY(-20px);
+  }
+  .color-swatch-card:hover .color-swatch picture:last-of-type {
+    transform: translateY(20px);
+  }
+}
 
-/* ── :checked (radio selected) → same animation stays active ── */
+/* ── SELECTED — same animation stays locked ── */
 .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:first-child,
 .color-swatch-card.is-selected .color-swatch picture:first-child {
-  transform: translateY(-20%);
+  transform: translateY(-4px);
 }
 .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:last-of-type,
 .color-swatch-card.is-selected .color-swatch picture:last-of-type {
   transform: translateY(20%);
+}
+@media (min-width: 768px) {
+  .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:first-child,
+  .color-swatch-card.is-selected .color-swatch picture:first-child {
+    transform: translateY(-20px);
+  }
+  .color-swatch-card .swatch-radio:checked ~ .swatch-label .color-swatch picture:last-of-type,
+  .color-swatch-card.is-selected .color-swatch picture:last-of-type {
+    transform: translateY(20px);
+  }
 }
 
 /* ── Checkmark icon ── */
@@ -642,12 +678,15 @@ a { color: inherit; }
   display: none;
   z-index: 4;
 }
+@media (min-width: 768px) {
+  .color-swatch-card .checkmark-icon { top: 10px; right: 10px; }
+}
 .color-swatch-card .swatch-radio:checked ~ .swatch-label .checkmark-icon,
 .color-swatch-card.is-selected .checkmark-icon {
   display: block;
 }
 .color-swatch-card .icon-checkmark .hover-stroke {
-  stroke: var(--clr-accent, #e76e7a);
+  stroke: var(--clr-accent, #e04b2a);
 }
 
 /* ── Title holder ── */
@@ -656,9 +695,10 @@ a { color: inherit; }
   align-items: flex-end;
   justify-content: center;
   text-align: center;
+  padding: 0 4px 4px;
 }
 .color-swatch-card .title-holder h5 {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--clr-text, #111);
   line-height: 1.3;
@@ -666,13 +706,119 @@ a { color: inherit; }
   word-break: break-word;
 }
 
-/* Responsive: small screens */
-@media (max-width: 380px) {
-  .suggestions { grid-template-columns: 1fr 1fr; gap: 6px; }
+
+/* ── COLOR FLYOUT — Apple Dock-stijl hover animatie ────────────────── */
+/* Het flyout__list gebruikt perspective voor de 3D-diepte */
+.flyout__list {
+  perspective: 600px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-content: start;
+}
+
+/* Elke kleurkaart */
+.flyout-color-item {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    border-color 0.18s ease;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  transform-origin: bottom center;
+}
+
+/* Hover: omhoog + schaal (Dock-effect) */
+.flyout-color-item:hover {
+  transform: translateY(-10px) scale(1.06);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+  z-index: 2;
+}
+
+/* Buurman-effect: directe siblings schalen iets mee */
+.flyout-color-item:hover + .flyout-color-item {
+  transform: translateY(-5px) scale(1.03);
+}
+.flyout-color-item:has(+ .flyout-color-item:hover) {
+  transform: translateY(-5px) scale(1.03);
+}
+
+/* Geselecteerd */
+.flyout-color-item.selected {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 2px var(--clr-accent), 0 4px 16px rgba(224,75,42,0.2);
+}
+.flyout-color-item.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 22px; height: 22px;
+  background: var(--clr-accent);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Kleur-image vult kaart */
+.flyout-color-item__img {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  display: block;
+  min-height: 0;
+}
+.flyout-color-item__swatch {
+  width: 100%;
+  flex: 1;
+  display: block;
+  min-height: 0;
+}
+
+/* Naam-overlay: altijd zichtbaar onderaan, voller bij hover */
+.flyout-color-item__footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 8px 8px;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+  transition: background 0.22s ease;
+  flex-shrink: 0;
+}
+.flyout-color-item:hover .flyout-color-item__footer {
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+}
+.flyout-color-item__name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.flyout-color-item__material {
+  font-size: 9px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 1px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 
-/* Radio groups */
 .radio-group {
   display: flex;
   flex-direction: column;
@@ -733,23 +879,25 @@ a { color: inherit; }
   background: var(--clr-text);
   color: #fff;
   border: none;
-  border-radius: var(--radius-lg);
-  padding: 16px 24px;
+  border-radius: 4px;           /* scherpe hoeken, niet afgerond */
+  padding: 14px 24px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  letter-spacing: 0.01em;
   transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+  cursor: pointer;
 }
 .btn-primary:hover {
-  background: #333;
+  background: #1a1a1a;
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
 }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:active  { transform: translateY(0); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 .btn-ghost {
@@ -870,89 +1018,10 @@ a { color: inherit; }
   color: var(--clr-accent);
 }
 
-.flyout__list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  align-content: start;
-}
 .flyout__list--hidden { display: none; }
 
-/* ── COLOR CARD ──────────────────────────────────────────────────────────── */
-.flyout-color-item {
-  position: relative;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  cursor: pointer;
-  background: #fff;
-  border: 2px solid transparent;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  transition:
-    transform var(--dur-fast) var(--ease),
-    box-shadow var(--dur-fast) var(--ease),
-    border-color var(--dur-fast) var(--ease);
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-}
-.flyout-color-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.13);
-}
-.flyout-color-item.selected {
-  border-color: var(--clr-accent);
-  box-shadow: 0 0 0 2px var(--clr-accent), 0 4px 16px rgba(224,75,42,0.2);
-}
-.flyout-color-item.selected::after {
-  content: '✓';
-  position: absolute;
-  top: 8px; right: 8px;
-  width: 22px; height: 22px;
-  background: var(--clr-accent);
-  color: #fff;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.flyout-color-item__img {
-  width: 100%;
-  flex: 1;
-  object-fit: cover;
-  display: block;
-  min-height: 0;
-}
-.flyout-color-item__swatch {
-  width: 100%;
-  flex: 1;
-  display: block;
-  min-height: 0;
-}
-.flyout-color-item__footer {
-  padding: 8px 10px;
-  background: #fff;
-  flex-shrink: 0;
-}
-.flyout-color-item__name {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--clr-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
-}
-.flyout-color-item__material {
-  font-size: 10px;
-  color: var(--clr-text-muted);
-  margin-top: 1px;
-}
+
 
 /* ── TOAST ─────────────────────────────────────────────────────────────────── */
 .toast {

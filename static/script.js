@@ -181,13 +181,24 @@ const PHASE_MESSAGES = [
 
 function updateLoadingUI({ status, step }) {
   const stepNum = parseInt(step) || 0;
-  if (stepNum === currentStep && status !== 'rendering') return;
-  currentStep = stepNum;
 
-  // Progress bar: 0→95% across phases, 98% on rendering
-  let pct = Math.min((stepNum / 5) * 95, 95);
-  if (status === 'rendering') pct = 98;
-  $('loading-bar').style.width = `${pct}%`;
+  // Monotone progress: never go backward
+  let pct;
+  if (status === 'rendering') {
+    pct = 98;
+  } else {
+    pct = Math.min((stepNum / 5) * 95, 95);
+  }
+
+  // Only advance, never retreat
+  const barEl = $('loading-bar');
+  const currentPct = parseFloat(barEl.style.width) || 0;
+  if (pct > currentPct) {
+    barEl.style.width = `${pct}%`;
+  }
+
+  // Only update step tracking if we advanced
+  if (stepNum > currentStep) currentStep = stepNum;
 
   // Status message
   const msgEl = $('loading-message');
@@ -235,22 +246,9 @@ async function populateResultScreen() {
   // Pre-load catalog so suggestions + color-hero can use sampleUrls immediately
   await loadCatalog();
 
-  // Suggestions
+  // Suggestions — renderSuggestions handles auto-select of first card internally
   const suggs = analysisData.suggestions || [];
   renderSuggestions(suggs);
-
-  // Auto-select top suggestion (try to match with catalog to get sampleUrl)
-  if (suggs.length > 0) {
-    const top = suggs[0];
-    // Try catalog match first for real sample image
-    const catalogMatch = findCatalogColor(top.colorName);
-    selectColor(catalogMatch || {
-      name: top.colorName,
-      hex: top.colorHex,
-      material: `${top.material} ${top.productType}`,
-      sampleUrl: '',
-    });
-  }
 
   // Technical window check
   const wc = analysisData.windowCheck || {};
@@ -265,12 +263,31 @@ async function populateResultScreen() {
 
 
 // ── SUGGESTIONS — Shopify color-swatch-card structure ───────────────────────
+// Always renders exactly 4 cards. If AI returns fewer than 4 suggestions,
+// fills remaining slots with random catalog items not already in the list.
 function renderSuggestions(suggs) {
   const container = $('suggestions');
   container.innerHTML = '';
 
-  suggs.slice(0, 4).forEach((s, idx) => {
-    const catalogItem = findCatalogColor(s.colorName);
+  // Ensure exactly 4 entries
+  let cards = suggs.slice(0, 4);
+  if (cards.length < 4) {
+    const usedNames = new Set(cards.map(s => s.colorName.toLowerCase()));
+    const fillers = allCatalogItems()
+      .filter(c => !usedNames.has(c.name.toLowerCase()))
+      .slice(0, 4 - cards.length)
+      .map(c => ({
+        colorName: c.name,
+        colorHex:  c.hex,
+        material:  c.material,
+        _fromCatalog: c,          // keep full catalog ref for topUrl/bottomUrl
+      }));
+    cards = cards.concat(fillers);
+  }
+
+  cards.forEach((s, idx) => {
+    // Prefer pre-resolved catalog ref (filler path), otherwise look up by name
+    const catalogItem = s._fromCatalog || findCatalogColor(s.colorName);
     const topUrl    = catalogItem?.topUrl    || catalogItem?.sampleUrl || '';
     const bottomUrl = catalogItem?.bottomUrl || catalogItem?.sampleUrl || '';
     const hex       = s.colorHex || catalogItem?.hex || '#cccccc';
@@ -306,7 +323,6 @@ function renderSuggestions(suggs) {
          </picture>`
       : `<picture><div class="swatch-hex-fallback" style="background:${hex};opacity:.7"></div></picture>`;
 
-    // Exact Shopify card HTML (radio → checkbox for multi-select feel)
     const card = document.createElement('div');
     card.className = 'color-swatch-card card-size--large' + (idx === 0 ? ' is-selected' : '');
     card.setAttribute('role', 'listitem');
@@ -328,9 +344,8 @@ function renderSuggestions(suggs) {
             ${bottomPicture}
           </div>
 
-          <!-- Checkmark (visible when input:checked via CSS) -->
           <div class="checkmark-icon" aria-hidden="true">
-            <svg class="icon-checkmark" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="icon-checkmark" width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path class="hover-stroke" d="M24.5 5.83331L9.98148 21L3.5 13.6781"
                     stroke="#3F56CC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -345,7 +360,6 @@ function renderSuggestions(suggs) {
       </label>
     `;
 
-    // When the radio changes, sync is-selected class and trigger color select
     card.querySelector('input').addEventListener('change', () => {
       container.querySelectorAll('.color-swatch-card').forEach(c => c.classList.remove('is-selected'));
       card.classList.add('is-selected');
@@ -357,7 +371,6 @@ function renderSuggestions(suggs) {
       });
     });
 
-    // Keyboard: space/enter on the card triggers the radio
     card.addEventListener('keydown', e => {
       if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
@@ -365,14 +378,13 @@ function renderSuggestions(suggs) {
       }
     });
     card.setAttribute('tabindex', '0');
-
     container.appendChild(card);
   });
 
-  // Auto-select the first suggestion's color
-  if (suggs.length) {
-    const first = suggs[0];
-    const ci    = findCatalogColor(first.colorName);
+  // Auto-select the first card
+  if (cards.length) {
+    const first = cards[0];
+    const ci    = first._fromCatalog || findCatalogColor(first.colorName);
     selectColor({
       name:      first.colorName,
       hex:       first.colorHex || ci?.hex || '#ccc',
@@ -434,9 +446,22 @@ function findCatalogColor(name) {
   if (!_catalog) return null;
   for (const items of Object.values(_catalog)) {
     const match = items.find(c => c.name.toLowerCase() === name.toLowerCase());
-    if (match) return { name: match.name, hex: match.hex, material: match.material, sampleUrl: match.sampleUrl };
+    if (match) return {
+      name:      match.name,
+      hex:       match.hex,
+      material:  match.material,
+      sampleUrl: match.sampleUrl,
+      topUrl:    match.topUrl    || match.sampleUrl || '',
+      bottomUrl: match.bottomUrl || match.sampleUrl || '',
+    };
   }
   return null;
+}
+
+// Returns a flat array of all catalog items (used to pad suggestions to 4)
+function allCatalogItems() {
+  if (!_catalog) return [];
+  return Object.values(_catalog).flat();
 }
 
 async function populateFlyout() {
@@ -525,9 +550,8 @@ function initSlider() {
 
   function setPosition(x) {
     const rect = slider.getBoundingClientRect();
-    let pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-    const pctPx = `${pct * 100}%`;
-    divider.style.left = pctPx;
+    const pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+    divider.style.left = `${pct * 100}%`;
     clip.style.clipPath = `inset(0 ${100 - pct * 100}% 0 0)`;
     handle.setAttribute('aria-valuenow', Math.round(pct * 100));
   }
@@ -555,22 +579,12 @@ async function triggerVisualize() {
   if (!sessionId || !renderInstruction) return;
 
   const TILT_MAP = {
-    // 1. Maximale lichtinval — lamellen volledig horizontaal
-    volledig_open:   'Volledig open — lamellen horizontaal op 0°, maximale transparantie. Vanuit de voorkant zijn de lamellen slechts dunne horizontale lijnen. Maximale lichtinval: brede openingen tussen lamellen, sterke directe zonnestralen op de vloer en muren, volledig buitenzicht zichtbaar door de jaloezie.',
-
-    // 2. Iets minder lichtinval — 25° gekanteld
-    licht_gekanteld: 'Licht gekanteld — lamellen onder 25° hoek neerwaarts gekanteld. Vrij open stand: de lamelfaces zijn licht zichtbaar, smalle maar open tussenruimtes, zacht diffuus licht valt schuin naar binnen, zachte diagonale schaduwlijnen op de vloer. De buitenomgeving is grotendeels zichtbaar. Sfeervolle maar lichte binnenruimte.',
-
-    // 3. Beperkte lichtinval — 50° gekanteld
-    half_gesloten:   'Half gesloten — lamellen op 50° steil neerwaarts gekanteld. Beperkte lichtinval: brede lamelfaces zichtbaar van voor, smalle kijkopeningen, alleen indirecte omgevingsverlichting komt binnen. Geen directe zonnestralen. Subtiele zachte schaduwen. Gedempte ruimteverlichting. Buitenzicht beperkt.',
-
-    // 4. Minimale lichtinval — 70° bijna verticaal
-    privacystand:    'Privacystand — lamellen op 70° bijna verticaal, minimale lichtdoorlaat. Zeer smalle tussenruimtes, alleen indirect omgevingslicht. Geen directe zonnestralen of schaduwbanden. Buitenzicht volledig geblokkeerd. Ruimte is donker en privé, slechts zwak omgevingslicht aanwezig.',
-
-    // 5. Geen lichtdoorlaat — 90° verticaal, volledig gesloten
-    volledig_gesloten:'Volledig gesloten — lamellen staan op 90° exact verticaal en raken elkaar volledig aan. HARD CONSTRAINT: volledig gesloten jaloezie, nul lichtdoorlaat, nul tussenruimtes. Het venster is afgesloten als een aaneengesloten solide paneel. Geen enkel spoor van buitenlicht, geen zonnestralen, geen schaduwprojecties. De ruimte is donker. Enkel zachte binnenverlichting of sfeerlampen verlichten de ruimte.',
+    volledig_open:     'Volledig open — lamellen horizontaal op 0°, maximale transparantie. Vanuit de voorkant zijn de lamellen slechts dunne horizontale lijnen. Maximale lichtinval: brede openingen tussen lamellen, sterke directe zonnestralen op de vloer en muren, volledig buitenzicht zichtbaar door de jaloezie.',
+    half_gesloten:     'Half gesloten — lamellen op 50° steil neerwaarts gekanteld. Beperkte lichtinval: brede lamelfaces zichtbaar van voor, smalle kijkopeningen, alleen indirecte omgevingsverlichting komt binnen. Geen directe zonnestralen. Subtiele zachte schaduwen. Gedempte ruimteverlichting. Buitenzicht beperkt.',
+    privacystand:      'Privacystand — lamellen op 70° bijna verticaal, minimale lichtdoorlaat. Zeer smalle tussenruimtes, alleen indirect omgevingslicht. Geen directe zonnestralen of schaduwbanden. Buitenzicht volledig geblokkeerd. Ruimte is donker en privé, slechts zwak omgevingslicht aanwezig.',
+    volledig_gesloten: 'Volledig gesloten — lamellen staan op 90° exact verticaal en raken elkaar volledig aan. HARD CONSTRAINT: volledig gesloten jaloezie, nul lichtdoorlaat, nul tussenruimtes. Het venster is afgesloten als een aaneengesloten solide paneel. Geen enkel spoor van buitenlicht, geen zonnestralen, geen schaduwprojecties. De ruimte is donker. Enkel zachte binnenverlichting of sfeerlampen verlichten de ruimte.',
   };
-  const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'licht_gekanteld';
+  const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'volledig_open';
 
   // Lighting descriptions with exact keywords matched to render_gemini.py _lighting_block() detection
   const LIGHTING_MAP = {

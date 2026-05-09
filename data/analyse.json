@@ -1,45 +1,45 @@
 {
   "analysis": {
-    "style": "Japandi",
-    "styleSummary": "Deze ruimte combineert Japanse minimalisme met Scandinavische warmte, gekenmerkt door strakke lijnen en natuurlijke materialen.",
-    "styleDescription": "Het interieur toont een perfecte balans tussen Japanse sereniteit en Scandinavisch design. De organische houten tafel en bank met hun vloeiende vormen contrasteren subtiel met de strakke zwarte kozijnen en architectonische elementen. De sculptuurachtige koperen hanglamp fungeert als kunstwerk en focuspunt. Neutrale tinten domineren met crèmewitte wanden en een lichte gietvloer, terwijl de warmte van walnotenhout en de textuur van linnen gordijnen zorgen voor tactiele rijkdom. Het open karakter met veel natuurlijk licht en doorzichten naar buiten versterkt het gevoel van rust en verbondenheid met de natuur.",
-    "roomMood": "Serene elegantie met warme, meditatieve rust en verfijnde eenvoud",
+    "style": "Modern Minimalistisch",
+    "styleSummary": "Een strak modern interieur met minimalistische inrichting en hoogwaardige materialen. Natuurlijk licht en open ruimtes vormen de kern van dit design.",
+    "styleDescription": "Deze ruimte ademt pure moderne elegantie met zijn open indeling en transparante architectuur. De combinatie van grote glaspartijen, gepolijste betonvloer en organisch gevormde houten meubels creëert een harmonieus geheel. Het sculptuurachtige hanglampje met koperen cirkels vormt een kunststuk dat industrieel design met ambachtelijk werk verbindt. De zwarte stalen kozijnen en subtiele gordijnen benadrukken de verticale lijnen en geven de ruimte een verfijnd karakter. Dit interieur balanceert perfect tussen warmte en koelte, waarbij natuurlijke materialen zorgen voor een toegankelijke uitstraling.",
+    "roomMood": "Sereen, verfijnd en artistiek met een subtiele luxe uitstraling",
     "colour_palette": [
       {
         "hex_code": "#F5F5F5",
-        "extracted_source": "Wanden en plafond",
+        "extracted_source": "Wanden en plafond in gebroken wit",
         "matched_catalog_color": "Parel White"
       },
       {
-        "hex_code": "#8B4513",
-        "extracted_source": "Houten tafel en bank",
-        "matched_catalog_color": "Cowboy Koper"
+        "hex_code": "#4A4A4A",
+        "extracted_source": "Zwarte stalen raamkozijnen en decoratieve elementen",
+        "matched_catalog_color": "Smokey Bamboo"
       },
       {
-        "hex_code": "#111111",
-        "extracted_source": "Raamkozijnen en keukenblok",
-        "matched_catalog_color": "BBQ Black"
+        "hex_code": "#A0785A",
+        "extracted_source": "Warme houttint van de eetbanken en tafel",
+        "matched_catalog_color": "Eigenlijk Eiken"
       },
       {
-        "hex_code": "#D2B48C",
-        "extracted_source": "Koperen hanglamp",
-        "matched_catalog_color": "De Naturist"
+        "hex_code": "#B87333",
+        "extracted_source": "Koperen ringen van het hanglampje",
+        "matched_catalog_color": "Koffie Koper"
       },
       {
         "hex_code": "#9E958C",
-        "extracted_source": "Linnen gordijnen",
+        "extracted_source": "Taupe/grijze gordijnen",
         "matched_catalog_color": "Smokey Taupe"
       }
     ],
     "windowCheck": {
-      "windowType": "Grote aluminium kozijnen met vast glas en draairamen",
-      "detectedWindowCount": 4,
+      "windowType": "Grote vaste glaspartijen met stalen kozijnen in moderne architectuur",
+      "detectedWindowCount": 3,
       "recommendation": "op de dag",
-      "reasoning": "De strakke zwarte aluminium kozijnen zijn te smal voor in-de-dag montage en functioneren als architectonisch statement. Montage op de dag behoudt de visuele kracht van deze lijnen en zorgt voor optimale lichtinval.",
-      "specialConsiderations": "Raamhandels aan binnenzijde zichtbaar bij linker raam, koperen hanglamp hangt voor middelste raampartij",
+      "reasoning": "Bij deze moderne stalen kozijnen met zeer smalle profielen is montage op de dag ideaal om de strakke lijnen te behouden en volledige lichtinval mogelijk te maken. De minimale dagmaat maakt montage in de dag minder geschikt.",
+      "specialConsiderations": "Links: hoog raam met draaikiepraam functie en raambediening. Midden: groot vast glaspartij zonder obstructies. Rechts: grote schuifpui naar terras met vloergeleiding.",
       "obstacles": true,
       "recess_depth_cm": 8,
-      "frame_material": "Aluminium, mat zwart gepoedercoat"
+      "frame_material": "Staal/metaal met zwarte poedercoating"
     },
     "suggestions": [
       {
@@ -48,45 +48,44 @@
         "colorName": "Smokey Taupe",
         "colorHex": "#9E958C",
         "suitabilityScore": 98,
-        "reasoning": "Deze kleur matcht perfect met de bestaande linnen gordijnen en vormt een natuurlijke brug tussen de warme houtentinten en de neutrale wanden. De subtiele taupe past naadloos in de Japandi esthetiek met zijn organische, aardse karakter."
+        "reasoning": "Deze kleur komt exact overeen met de bestaande gordijnen en vormt een perfecte brug tussen de warme houttinten en de donkere stalen kozijnen. De subtiele taupe past naadloos in het minimalistische kleurenpalet."
       },
       {
         "productType": "Houten Jaloezieën",
         "material": "Hout",
-        "colorName": "Parel White",
-        "colorHex": "#F5F5F5",
+        "colorName": "Eigenlijk Eiken",
+        "colorHex": "#A0785A",
         "suitabilityScore": 95,
-        "reasoning": "Harmonieus met de crèmewitte wanden en versterkt de lichte, open sfeer van het interieur. De neutrale tint behoudt de minimalistische sereniteit en laat het zonlicht subtiel filteren zonder de ruimte visueel te belasten."
+        "reasoning": "Deze warme eikenkleur sluit aan bij de houten eetbanken en tafel, waardoor een harmonieus geheel ontstaat. Het natuurlijke houtkarakter versterkt de organische elementen in het interieur."
       },
       {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "De Naturist",
-        "colorHex": "#D2B48C",
+        "productType": "Aluminium Jaloezieën",
+        "material": "Aluminium",
+        "colorName": "Smokey Grey",
+        "colorHex": "#708090",
         "suitabilityScore": 92,
-        "reasoning": "Echoot de warme koperen tonen van de sculptuurachtige hanglamp en creëert een zachte verbinding met de walnotenhout meubels. Deze natuurlijke houtkleur versterkt de organische warmte die essentieel is voor de Japandi balans."
+        "reasoning": "Een koele grijstint die perfect aansluit bij de industriële uitstraling van de zwarte stalen kozijnen. Het aluminium materiaal ondersteunt het moderne, strakke karakter van de architectuur."
       }
     ],
     "materialSuggestions": [
-      "Houten Jaloezieën - past perfect bij de Japandi filosofie met natuurlijke materialen en organische warmte",
-      "50mm latten - creëren rustiger, meer minimalistische lijnen die aansluiten bij de strakke architectuur",
-      "Ladderlint - versterkt de horizontale gelaagdheid en Japanse esthetiek"
+      "Hout - voor warmte en aansluiting bij meubilair",
+      "Aluminium - voor industriële moderne uitstraling"
     ],
-    "lightingConditions": "Overvloedig natuurlijk daglicht met diffuse, zachte lichtinval door grote raampartijen. De heldere, neutrale verlichting creëert een serene en open atmosfeer waarbij schaduwen minimaal en subtiel zijn."
+    "lightingConditions": "Overvloedig natuurlijk daglicht door grote glaspartijen met heldere, gelijkmatige belichting. Het licht creëert een open en luchtige sfeer in de ruimte."
   },
   "render_instruction": {
     "product_type": "Houten Jaloezieën",
     "color_name": "Smokey Taupe",
     "hex_code": "#9E958C",
     "mount_type": "outside mount",
-    "window_sections": 4,
+    "window_sections": 3,
     "lighting_condition": "bright natural daylight",
     "state": "half lowered",
     "slat_width": "50mm",
     "ladder_tape": true,
-    "scene_description": "Een serene Japandi woonruimte met vier grote aluminium raampartijen in mat zwart, waarop houten jaloezieën in Smokey Taupe op de dag gemonteerd zijn. De jaloezieën hangen halfhoog en filteren het overvloedige natuurlijke licht op zachte wijze, waarbij de lamellen subtiele schaduwlijnen werpen op de crèmewitte wanden. De organische houten eettafel en bank in walnotentint staan prominent in beeld, met de sculptuurachtige koperen hanglamp als focuspunt. De linnen gordijnen aan weerszijden harmoniëren perfect met de taupe jaloezieën. De lichte gietvloer reflecteert zacht het gefilterde zonlicht, terwijl door de half geopende lamellen glimpen van groen buitenlandschap zichtbaar zijn.",
-    "negative_prompt": "plastic materials, glossy finishes, bright colors, cluttered space, artificial lighting, heavy curtains, traditional blinds, white plastic slats, venetian blinds in aluminum, closed blinds, dark room, modern minimalist without warmth",
-    "camera_angle": "Eye-level perspective from dining area looking towards the window wall, capturing the full height of the windows and the interplay between the black frames, taupe wooden blinds, and interior furnishings",
-    "room_context": "Open Japandi woon-eetkamer met nadruk op natuurlijke materialen, horizontale lijnen en serene elegantie. De zwarte kozijnen vormen een sterk architectonisch statement."
+    "scene_description": "Een lichte moderne woonruimte met grote stalen raampartijen, gepolijste betonvloer en organische houten meubels. De houten jaloezieën in Smokey Taupe zijn op de dag gemonteerd en halfopen, waardoor subtiele lichtstrepen over de vloer vallen. Het artistieke koperen hanglampje werpt zachte schaduwen, terwijl de jaloezieën perfect aansluiten bij de bestaande taupe gordijnen. De ruimte ademt sereniteit met zijn verfijnde kleurenpalet van gebroken wit, warm hout en grafietgrijze accenten.",
+    "negative_prompt": "cheap materials, cluttered space, harsh shadows, overly bright colors, plastic finishes, busy patterns, dated furniture, poor lighting, low quality rendering",
+    "camera_angle": "Frontaal perspectief vanuit de woonruimte richting de raampartijen, op ooghoogte, met nadruk op de interactie tussen jaloezieën en natuurlijk licht",
+    "room_context": "Modern minimalistisch interieur met open indeling, stalen kozijnen, betonvloer en hoogwaardige natuurlijke materialen"
   }
 }
