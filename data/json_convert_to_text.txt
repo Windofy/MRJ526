@@ -4,97 +4,97 @@
   },
   "vision": {
     "style": "Scandinavisch-Modern",
-    "styleSummary": "Een lichte, minimalistische ruimte met organische vormen en natuurlijke materialen. De stijl combineert Scandinavische eenvoud met moderne architecturale lijnen.",
-    "styleDescription": "Deze ruimte ademt een verfijnde Scandinavisch-moderne sfeer met een focus op licht, ruimte en natuurlijke materialen. Het interieur kenmerkt zich door strakke lijnen, een neutrale kleurenpalet met warme accenten, en organische meubels in notenhout. De grote raampartijen laten veel natuurlijk licht binnen en creëren een verbinding met buiten. De sculptuur-achtige hanglamp met koperen ringen vormt een artistiek statement dat de minimalistische inrichting contrasteert. Het betonlook vloersysteem en de zwarte accenten in de kozijnen en keuken geven de ruimte een eigentijdse edge.",
-    "roomMood": "Sereen, open en luchtig met een subtiele warmte door de notenhoutentinten en koperaccenten",
+    "styleSummary": "Deze ruimte combineert Scandinavische helderheid met moderne, organische vormen. De warme houten accenten en strakke lijnen creëren een harmonieuze balans.",
+    "styleDescription": "Het interieur kenmerkt zich door een minimalistische benadering met hoogwaardige materialen en doordacht design. De ruimte ademt licht en lucht door de grote raampartijen en het neutrale kleurenpalet. Warme walnoottinten in het meubilair contrasteren subtiel met de koele betonvloer en zwarte designelementen. De organische, cirkelvormige hanglamp vormt een sculpturaal middelpunt dat de strakke architectuur verzacht. Deze ruimte straalt rust en verfijning uit, typisch voor hedendaags Scandinavisch design met een moderne twist.",
+    "roomMood": "Sereen, luchtig en verfijnd met een warme ondertoon",
     "colour_palette": [
       {
         "hex_code": "#E9E5CE",
-        "extracted_source": "De neutrale wand- en plafondkleuren die het interieur domineren",
+        "extracted_source": "Crèmewitte wanden en plafond",
         "matched_catalog_color": "Like RAL9002"
       },
       {
         "hex_code": "#8B4513",
-        "extracted_source": "Het notenhout van de tafel en banken",
+        "extracted_source": "Warme walnoottint van tafel, bank en verlichtingsaccenten",
         "matched_catalog_color": "Cowboy Koper"
       },
       {
-        "hex_code": "#B87333",
-        "extracted_source": "De koperen ringen van de hanglamp",
-        "matched_catalog_color": "Koffie Koper"
-      },
-      {
         "hex_code": "#1A1A1A",
-        "extracted_source": "De zwarte kozijnen en keukenkasten",
+        "extracted_source": "Zwarte kozijnen, keukenkasten en designelementen",
         "matched_catalog_color": "Drop Zwart"
       },
       {
-        "hex_code": "#D2B48C",
-        "extracted_source": "De warme beige tint van de gordijnen",
-        "matched_catalog_color": "De Naturist"
+        "hex_code": "#D8CCBB",
+        "extracted_source": "Zachte taupe gordijnen",
+        "matched_catalog_color": "Teder Taupe"
+      },
+      {
+        "hex_code": "#A9A9A9",
+        "extracted_source": "Betonvloer in koele grijstint",
+        "matched_catalog_color": "Cool Grey"
       }
     ],
     "windowCheck": {
-      "windowType": "Grote stalen raampartijen met vast glas en draai-kiep secties",
-      "detectedWindowCount": 5,
+      "windowType": "Moderne aluminium kozijnen met smalle stijlen en grote glasoppervlakken",
+      "detectedWindowCount": 4,
       "recommendation": "in de dag",
-      "reasoning": "De stalen kozijnen hebben voldoende dagmaat om de jaloezieën strak in de dag te monteren, wat de strakke architecturale lijnen behoudt en het moderne karakter van de ruimte versterkt.",
-      "specialConsiderations": "Let op de draai-kiepraamhendels bij de linker raampartij; zorg voor voldoende vrije ruimte. De grote glasoppervlakken vereisen meerdere jaloezieën die naadloos op elkaar aansluiten.",
+      "reasoning": "De strakke, moderne kozijnen hebben voldoende diepte en de montage in de dag behoudt de minimalistische uitstraling. Dit past perfect bij het clean design en maximaliseert het lichtinval.",
+      "specialConsiderations": "Links een draaikiepraam met handgreep op ooghoogte. De grote raampartijen zijn vaste beglazing zonder obstakels. Let op de voldoende ruimte tussen de verschillende raamvlakken voor afzonderlijke jaloezieën.",
       "obstacles": true,
       "recess_depth_cm": 12,
-      "frame_material": "Staal, zwart gepoedercoat"
+      "frame_material": "Aluminium met zwarte poedercoating"
     }
   },
   "text": {
     "mountingStrategy": {
       "mount_type": "in de dag",
-      "reasoning": "De stalen kozijnen bieden met 12 cm dagdiepte voldoende ruimte voor montage in de dag. Dit behoudt de strakke architecturale lijnen van de Scandinavisch-moderne ruimte en laat de zwarte kozijnen als frame zichtbaar, wat het industriële karakter versterkt. Let wel op de draai-kiep hendels aan de linkerzijde voor voldoende speelruimte."
+      "reasoning": "De moderne aluminium kozijnen hebben voldoende diepte (12cm) voor montage in de dag. Dit behoudt de strakke, minimalistische uitstraling van het Scandinavisch-moderne interieur en maximaliseert de lichtinval. De clean lijnen blijven behouden zonder uitstekende elementen."
     },
-    "lightingConditions": "Uitstekende natuurlijke lichtinval door grote stalen raampartijen met zuidelijke oriëntatie. De ruimte beschikt over overvloedig daglicht wat de lichte, open Scandinavische sfeer versterkt. Zonwering is noodzakelijk om overmatige opwarming en verblinding te voorkomen, met name tijdens middag- en namiddaguren.",
+    "lightingConditions": "Helder daglicht met zachte schaduwen, typisch voor een Noord-Europese lichtinval. De grote glasoppervlakken zorgen voor overvloedig natuurlijk licht dat de neutrale tinten en warme houtaccenten benadrukt.",
     "suggestions": [
-      {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "De Naturist",
-        "colorHex": "#D2B48C",
-        "suitabilityScore": 95,
-        "reasoning": "Deze warme beige tint past perfect bij de bestaande gordijnen en creëert een zachte, natuurlijke overgang die de Scandinavische warmte behoudt. Het hout resoneert met de notenhoutentafel en past naadloos in het organische materiaalgebruik."
-      },
-      {
-        "productType": "Houten Jaloezieën",
-        "material": "Hout",
-        "colorName": "Parel White",
-        "colorHex": "#F5F5F5",
-        "suitabilityScore": 92,
-        "reasoning": "Een lichte, parelwitte jaloezie versterkt het minimalistische karakter en maximaliseert lichtreflectie, wat de open, luchtige sfeer behoudt. Perfect voor wie de focus op de architecturale lijnen wil houden zonder warme accenten toe te voegen."
-      },
       {
         "productType": "Aluminium Jaloezieën",
         "material": "Aluminium",
         "colorName": "Like RAL9002",
         "colorHex": "#E9E5CE",
+        "suitabilityScore": 95,
+        "reasoning": "Deze crèmewitte tint matcht perfect met de wanden en plafond, waardoor een naadloze integratie ontstaat. De kleur behoudt de luchtige Scandinavische uitstraling en reflecteert het natuurlijke licht optimaal."
+      },
+      {
+        "productType": "Houten Jaloezieën",
+        "material": "Hout",
+        "colorName": "Teder Taupe",
+        "colorHex": "#D8CCBB",
+        "suitabilityScore": 92,
+        "reasoning": "Deze zachte taupe tint harmoniëert prachtig met de bestaande gordijnen en creëert een warme, organische laag. Het voegt textuur toe zonder de minimalistische esthetiek te verstoren."
+      },
+      {
+        "productType": "Aluminium Jaloezieën",
+        "material": "Aluminium",
+        "colorName": "Cool Grey",
+        "colorHex": "#A9A9A9",
         "suitabilityScore": 88,
-        "reasoning": "Deze subtiele cremewitte tint matcht exact de wand- en plafondkleuren, waardoor de jaloezieën visueel versmelten met het interieur. Het aluminium geeft een strakke, moderne uitstraling die het industriële karakter van de stalen kozijnen onderstreept."
+        "reasoning": "Deze koele grijstint sluit aan bij de betonvloer en zwarte kozijnen, waardoor een monochromatische elegantie ontstaat. Perfect voor wie een stoer, industrieel accent wenst binnen het Scandinavische design."
       }
     ],
     "materialSuggestions": [
-      "Houten Jaloezieën - 50mm lamelbreedtes voor optimale lichtcontrole en warmte-uitstraling",
-      "Aluminium Jaloezieën - 25mm lamellen voor een ultra-strakke, moderne look"
+      "Aluminium voor strakke, onderhoudsvriendelijke oplossing",
+      "Hout voor extra warmte en natuurlijke textuur"
     ],
     "render_instruction": {
-      "product_type": "Houten Jaloezieën",
-      "color_name": "De Naturist",
-      "hex_code": "#D2B48C",
+      "product_type": "Aluminium Jaloezieën",
+      "color_name": "Like RAL9002",
+      "hex_code": "#E9E5CE",
       "mount_type": "inside mount",
-      "window_sections": 5,
-      "lighting_condition": "bright natural daylight",
+      "window_sections": 4,
+      "lighting_condition": "bright daylight with soft shadows",
       "state": "half lowered",
-      "slat_width": "50mm",
-      "ladder_tape": true,
-      "scene_description": "Een serene Scandinavisch-moderne woonruimte met grote stalen raampartijen waarachter houten jaloezieën in de warme beige tint 'De Naturist' halfopen staan. Het gefilterde daglicht creëert een zachte lichtval over de notenhoutentafel en sculptuurachtige hanglamp met koperen ringen. De jaloezieën zijn strak in de dag gemonteerd binnen de zwarte stalen kozijnen, met de 50mm lamellen onder een subtiele hoek om licht door te laten terwijl privacy behouden blijft. De natuurlijke houtstructuur van de jaloezieën harmonieert met de organische vormen van het meubilair en het neutrale kleurenpalet van de ruimte.",
-      "negative_prompt": "plastic appearance, synthetic materials, cold atmosphere, cluttered space, harsh shadows, over-saturated colors, misaligned slats, visible mounting hardware, gaps between sections, damaged or worn materials",
-      "camera_angle": "Eye-level perspective vanuit de woonkamer richting de raampartijen, met de notenhoutentafel en hanglamp in het middenvlak voor context en schaalgevoel",
-      "room_context": "Open Scandinavisch-moderne woonruimte met betonlook vloer, zwarte keukenkasten op de achtergrond, en natuurlijk licht dat door de halfopen jaloezieën filtert en zachte schaduwen creëert"
+      "slat_width": "25mm",
+      "ladder_tape": false,
+      "scene_description": "Een lichte, Scandinavisch-moderne woonruimte met grote raampartijen voorzien van crèmewitte aluminium jaloezieën (Like RAL9002) gemonteerd in de dag. De jaloezieën zijn half neergelaten, waardoor strepen zacht daglicht over de betonvloer en walnotenhouten eettafel vallen. De strakke, smalle lamellen harmoniëren perfect met de zwarte aluminium kozijnen en het minimalistische interieur. De organische cirkelvormige hanglamp boven de tafel werpt subtiele schaduwen, terwijl de neutrale wandkleuren het natuurlijke licht reflecteren.",
+      "negative_prompt": "fabric curtains, busy patterns, ornate details, dark or heavy window treatments, visible cords or chains, cluttered windowsills, incorrect mounting, misaligned slats, unrealistic shadows, oversaturated colors",
+      "camera_angle": "Wide angle shot from the living area, capturing the full window wall with all four sections, showing the jaloezieën in context with the dining table and kitchen in the background",
+      "room_context": "Scandinavisch-moderne open woonruimte met betonvloer, walnotenhouten meubilair, zwarte designaccenten en overvloedig natuurlijk licht"
     }
   }
 }

@@ -357,6 +357,9 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
         else:
             print(f"[{session_id}] SAM2 skipped (no FAL_KEY) — using Gemini pipeline")
 
+        # ── First render always uses Golden Hour for the best first impression ──
+        render_instruction["lighting_condition"] = "Zonsondergang (Warm)"
+
         render_bytes, method = _render_with_fallback(
             img_bytes, render_instruction, mask_bytes
         )

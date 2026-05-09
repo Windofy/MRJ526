@@ -78,6 +78,18 @@ def _build_render_prompt(render_instruction: dict, config_override: dict | None 
         f"{'These are STANDARD/WIDE slats — approximately 2 inches wide. Fewer slats visible, each clearly distinct.' if slat_mm >= 50 else ''}"
     )
 
+    # Extra physics reinforcement when slats are fully closed
+    is_closed = "90°" in state or "fully vertical" in state.lower() or "fully closed" in state.lower()
+    closed_override = (
+        "\n═══ FULLY CLOSED OVERRIDE ═══\n"
+        "• The slats are at 90° — COMPLETELY CLOSED. There is ZERO light bleed between slats.\n"
+        "• The entire window opening appears as a SOLID FLAT PANEL of blind slats — opaque, no gaps, no transparency.\n"
+        "• NO outdoor view, NO sky, NO window light is visible through the blind.\n"
+        "• The room interior is lit ONLY by ambient room light from other sources (lamps, indirect).\n"
+        "• The slats tightly interlock edge-to-edge, creating a uniform surface of color {color}.\n"
+        "• Deep shadow falls on the interior side of the blind — the room feels enclosed and private."
+    ).format(color=color) if is_closed else ""
+
     prompt = f"""Photorealistic interior photograph of a room with {product} installed on the window.
 
 CRITICAL INSTRUCTION: Keep the ENTIRE room, walls, furniture, floor, ceiling, and all existing elements
@@ -107,6 +119,7 @@ Lighting condition: {lighting}
 • Between the slats, thin strips of the window or outdoor scene may be visible depending on tilt angle.
 • The blind casts a subtle soft shadow on the window frame/wall where it's mounted.
 • Overall room lighting must remain consistent with the reference photo.
+{closed_override}
 
 ═══ RENDERING QUALITY ═══
 • Professional interior photography quality — shot on a full-frame camera at f/4, ISO 200

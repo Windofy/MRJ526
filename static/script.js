@@ -474,19 +474,28 @@ async function triggerVisualize() {
   if (!sessionId || !renderInstruction) return;
 
   const TILT_MAP = {
-    fully_open:   'Slats fully open at 0° — maximum light, full see-through',
-    slightly_open:'Slats slightly open at 35° — diffused light, partial view',
-    privacy:      'Privacy angle at 50° — privacy without full darkness',
-    closed:       'Slats fully closed at 90° — maximum privacy, no light through',
+    fully_open:   'Slats fully open at 0° — horizontal blades, maximum natural light flooding in, full visual transparency through the window',
+    slightly_open:'Slats tilted slightly at 35° — soft diffused light enters, partial view maintained, gentle shadows on the floor',
+    privacy:      'Slats at privacy angle 50° — angled blades block direct sightlines from outside while still allowing indirect ambient light',
+    closed:       'Slats completely closed at 90° — blades are fully vertical and tightly overlapping, NO light passes through, the window area appears as a solid panel of blinds, deep shadows on the interior side',
   };
   const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'fully_open';
+
+  // Rich lighting descriptions for more accurate Gemini rendering
+  const LIGHTING_MAP = {
+    'Ochtend (Koel)':       'Early morning daylight — soft cool light from a low sun angle, slightly blue-white ambient, long gentle shadows, fresh atmosphere',
+    'Middag (Helder)':      'Bright midday sunlight — high sun, strong direct light, sharp high-contrast shadows, vivid saturated colors, hot white highlights',
+    'Zonsondergang (Warm)': 'Golden hour sunset — warm amber-orange light flooding through the window, rich golden tones washing over all surfaces, long dramatic shadows, cinematic and atmospheric',
+    'Avond (Sfeervol)':     'Late evening interior scene — the exterior window view shows a dark blue-hour night sky, NO daylight outside, interior warm artificial lamps are switched on, cozy low amber ambient light inside, clear contrast between lit interior and dark exterior',
+  };
+  const rawDaytime = document.querySelector('input[name="daytime"]:checked')?.value || 'Zonsondergang (Warm)';
 
   const config = {
     color_name:         selectedColor?.name || renderInstruction.color_name,
     hex_code:           selectedColor?.hex  || renderInstruction.hex_code,
     slat_width:         document.querySelector('input[name="slat"]:checked')?.value || renderInstruction.slat_width,
     ladder_tape:        document.querySelector('input[name="ladder"]:checked')?.value === 'ladderband',
-    lighting_condition: document.querySelector('input[name="daytime"]:checked')?.value || renderInstruction.lighting_condition,
+    lighting_condition: LIGHTING_MAP[rawDaytime] || rawDaytime,
     state:              TILT_MAP[tiltVal] || TILT_MAP.fully_open,
   };
 
