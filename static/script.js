@@ -474,13 +474,21 @@ function initSlider() {
 async function triggerVisualize() {
   if (!sessionId || !renderInstruction) return;
 
+  const TILT_MAP = {
+    fully_open:   'Slats fully open at 0° — maximum light, full see-through',
+    slightly_open:'Slats slightly open at 35° — diffused light, partial view',
+    privacy:      'Privacy angle at 50° — privacy without full darkness',
+    closed:       'Slats fully closed at 90° — maximum privacy, no light through',
+  };
+  const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'fully_open';
+
   const config = {
-    color_name:        selectedColor?.name || renderInstruction.color_name,
-    hex_code:          selectedColor?.hex  || renderInstruction.hex_code,
-    slat_width:        document.querySelector('input[name="slat"]:checked')?.value || renderInstruction.slat_width,
-    ladder_tape:       document.querySelector('input[name="ladder"]:checked')?.value === 'ladderband',
+    color_name:         selectedColor?.name || renderInstruction.color_name,
+    hex_code:           selectedColor?.hex  || renderInstruction.hex_code,
+    slat_width:         document.querySelector('input[name="slat"]:checked')?.value || renderInstruction.slat_width,
+    ladder_tape:        document.querySelector('input[name="ladder"]:checked')?.value === 'ladderband',
     lighting_condition: document.querySelector('input[name="daytime"]:checked')?.value || renderInstruction.lighting_condition,
-    state:             document.querySelector('input[name="tilt"]:checked')?.value === 'open' ? 'Geheel uitgerold' : 'Tot de helft',
+    state:              TILT_MAP[tiltVal] || TILT_MAP.fully_open,
   };
 
   const btnTop = $('btn-viz-top');

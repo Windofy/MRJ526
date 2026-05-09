@@ -89,7 +89,7 @@ Do NOT change any colors, lighting, or objects in the room.
 • Color: {color} (exact hex: {hex_code}) — the slats MUST match this exact color
 • Mount: {mount} — {"blind sits INSIDE the window recess, flush with the wall" if "inside" in mount.lower() else "blind sits OUTSIDE the window recess, mounted on the wall above the frame"}
 • Window sections: {sections}
-• Blind state: {state}
+• Slat angle / state: {state}
 • {slat_proportion}
 
 ═══ MATERIAL & TEXTURE ═══
