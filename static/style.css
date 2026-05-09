@@ -162,6 +162,7 @@ a { color: inherit; }
   cursor: pointer;
   transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
   text-align: center;
+  -webkit-user-select: none;
   user-select: none;
 }
 .upload-zone:hover,
@@ -328,6 +329,7 @@ a { color: inherit; }
   overflow: hidden;
   cursor: ew-resize;
   box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+  -webkit-user-select: none;
   user-select: none;
 }
 .slider__before,
@@ -389,8 +391,8 @@ a { color: inherit; }
   padding: 8px 18px;
   font-size: 13px;
   font-weight: 500;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease), transform var(--dur-fast);
   letter-spacing: 0.02em;
@@ -517,6 +519,7 @@ a { color: inherit; }
   background-color: transparent;
   border: 1.5px solid var(--clr-border, #e8e8e8);
   transition: background-color 0.3s, border-color 0.25s, box-shadow 0.25s;
+  -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
@@ -908,6 +911,7 @@ a { color: inherit; }
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 500;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transition: background var(--dur-fast), transform var(--dur-fast);
 }
@@ -926,6 +930,7 @@ a { color: inherit; }
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-base) var(--ease);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
 }
 .flyout-overlay.visible {
