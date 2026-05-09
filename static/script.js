@@ -170,13 +170,11 @@ async function pollStatus() {
 }
 
 
-// Phase messages shown as progress advances
+// Phase messages — 2-call pipeline (quality + color/config)
 const PHASE_MESSAGES = [
   'Super! Ik analyseer jouw foto…',
-  'Ik bekijk de ramen in jouw ruimte…',
-  'Ik bepaal de ideale jaloezie voor jou…',
-  'Ik bereken de perfecte kleur…',
-  'Ik leg de laatste hand aan de visualisatie…',
+  'Ik match de kleuren in jouw ruimte…',
+  'Bijna klaar! Configuratie wordt opgeslagen…',
 ];
 
 function updateLoadingUI({ status, step }) {
@@ -246,16 +244,16 @@ async function populateResultScreen() {
   // Pre-load catalog so suggestions + color-hero can use sampleUrls immediately
   await loadCatalog();
 
-  // Suggestions — renderSuggestions handles auto-select of first card internally
+  // Suggestions (exactly 4 cards)
   const suggs = analysisData.suggestions || [];
   renderSuggestions(suggs);
 
-  // Technical window check
+  // Window check — safe access, no style/mood fields
   const wc = analysisData.windowCheck || {};
-  $('tech-type').textContent = wc.windowType || '—';
-  $('tech-mount').textContent = wc.recommendation || '—';
-  $('tech-count').textContent = wc.detectedWindowCount || '—';
-  $('bijzonderheden').textContent = wc.specialConsiderations || wc.reasoning || '—';
+  const mountEl = $('tech-mount');
+  const countEl = $('tech-count');
+  if (mountEl) mountEl.textContent = wc.recommendation || '—';
+  if (countEl) countEl.textContent = wc.detectedWindowCount || '—';
 
   // Populate flyout from catalog
   populateFlyout();
