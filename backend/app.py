@@ -22,24 +22,16 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="")
 CORS(app)
 
-# In-memory session store: session_id → state dict
-_sessions: dict = {}
-_lock = threading.Lock()
+# Cross-instance persistent session store (Supabase-backed with local cache)
+from session_store import get_session, set_session, init_session
 
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
 
-def _get_session(session_id: str) -> dict | None:
-    with _lock:
-        return _sessions.get(session_id)
-
-
-def _set_session(session_id: str, data: dict) -> None:
-    with _lock:
-        if session_id not in _sessions:
-            _sessions[session_id] = {}
-        _sessions[session_id].update(data)
+# Aliases kept so existing call-sites in this file keep working
+_get_session = get_session
+_set_session = set_session
 
 
 # ── ROUTES ─────────────────────────────────────────────────────────────────────
@@ -140,8 +132,8 @@ def upload():
     local_path = os.path.join(UPLOAD_DIR, f"{session_id}{ext}")
     file.save(local_path)
 
-    # Initial session state
-    _set_session(session_id, {
+    # Initial session state — use init_session so Supabase gets a full row
+    init_session(session_id, {
         "status": "uploading",
         "phase": 1,
         "step": 0,
@@ -215,8 +207,28 @@ def preview():
         return jsonify({"error": "Analyse nog bezig. Probeer opnieuw als het resultaat klaar is.", "status": state.get("status")}), 503
 
     image_local = state.get("image_local")
+    image_url   = state.get("image_url")   # Supabase public URL (always available)
+
     if not image_local or not os.path.exists(image_local):
-        return jsonify({"error": "Originele afbeelding niet meer beschikbaar."}), 400
+        # Image not on this container instance — download from Supabase Storage
+        if not image_url:
+            return jsonify({"error": "Originele afbeelding niet meer beschikbaar."}), 400
+        try:
+            import httpx, tempfile
+            resp = httpx.get(image_url, timeout=30, follow_redirects=True)
+            resp.raise_for_status()
+            suffix = ".jpg"
+            ct = resp.headers.get("content-type", "")
+            if "png" in ct: suffix = ".png"
+            elif "webp" in ct: suffix = ".webp"
+            tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix, dir=UPLOAD_DIR)
+            tmp.write(resp.content)
+            tmp.flush()
+            tmp.close()
+            image_local = tmp.name
+            _set_session(session_id, {"image_local": image_local})
+        except Exception as dl_err:
+            return jsonify({"error": f"Kon afbeelding niet ophalen: {dl_err}"}), 500
 
     # Run synchronously (previews are user-triggered, acceptable latency)
     try:
@@ -224,6 +236,7 @@ def preview():
 
         with open(image_local, "rb") as f:
             img_bytes = f.read()
+
 
         render_bytes, method = _render_with_fallback(
             img_bytes,
