@@ -474,19 +474,19 @@ async function triggerVisualize() {
   if (!sessionId || !renderInstruction) return;
 
   const TILT_MAP = {
-    fully_open:   'Slats fully open at 0° — horizontal blades, maximum natural light flooding in, full visual transparency through the window',
-    slightly_open:'Slats tilted slightly at 35° — soft diffused light enters, partial view maintained, gentle shadows on the floor',
-    privacy:      'Slats at privacy angle 50° — angled blades block direct sightlines from outside while still allowing indirect ambient light',
-    closed:       'Slats completely closed at 90° — blades are fully vertical and tightly overlapping, NO light passes through, the window area appears as a solid panel of blinds, deep shadows on the interior side',
+    fully_open:   'Slats fully open at 0° horizontal — blades are perfectly flat, maximum transparency, full outdoor view visible through wide gaps between slats',
+    slightly_open:'Slats tilted slightly at 35° downward — partial view through narrowed gaps, soft diffused light, gentle diagonal shadows on floor',
+    privacy:      'Slats at privacy mode 50° steep angle — broad slat faces visible from front, sightlines from outside blocked, only indirect ambient light enters',
+    closed:       'Slats fully closed at 90° vertical — solid opaque panel, zero gaps, zero light transmission, no outdoor view, fully closed blind surface',
   };
   const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'fully_open';
 
-  // Rich lighting descriptions for more accurate Gemini rendering
+  // Lighting descriptions with exact keywords matched to render_gemini.py _lighting_block() detection
   const LIGHTING_MAP = {
-    'Ochtend (Koel)':       'Early morning daylight — soft cool light from a low sun angle, slightly blue-white ambient, long gentle shadows, fresh atmosphere',
-    'Middag (Helder)':      'Bright midday sunlight — high sun, strong direct light, sharp high-contrast shadows, vivid saturated colors, hot white highlights',
-    'Zonsondergang (Warm)': 'Golden hour sunset — warm amber-orange light flooding through the window, rich golden tones washing over all surfaces, long dramatic shadows, cinematic and atmospheric',
-    'Avond (Sfeervol)':     'Late evening interior scene — the exterior window view shows a dark blue-hour night sky, NO daylight outside, interior warm artificial lamps are switched on, cozy low amber ambient light inside, clear contrast between lit interior and dark exterior',
+    'Ochtend (Koel)':       'Early morning ochtend — soft cool blue-white daylight from low sun angle, long cool shadows, fresh quiet atmosphere, pale sky outside',
+    'Middag (Helder)':      'Bright middag noon — high overhead sun, strong white-yellow direct light, sharp high-contrast shadows, vivid saturated colors, bright helder sky outside',
+    'Zonsondergang (Warm)': 'Golden hour zonsondergang — warm amber-orange light flooding through window, rich golden tones on all surfaces, long dramatic shadows, cinematic atmosphere, orange sky outside',
+    'Avond (Sfeervol)':     'Evening avond — exterior is dark night sky, NO daylight outside, interior lit by warm artificial lamps switched on, cozy amber glow inside, dark nacht exterior visible through window',
   };
   const rawDaytime = document.querySelector('input[name="daytime"]:checked')?.value || 'Zonsondergang (Warm)';
 

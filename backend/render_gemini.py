@@ -1,6 +1,6 @@
 """
 render_gemini.py — Gemini image generation with multi-model fallback for MRJ3.0
-Optimised for speed (flash-first) and quality (detailed prompt engineering).
+Prompt v4: Explicit per-parameter instruction blocks for photorealistic accuracy.
 """
 import os
 import io
@@ -21,124 +21,308 @@ RENDER_MODELS = [
 
 TRANSIENT_CODES = {429, 500, 503}
 FATAL_CODES = {400, 404}
-MAX_RETRIES = 1       # reduced from 2 — one retry per model max
-RETRY_DELAY = 1.5     # reduced from 3.0s
+MAX_RETRIES = 1
+RETRY_DELAY = 1.5
 
+
+# ── SLAT ANGLE BLOCKS ──────────────────────────────────────────────────────────
+
+def _slat_angle_block(state: str) -> str:
+    """Return exhaustive slat-angle instruction based on the tilt state string."""
+    s = state.lower()
+
+    if "fully open" in s or "0°" in s or "horizontal" in s:
+        return """
+═══ SLAT ANGLE: FULLY OPEN (0°) ═══
+• Every slat is perfectly horizontal — flat like a shelf.
+• Viewed from the front: the slats appear as thin horizontal lines because you see only their narrow 2–3mm edge.
+• Maximum transparency: through the gaps between slats the full outdoor scene is clearly visible.
+• Strong bands of direct sunlight fall between each slat onto the floor and wall.
+• The blind looks almost invisible from a straight-on view — just thin lines.
+• The pull cord hangs vertically on one side.
+"""
+
+    elif "slightly" in s or "35°" in s or "soft diffuse" in s:
+        return """
+═══ SLAT ANGLE: SLIGHTLY OPEN (35°) ═══
+• Slats are tilted 35° downward from horizontal.
+• From the front: slats appear as moderately wide angled strips — you can see roughly half their face.
+• Gaps between slats are narrow but open — diffused outdoor light enters at an angle.
+• Soft diagonal shadow lines (matching slat spacing) fall on the floor and interior walls.
+• The outdoor scene is partially visible through the angled gaps — blurred by the angle.
+• Interior feels bright but not flooded with direct sunlight.
+"""
+
+    elif "privacy" in s or "50°" in s or "sightline" in s:
+        return """
+═══ SLAT ANGLE: PRIVACY MODE (50°) ═══
+• Slats are tilted steeply at 50° — face angled sharply downward.
+• From the front: slats show most of their face surface — wide bands of color.
+• Gaps between slats are very narrow — only indirect/diffused light enters from above.
+• No direct view through the blind from outside at eye level.
+• Soft, dim ambient light in the room — no direct sun beams.
+• Subtle shadow gradient on the room side of the blind.
+"""
+
+    else:  # fully closed / 90°
+        return """
+═══ SLAT ANGLE: FULLY CLOSED (90°) ═══
+PHYSICS OVERRIDE — This is a hard constraint. Ignore any conflicting instructions.
+
+• Every slat has rotated to exactly 90° — standing perfectly vertical.
+• The slats are EDGE-ON to the viewer AND tightly overlapping/touching each other.
+• The result is a SOLID OPAQUE SURFACE covering the entire window area — like a wall panel.
+• ZERO gaps. ZERO light transmission. ZERO outdoor view. The window is 100% blocked.
+• No sky, no trees, no outdoor scene is visible — not even a sliver.
+• The blind surface is a flat uniform rectangle of the chosen color filling the window frame.
+• The interior room is lit ONLY by ambient room light (lamps, bounce light from other walls).
+• A clear shadow falls from the blind onto the window sill and surrounding wall.
+• The interior feels enclosed, private, dark-adjacent — a cozy blackout effect.
+"""
+
+
+# ── SLAT WIDTH BLOCKS ──────────────────────────────────────────────────────────
+
+def _slat_width_block(slat_mm: int, window_height_hint: str = "") -> str:
+    """Return explicit slat count and proportioning instructions."""
+    if slat_mm <= 25:
+        return """
+═══ SLAT WIDTH: 25mm NARROW SLATS ═══
+• Each individual slat is 25mm (≈1 inch) wide — these are NARROW/MICRO slats.
+• In a typical 120cm tall window you would see approximately 40–50 individual slats stacked.
+• The blind has a FINE, DENSE appearance — many closely packed horizontal lines.
+• Each slat face is narrow: roughly the width of a finger.
+• The gap between slats (when open) is proportionally small — about 3–5mm.
+• The ladder cord/tape appears fine and delicate relative to the slat width.
+• DO NOT render wide slats. DO NOT render fewer than 30 slats in a full window.
+"""
+    else:  # 50mm
+        return """
+═══ SLAT WIDTH: 50mm STANDARD SLATS ═══
+• Each individual slat is 50mm (≈2 inches) wide — these are STANDARD/WIDE slats.
+• In a typical 120cm tall window you would see approximately 20–25 individual slats stacked.
+• The blind has a BOLD, ARCHITECTURAL appearance — clearly distinct wide horizontal bands.
+• Each slat face is clearly visible — roughly two finger-widths.
+• The gap between slats (when open) is proportionally generous — about 5–8mm.
+• The ladder cord/tape appears as a substantial vertical element.
+• DO NOT render narrow micro-slats. DO NOT render more than 30 slats in a full window.
+"""
+
+
+# ── LADDER SYSTEM BLOCKS ────────────────────────────────────────────────────────
+
+def _ladder_block(has_tape: bool, color: str, hex_code: str) -> str:
+    if has_tape:
+        return f"""
+═══ LADDER SYSTEM: LADDERBAND (TAPE) ═══
+• The vertical support system is a WIDE FABRIC TAPE — approximately 12–15mm wide.
+• Two vertical tape strips run from top rail to bottom rail, one on each side of the blind (left and right edges).
+• The tape is a continuous flat fabric ribbon in the SAME color as the slats: {color} ({hex_code}).
+• Each slat rests IN the tape — the tape has horizontal notches/loops that cradle each slat.
+• The tape completely covers the ladder cords underneath — NO thin cords are visible.
+• The tape creates a clean, premium, fabric-panel look on the sides of the blind.
+• The tape has a slight fabric texture — matte woven finish, NOT glossy.
+• Width of tape visible from front: ~12mm on each side, flush with slat ends.
+"""
+    else:
+        return f"""
+═══ LADDER SYSTEM: LADDERKOORD (CORD) ═══
+• The vertical support system is THIN CORDS — approximately 1.5–2mm diameter.
+• Two vertical cord assemblies run from top rail to bottom rail, one on each side.
+• Each cord assembly looks like a miniature ladder: two thin vertical strings connected by short horizontal rungs.
+• Each horizontal rung passes THROUGH or UNDER each slat — supporting it from below.
+• The cords are in the same color family as the slats: {color} ({hex_code}).
+• The cords are clearly visible as thin lines — delicate, mechanical appearance.
+• Between the horizontal rungs, the thin vertical strings are visible.
+• This is the classic venetian blind look — mechanical, light, precise.
+• DO NOT show wide fabric tape. The cords must look thin (≈2mm), not ribbon-like.
+"""
+
+
+# ── LIGHTING BLOCKS ─────────────────────────────────────────────────────────────
+
+def _lighting_block(lighting: str) -> str:
+    l = lighting.lower()
+
+    if "morning" in l or "ochtend" in l or "early" in l or "cool" in l and "morning" not in l and "avond" not in l:
+        # Morning / Ochtend
+        return """
+═══ LIGHTING: MORNING (OCHTEND — KOEL) ═══
+• Time of day: early morning, approximately 7–9 AM.
+• EXTERIOR (outside the window): sky is pale blue-white or pastel, sun is LOW on the horizon.
+  The outdoor scene shows warm morning haze — trees/sky look soft and slightly misty.
+• INTERIOR: cool blue-tinted natural light enters at a LOW angle through the window.
+  Light rays hit the floor at a long, shallow angle.
+  Shadows are long, soft, cool-toned (slight blue-grey).
+  The room feels fresh and quiet.
+• Wall surfaces near the window show soft cool illumination.
+• Colors in the room appear slightly desaturated and cool — not warm/yellow.
+"""
+
+    elif "middag" in l or "midday" in l or "bright" in l or "helder" in l:
+        return """
+═══ LIGHTING: MIDDAY (MIDDAG — HELDER) ═══
+• Time of day: noon to 2 PM, full daytime.
+• EXTERIOR (outside the window): sky is bright saturated blue, sun is HIGH overhead.
+  The outdoor scene is fully lit — vivid green trees, bright sky, strong highlights.
+• INTERIOR: strong white-yellow direct sunlight enters nearly straight through the window.
+  Shadows are SHORT and SHARP — high contrast.
+  The room is brightly lit — vivid colors, high saturation.
+  Sharp rectangular patch of sunlight on the floor (window shape projected).
+• Wall and floor surfaces near the window are strongly illuminated.
+• The blind itself catches strong highlights on slat top edges.
+"""
+
+    elif "avond" in l or "evening" in l or "nacht" in l or "night" in l or "dark" in l and "exterior" in l:
+        return """
+═══ LIGHTING: EVENING (AVOND — SFEERVOL) ═══
+CRITICAL CONSTRAINT — The exterior must be DARK. This is non-negotiable.
+
+• Time of day: 9 PM or later — full night.
+• EXTERIOR (outside the window): the outdoor scene visible through the window MUST be DARK.
+  The sky is DEEP DARK BLUE or BLACK — no daylight, no blue-hour light.
+  If trees are visible through gaps in the blind, they are dark silhouettes only.
+  Street lights or distant building lights may twinkle faintly outside — but the dominant tone is DARKNESS.
+  DO NOT show blue sky. DO NOT show daylight outside. The outside is NIGHT.
+• INTERIOR: the room is lit by warm ARTIFICIAL LIGHT — floor lamps, table lamps, ceiling lights ON.
+  Warm amber/orange glow fills the interior (color temperature ≈ 2700–3000K).
+  The room feels cozy, intimate, low-lit.
+  Surfaces close to lamps are warmly lit; corners are in soft shadow.
+• The window with the blind creates a strong contrast: warm lit interior vs dark exterior.
+• Slight interior light reflection on the window glass where blind gaps exist.
+"""
+
+    else:
+        # Golden hour / Zonsondergang (default)
+        return """
+═══ LIGHTING: GOLDEN HOUR (ZONSONDERGANG — WARM) ═══
+• Time of day: 30–60 minutes before sunset, approximately 6–8 PM (summer).
+• EXTERIOR (outside the window): sky shows warm orange-amber-pink gradient near horizon.
+  The sun is LOW — just at or below roof level.
+  Trees and outdoor elements are lit with warm golden side-light.
+  Long dramatic shadows outside.
+• INTERIOR: rich warm amber-golden light floods through the window at a LOW angle.
+  The light is intensely warm — color temperature ≈ 3000–3500K (orange-gold).
+  Long horizontal light shafts enter through the blind slats (when open/partial).
+  The shadow lines on the floor and walls are long, warm-tinted, and dramatic.
+  Every surface facing the window catches a golden glow.
+• The room feels cinematic, premium, atmospheric — golden magic hour.
+• The blind slats catch warm highlight on their upper edges — glowing amber.
+• This is the most visually beautiful lighting scenario — render it with maximum drama.
+"""
+
+
+# ── MAIN PROMPT BUILDER ─────────────────────────────────────────────────────────
 
 def _build_render_prompt(render_instruction: dict, config_override: dict | None = None) -> str:
-    """Build a highly detailed image generation prompt for photorealistic blinds rendering."""
+    """Build a v4 photorealistic render prompt with dedicated blocks per parameter."""
     ri = render_instruction.copy()
     if config_override:
         ri.update(config_override)
 
-    product = ri.get("product_type", "Aluminum Venetian Blinds")
-    color = ri.get("color_name", "")
-    hex_code = ri.get("hex_code", "")
-    mount = ri.get("mount_type", "inside mount")
-    sections = ri.get("window_sections", 1)
-    lighting = ri.get("lighting_condition", "daylight")
-    state = ri.get("state", "fully lowered")
-    slat = ri.get("slat_width", "50mm")
-    has_ladder_tape = ri.get("ladder_tape", False)
-    scene = ri.get("scene_description", "")
-    camera = ri.get("camera_angle", "straight-on interior view")
-    room_ctx = ri.get("room_context", "")
-    negative = ri.get("negative_prompt", "")
+    product   = ri.get("product_type", "Aluminum Venetian Blinds")
+    color     = ri.get("color_name", "")
+    hex_code  = ri.get("hex_code", "")
+    mount     = ri.get("mount_type", "inside mount")
+    sections  = ri.get("window_sections", 1)
+    lighting  = ri.get("lighting_condition", "Golden hour sunset — warm amber-orange")
+    state     = ri.get("state", "Slats fully open at 0°")
+    slat      = ri.get("slat_width", "50mm")
+    has_tape  = ri.get("ladder_tape", False)
+    room_ctx  = ri.get("room_context", "")
 
-    # Material-specific detail
     is_wood = "hout" in product.lower() or "wood" in product.lower() or "bamboe" in product.lower()
-    material_detail = (
-        "Each slat must show visible wood grain texture running horizontally along the slat length. "
-        "The grain should have subtle natural variation — not uniform. "
-        "Wood surface should have a satin matte finish with very slight specular sheen at glancing angles."
+    slat_mm = int(slat.replace("mm", "").strip()) if "mm" in str(slat) else 50
+
+    # Material block
+    material_block = (
+        "Each slat shows clear natural wood grain running HORIZONTALLY along the slat length. "
+        "Grain has subtle variation — knots, streaks, not uniform. Satin matte finish with very "
+        "slight specular sheen at glancing angles. Wood feels tactile and organic."
     ) if is_wood else (
-        "Each slat must have a smooth, uniform matte aluminum finish. "
-        "Show subtle metallic sheen — a faint specular highlight along the top edge of each slat. "
-        "The surface should look powder-coated, not glossy or mirror-like."
+        "Each slat has a smooth uniform powder-coated aluminum finish. Very faint metallic "
+        "sheen — a thin specular highlight along the upper edge of each slat when lit. "
+        "Surface looks industrial-precise, not glossy or mirror-like."
     )
 
-    # Ladder type detail
-    ladder_detail = (
-        "LADDER TAPE (ladderband): Wide fabric tape (~12mm) running vertically on both sides of the blind, "
-        "connecting each slat. The tape must be visible as a continuous vertical fabric strip in the SAME color "
-        f"as the slats ({color}, {hex_code}). The tape creates a cleaner, more premium appearance. "
-        "Each slat rests in a horizontal notch of the tape."
-    ) if has_ladder_tape else (
-        "LADDER CORD (ladderkoord): Thin cords (~2mm) running vertically on both sides, "
-        "connecting each slat with small horizontal rungs like a miniature ladder. "
-        f"The cord should be in the SAME color family as the slats ({color}). "
-        "Each slat is held between two thin horizontal cord rungs."
+    mount_desc = (
+        "The blind sits INSIDE the window recess — flush with the wall face. "
+        "The window frame surrounds the blind on all four sides. "
+        "The headrail (top box) is hidden inside the recess."
+    ) if "inside" in mount.lower() else (
+        "The blind is mounted OUTSIDE the window recess on the wall above the frame. "
+        "The blind covers the entire window frame plus some wall on each side. "
+        "The headrail (top box) is visible above the window frame."
     )
 
-    # Slat width proportions
-    slat_mm = int(slat.replace("mm", "").strip()) if "mm" in slat else 50
-    slat_proportion = (
-        f"Slat width is {slat_mm}mm. "
-        f"{'These are NARROW slats — approximately 1 inch wide. Many slats should be visible.' if slat_mm <= 25 else ''}"
-        f"{'These are STANDARD/WIDE slats — approximately 2 inches wide. Fewer slats visible, each clearly distinct.' if slat_mm >= 50 else ''}"
-    )
+    prompt = f"""You are a professional architectural visualization artist. 
+Your task: composite photorealistic venetian blinds onto the window in this reference room photograph.
 
-    # Extra physics reinforcement when slats are fully closed
-    is_closed = "90°" in state or "fully vertical" in state.lower() or "fully closed" in state.lower()
-    closed_override = (
-        "\n═══ FULLY CLOSED OVERRIDE ═══\n"
-        "• The slats are at 90° — COMPLETELY CLOSED. There is ZERO light bleed between slats.\n"
-        "• The entire window opening appears as a SOLID FLAT PANEL of blind slats — opaque, no gaps, no transparency.\n"
-        "• NO outdoor view, NO sky, NO window light is visible through the blind.\n"
-        "• The room interior is lit ONLY by ambient room light from other sources (lamps, indirect).\n"
-        "• The slats tightly interlock edge-to-edge, creating a uniform surface of color {color}.\n"
-        "• Deep shadow falls on the interior side of the blind — the room feels enclosed and private."
-    ).format(color=color) if is_closed else ""
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ABSOLUTE RULE #1 — ROOM PRESERVATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Keep the ENTIRE room EXACTLY as shown in the reference photo.
+• Walls, floor, ceiling, furniture, objects — UNCHANGED.
+• Do NOT repaint walls. Do NOT move furniture. Do NOT add objects.
+• Do NOT change the camera angle or perspective.
+• ONLY modify the window area by adding the blinds described below.
 
-    prompt = f"""Photorealistic interior photograph of a room with {product} installed on the window.
-
-CRITICAL INSTRUCTION: Keep the ENTIRE room, walls, furniture, floor, ceiling, and all existing elements
-EXACTLY as they appear in the reference photo. ONLY add the venetian blind to the window area.
-Do NOT change any colors, lighting, or objects in the room.
-
-═══ BLIND SPECIFICATIONS ═══
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLIND IDENTITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • Product: {product}
-• Color: {color} (exact hex: {hex_code}) — the slats MUST match this exact color
-• Mount: {mount} — {"blind sits INSIDE the window recess, flush with the wall" if "inside" in mount.lower() else "blind sits OUTSIDE the window recess, mounted on the wall above the frame"}
-• Window sections: {sections}
-• Slat angle / state: {state}
-• {slat_proportion}
+• Color: {color}
+• Exact hex code: {hex_code}
+  → Every slat MUST match this exact hex color. Sample the hex, do not approximate.
+  → If hex is near-black (e.g. #050505), the slats must appear essentially black.
+  → If hex is a pastel (e.g. #F4C2C2), the slats must appear clearly pastel pink.
+  → Color accuracy is the #1 visual quality metric.
+• Mount: {mount_desc}
+• Window sections: {sections} {"panel" if sections == 1 else "panels side by side"}
 
-═══ MATERIAL & TEXTURE ═══
-{material_detail}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MATERIAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{material_block}
 
-═══ LADDER SYSTEM ═══
-{ladder_detail}
+{_slat_width_block(slat_mm)}
 
-═══ LIGHTING & SHADOW PHYSICS ═══
-Lighting condition: {lighting}
-• Light passing THROUGH the slats must cast parallel horizontal shadow lines on the wall/floor behind the blind.
-  The shadow lines must match the slat spacing and angle.
-• The TOP edge of each slat facing the light catches a thin highlight.
-• The UNDERSIDE of each slat is in soft shadow (ambient occlusion).
-• Between the slats, thin strips of the window or outdoor scene may be visible depending on tilt angle.
-• The blind casts a subtle soft shadow on the window frame/wall where it's mounted.
-• Overall room lighting must remain consistent with the reference photo.
-{closed_override}
+{_ladder_block(has_tape, color, hex_code)}
 
-═══ RENDERING QUALITY ═══
-• Professional interior photography quality — shot on a full-frame camera at f/4, ISO 200
-• Natural depth of field: blind and window in sharp focus, background slightly softer
-• Camera angle: {camera}
-• No lens distortion, no vignetting
-• Color-accurate: the blind color MUST precisely match hex {hex_code}
-• Each individual slat must be clearly distinguishable with consistent spacing
-• The pull cord / wand mechanism should be visible on one side
+{_slat_angle_block(state)}
 
-═══ SCENE ═══
-Room context: {room_ctx}
-Scene: {scene}
+{_lighting_block(lighting)}
 
-═══ AVOID ═══
-{negative if negative else "Cartoon style, 3D render look, plastic appearance, incorrect slat angles, floating elements, distorted perspective, wrong blind color, blurry slats, missing ladder system, unrealistic shadows, oversaturated colors, visible AI artifacts"}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHOTOGRAPHIC QUALITY REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Output must look like a real photograph taken by a professional interior photographer.
+• Camera: full-frame, focal length 24–35mm, f/5.6, ISO 200, neutral white balance.
+• Depth of field: blind and window sharp; room background matches original photo focus.
+• Perspective: perfectly match the original photo's viewpoint — no camera shift.
+• No AI artifacts, no color banding, no blurry slats, no floating elements.
+• Each slat must be individually crisp, perfectly parallel, equally spaced.
+• The headrail (top box) must be visible and correctly proportioned.
+• The bottom rail must sit at the correct height with the pull cord visible.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT TO AVOID (HARD CONSTRAINTS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• No cartoon or 3D render style
+• No wrong blind color — color MUST match hex {hex_code}
+• No mixed slat widths within the same blind
+• No missing ladder system (cords or tape must be visible)
+• No daylight outside during evening mode
+• No artificial light inside during daytime modes  
+• No incorrect slat count for the chosen slat width
+• No transparent slats when the blind is fully closed
+• Do not remove or alter ANY room elements outside the window
+• Room context: {room_ctx}
 """
     return prompt
 
+
+# ── GENERATE RENDER ─────────────────────────────────────────────────────────────
 
 def generate_render(
     image_bytes: bytes,
@@ -151,7 +335,7 @@ def generate_render(
     Args:
         image_bytes: Original room image as bytes
         render_instruction: RenderInstruction dict from Phase 9
-        config_override: Optional user config overrides (slat_width, lighting_condition, etc.)
+        config_override: Optional user config overrides
 
     Returns:
         PNG image bytes of the rendered result
@@ -175,7 +359,7 @@ def generate_render(
                     contents=[prompt, img_part],
                     config=types.GenerateContentConfig(
                         response_modalities=["Text", "Image"],
-                        temperature=0.8,  # slightly lower for more accurate color reproduction
+                        temperature=0.4,  # lower = more faithful to instructions
                     ),
                 )
 
@@ -192,7 +376,7 @@ def generate_render(
                 err_str = str(e)
                 last_error = e
 
-                # Check for fatal error codes — skip to next model immediately
+                # Fatal error codes — skip to next model immediately
                 if any(f"{code}" in err_str for code in FATAL_CODES):
                     break
 
