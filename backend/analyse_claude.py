@@ -31,13 +31,67 @@ RETRY_DELAY = 1.5
 
 
 def _encode_image(image_path: str) -> tuple[str, str]:
-    """Return (base64_data, media_type) for the image file."""
+    """Return (base64_data, media_type) for the image file.
+
+    Claude's API enforces a 5 MB limit on base64-encoded image data.
+    If the raw file would exceed that, we progressively compress/resize it
+    using Pillow until it fits, then encode the result.
+    """
+    # Claude hard limit: 5 242 880 bytes in base64 ≈ 3 932 160 raw bytes
+    CLAUDE_MAX_BYTES = 3_900_000  # conservative raw-byte ceiling before b64
+
     ext = os.path.splitext(image_path)[1].lower()
     media_map = {".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                  ".png": "image/png", ".webp": "image/webp"}
     media_type = media_map.get(ext, "image/jpeg")
-    with open(image_path, "rb") as f:
-        return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
+
+    raw_size = os.path.getsize(image_path)
+
+    if raw_size <= CLAUDE_MAX_BYTES:
+        # Fast path: file is already small enough, encode directly
+        with open(image_path, "rb") as f:
+            return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
+
+    # Slow path: need to compress/downscale before sending to Claude
+    try:
+        from PIL import Image
+        import io
+
+        img = Image.open(image_path)
+        # Always work in RGB to allow JPEG re-encode (drops transparency)
+        if img.mode in ("RGBA", "P", "LA"):
+            img = img.convert("RGB")
+
+        output_media = "image/jpeg"
+        quality = 85
+        scale = 1.0
+
+        for _attempt in range(8):
+            buf = io.BytesIO()
+            w = int(img.width * scale)
+            h = int(img.height * scale)
+            resized = img.resize((w, h), Image.LANCZOS) if scale < 1.0 else img
+            resized.save(buf, format="JPEG", quality=quality, optimize=True)
+            data = buf.getvalue()
+
+            if len(data) <= CLAUDE_MAX_BYTES:
+                b64 = base64.standard_b64encode(data).decode("utf-8")
+                return b64, output_media
+
+            # Still too large — reduce quality first, then scale
+            if quality > 60:
+                quality -= 10
+            else:
+                scale *= 0.75
+
+        # Last-resort: return whatever we have (API will reject if still too big)
+        b64 = base64.standard_b64encode(data).decode("utf-8")
+        return b64, output_media
+
+    except ImportError:
+        # Pillow not available — fall back to raw encode and let API report the error
+        with open(image_path, "rb") as f:
+            return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
 
 
 def _call_claude(system_prompt: str, user_content: list, model: str = MODEL_ANALYSIS, max_tokens: int = 4096) -> str:
