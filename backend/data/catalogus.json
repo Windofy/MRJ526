@@ -35,7 +35,7 @@
     { "name": "Juicy Olive",       "hex": "#808000", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1H7YJmrI3xwQv2x_bFLJ0wfsgEmdFu3Ab" },
     { "name": "Koel Blue",         "hex": "#AEC6CF", "material": "Aluminium", "sampleUrl": "/img-proxy?id=18Q9K6ZvSgkdI482VESFKrCas1mcT7tzt" },
     { "name": "Like RAL9001",      "hex": "#FDF4E3", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1_HG2A85gyte4X1UdhtvbI4Ls364oxpnQ" },
-    { "name": "Cowboy Koper",      "hex": "#8B4513", "material": "Aluminium", "sampleUrl": "/img-proxy?id=1uM2WYHTvbE74z_OVZG18KcpJSUGizj4c" }
+    { "name": "Cowboy Koper",      "hex": "#8B4513", "material": "Aluminium", "sampleUrl": "/img-proxy?id=17n6PC6IJoeZVIQrvjjc4KgNSlWS0zV7r" }
   ],
   "Houten Jaloezieën": [
     { "name": "Like RAL9016",    "hex": "#F0F8FF", "material": "Hout", "sampleUrl": "/img-proxy?id=1-ppuRfo2-G52buV4A9iOLi-HSJKxCiWl" },
@@ -58,6 +58,6 @@
     { "name": "Gebroken White",  "hex": "#FDF5E6", "material": "Hout", "sampleUrl": "/img-proxy?id=1gyvbrmqUEzk6PMA1nS_U3H9MHuSZ_ns9" },
     { "name": "Haver Milk",      "hex": "#EFEBD8", "material": "Hout", "sampleUrl": "/img-proxy?id=1uU1IankZMIy1nGRDrlTHlSbYQukR-E6t" },
     { "name": "Smokey Bamboo",   "hex": "#4A4A4A", "material": "Hout", "sampleUrl": "/img-proxy?id=1yT1mCZFW6-_kIjS0Agt15LQv_weyO_7A" },
-    { "name": "Deep Zwart",      "hex": "#080808", "material": "Hout", "sampleUrl": "/img-proxy?id=17n6PC6IJoeZVIQrvjjc4KgNSlWS0zV7r" }
+    { "name": "Deep Zwart",      "hex": "#080808", "material": "Hout", "sampleUrl": "/img-proxy?id=1uM2WYHTvbE74z_OVZG18KcpJSUGizj4c" }
   ]
 }
