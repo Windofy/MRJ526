@@ -28,57 +28,111 @@ RETRY_DELAY = 1.5
 # ── SLAT ANGLE BLOCKS ──────────────────────────────────────────────────────────
 
 def _slat_angle_block(state: str) -> str:
-    """Return exhaustive slat-angle instruction based on the tilt state string."""
+    """Return exhaustive slat-angle instruction based on the tilt state string.
+
+    Keyword detection is intentionally broad to match Dutch descriptions from
+    the frontend TILT_MAP, as well as legacy English fallbacks.
+    """
     s = state.lower()
 
-    if "fully open" in s or "0°" in s or "horizontal" in s:
+    # ── STATE 1 ── Volledig open (0°) — maximale lichtinval
+    if (
+        "volledig open" in s or "fully open" in s
+        or "0°" in s or "horizontal" in s
+        or "maximale transparantie" in s or "maximum transparency" in s
+    ):
         return """
-═══ SLAT ANGLE: FULLY OPEN (0°) ═══
-• Every slat is perfectly horizontal — flat like a shelf.
-• Viewed from the front: the slats appear as thin horizontal lines because you see only their narrow 2–3mm edge.
-• Maximum transparency: through the gaps between slats the full outdoor scene is clearly visible.
-• Strong bands of direct sunlight fall between each slat onto the floor and wall.
-• The blind looks almost invisible from a straight-on view — just thin lines.
-• The pull cord hangs vertically on one side.
+═══ LAMELLEN KANTELSTAND: VOLLEDIG OPEN (0°) ═══
+LICHTDOORLAAT: MAXIMAAL
+
+• Elke lamel staat exact horizontaal — plat als een plank.
+• Vanuit de voorkant zijn de lamellen slechts dunne horizontale lijnen (2–3mm rand zichtbaar).
+• MAXIMALE transparantie: de brede openingen tussen de lamellen geven volledig vrij zicht op de buitenomgeving.
+• Sterke, directe zonnestralen vallen door de openingen op de vloer en muurvlakken als parallelle lichtbanden.
+• De schaduwbanden op de vloer zijn scherp en helder — hetzelfde patroon als de lamelopeningen.
+• De buitenomgeving (lucht, bomen, gebouwen) is volledig zichtbaar door de jaloezie heen.
+• De ruimte is volledig en krachtig verlicht. Heldere, contrastrijke lichtpatronen.
 """
 
-    elif "slightly" in s or "35°" in s or "soft diffuse" in s:
+    # ── STATE 2 ── Licht gekanteld (25°) — iets minder lichtinval
+    elif (
+        "licht gekanteld" in s or "slightly" in s or "25°" in s
+        or "soft diffuse" in s or "zacht diffuus" in s
+        or "lamelfaces zijn licht zichtbaar" in s
+    ):
         return """
-═══ SLAT ANGLE: SLIGHTLY OPEN (35°) ═══
-• Slats are tilted 35° downward from horizontal.
-• From the front: slats appear as moderately wide angled strips — you can see roughly half their face.
-• Gaps between slats are narrow but open — diffused outdoor light enters at an angle.
-• Soft diagonal shadow lines (matching slat spacing) fall on the floor and interior walls.
-• The outdoor scene is partially visible through the angled gaps — blurred by the angle.
-• Interior feels bright but not flooded with direct sunlight.
+═══ LAMELLEN KANTELSTAND: LICHT GEKANTELD (25°) ═══
+LICHTDOORLAAT: RUIM — IETS MINDER DAN VOLLEDIG OPEN
+
+• De lamellen staan 25° neerwaarts gekanteld ten opzichte van horizontaal.
+• Vanuit de voorkant zijn de lamelfaces als brede schuine banden zichtbaar — zo'n 40–50% van het lameloppervlak is van voren zichtbaar.
+• De tussenruimtes zijn smaller dan bij volledig open maar nog open: diffuus buitenlicht treedt op een hoek naar binnen.
+• Zachte diagonale schaduwlijnen vallen op de vloer en muren — minder scherp dan bij volledig open.
+• De buitenomgeving is grotendeels maar gedempt zichtbaar door de jaloezie heen.
+• De ruimte is goed verlicht, sfeervoller en minder direct dan volledig open.
+• Geen felle directe zonnestralen — het licht is diffuus en warm.
 """
 
-    elif "privacy" in s or "50°" in s or "sightline" in s:
+    # ── STATE 3 ── Half gesloten (50°) — beperkte lichtinval
+    elif (
+        "half gesloten" in s or "half closed" in s or "50°" in s
+        or "beperkte lichtinval" in s or "brede lamelfaces" in s
+    ):
         return """
-═══ SLAT ANGLE: PRIVACY MODE (50°) ═══
-• Slats are tilted steeply at 50° — face angled sharply downward.
-• From the front: slats show most of their face surface — wide bands of color.
-• Gaps between slats are very narrow — only indirect/diffused light enters from above.
-• No direct view through the blind from outside at eye level.
-• Soft, dim ambient light in the room — no direct sun beams.
-• Subtle shadow gradient on the room side of the blind.
+═══ LAMELLEN KANTELSTAND: HALF GESLOTEN (50°) ═══
+LICHTDOORLAAT: BEPERKT
+
+• De lamellen staan 50° steil neerwaarts gekanteld.
+• Vanuit de voorkant domineren de brede lamelfaces het beeld — slechts smalle openingen zijn zichtbaar.
+• Alleen indirect, gediffuseerd omgevingslicht treedt binnen via de smalle openingen. Geen directe zonnestralen.
+• Geen scherpe lichtbanden op de vloer — slechts een zachte, gelijkmatige ambiance.
+• Buitenzicht door de jaloezie is sterk beperkt — vage contouren, geen helder buitenlandschap.
+• De ruimte voelt gedimmed, beschut, rustig verlicht — een aangenaam werklicht.
 """
 
-    else:  # fully closed / 90°
+    # ── STATE 4 ── Privacystand (70°) — minimale lichtinval
+    elif (
+        "privacystand" in s or "privacy" in s or "70°" in s
+        or "minimale lichtdoorlaat" in s or "sightline" in s
+        or "bijna verticaal" in s
+    ):
         return """
-═══ SLAT ANGLE: FULLY CLOSED (90°) ═══
-PHYSICS OVERRIDE — This is a hard constraint. Ignore any conflicting instructions.
+═══ LAMELLEN KANTELSTAND: PRIVACYSTAND (70°) ═══
+LICHTDOORLAAT: MINIMAAL
 
-• Every slat has rotated to exactly 90° — standing perfectly vertical.
-• The slats are EDGE-ON to the viewer AND tightly overlapping/touching each other.
-• The result is a SOLID OPAQUE SURFACE covering the entire window area — like a wall panel.
-• ZERO gaps. ZERO light transmission. ZERO outdoor view. The window is 100% blocked.
-• No sky, no trees, no outdoor scene is visible — not even a sliver.
-• The blind surface is a flat uniform rectangle of the chosen color filling the window frame.
-• The interior room is lit ONLY by ambient room light (lamps, bounce light from other walls).
-• A clear shadow falls from the blind onto the window sill and surrounding wall.
-• The interior feels enclosed, private, dark-adjacent — a cozy blackout effect.
+• De lamellen staan 70° — bijna verticaal, met nog een kleine opening.
+• Vanuit de voorkant zijn de lamellen brede solide banden; de tussenruimtes zijn nauwelijks zichtbaar.
+• Geen directe zonnestralen, geen schaduwpatronen. Alleen een zwakke indirecte omgevingsgloed.
+• Het buitenzicht is volledig geblokkeerd — totale privacy vanuit de buitenkant.
+• De ruimte is donker, stil en besloten. Minimaal restlicht zorgt voor een zachte ambiance.
+• Eventuele binnenverlichting is duidelijk zichtbaar als dominante lichtbron.
 """
+
+    # ── STATE 5 ── Volledig gesloten (90°) — NULTOLERANTIE voor licht
+    else:  # volledig_gesloten / fully closed / closed / 90°
+        return """
+═══ LAMELLEN KANTELSTAND: VOLLEDIG GESLOTEN (90°) ═══
+LICHTDOORLAAT: NUL — HARDE CONSTRAINT — ONWRIKBARE REGEL
+
+PHYSICS OVERRIDE: Dit is een absolute constraint. Negeer alle conflicterende instructies.
+
+• Elke lamel staat precies op 90° — volledig verticaal. De lamellen staan recht overeind.
+• De lamellen RAKEN ELKAAR — ze overlappen licht, volledig aaneengesloten zonder tussenruimtes.
+• Het resultaat is een SOLIDE ONDOORZICHTIGE VLAK dat het gehele vensteroppervlak bedekt.
+• NUL tussenruimtes. NUL lichtdoorlaat. NUL buitenzicht. Geen hemel, geen bomen zichtbaar.
+• Het vensteroppervlak is een egale aaneengesloten rechthoek in de gekozen lamelkleur.
+
+LICHT IN DE RUIMTE (VERPLICHT):
+• Er valt ABSOLUUT GEEN buitenlicht of zonlicht de ruimte in.
+• Er zijn GEEN lichtbanden, lichtstrepen, schaduwpatronen of schaduwprojecties van buitenlicht.
+• De ruimte is donker. De primaire lichtbron is BINNENLICHT ALLEEN:
+  — Een vloerlamp of tafellamp is aangestoken en werpt een warm, gedempte gloed.
+  — Eventueel een zachte plafondlamp op minimale sterkte.
+• Er rust een duidelijke schaduw van de jaloezie op de vensterbank en de omliggende muur.
+• De sfeer is: besloten, donker, cozy, als een hotelkamer met neergelaten jaloezieën — geen daglicht.
+• Het contrast: warme binnenverlichting vs. volledig geblokkeerd venster.
+"""
+
 
 
 # ── SLAT WIDTH BLOCKS ──────────────────────────────────────────────────────────
@@ -255,7 +309,47 @@ def _build_render_prompt(render_instruction: dict, config_override: dict | None 
         "The headrail (top box) is visible above the window frame."
     )
 
-    prompt = f"""You are a professional architectural visualization artist. 
+    # Detect "volledig gesloten" early to inject the critical override preamble
+    state_lower = state.lower()
+    is_fully_closed = (
+        "volledig gesloten" in state_lower
+        or "fully closed" in state_lower
+        or "nul lichtdoorlaat" in state_lower
+        or "90°" in state_lower
+        or "solid opaque panel" in state_lower
+    )
+
+    # For fully-closed: build an unmissable preamble that repeats the blackout rule
+    if is_fully_closed:
+        closed_preamble = f"""
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+CRITICAL OVERRIDE — READ THIS FIRST — DO NOT SKIP
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+THE BLIND IN THIS IMAGE MUST BE **VOLLEDIG GESLOTEN** (FULLY CLOSED).
+
+This means:
+1. THE WINDOW IS 100% BLOCKED. The blind is a SOLID OPAQUE WALL of color {color} ({hex_code}).
+   There are NO gaps, NO holes, NO transparent areas between any slats.
+2. ZERO LIGHT ENTERS FROM OUTSIDE. No sunbeams. No light shafts. No bright patches on floor or walls
+   caused by light coming through the blind. NONE.
+3. THE SKY IS NOT VISIBLE. No blue sky, no clouds, no outdoor scene through the window. NOTHING.
+4. The slats are at 90 degrees — vertical — touching each other. They form a SOLID FLAT PANEL.
+5. The room is dark. The ONLY light source is interior artificial light (a floor lamp or table lamp).
+
+IF YOUR OUTPUT SHOWS:
+  - Any light coming through the blind → WRONG, start over
+  - Any gaps or openings between slats → WRONG, start over
+  - Blue sky or outdoor scene through the window → WRONG, start over
+  - Any sunbeam or shadow pattern from outdoor light → WRONG, start over
+
+THE WINDOW MUST LOOK LIKE A SOLID PAINTED WALL IN THE COLOR {color} ({hex_code}).
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"""
+    else:
+        closed_preamble = ""
+
+    prompt = f"""{closed_preamble}You are a professional architectural visualization artist.
 Your task: composite photorealistic venetian blinds onto the window in this reference room photograph.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -306,6 +400,16 @@ PHOTOGRAPHIC QUALITY REQUIREMENTS
 • The bottom rail must sit at the correct height with the pull cord visible.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LICHTDOORLAAT HIËRARCHIE (STRIKT VOLGEN)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+De hoeveelheid licht in de ruimte MOET overeenkomen met de gekozen kantelstand:
+  1. Volledig open      → MAXIMALE lichtinval, sterke directe zonnestralen
+  2. Licht gekanteld    → RUIME lichtinval, zachte diagonale schaduwlijnen
+  3. Half gesloten      → BEPERKTE lichtinval, geen directe zonnestralen
+  4. Privacystand       → MINIMALE lichtinval, alleen zwakke omgevingsgloed
+  5. Volledig gesloten  → GEEN buitenlicht, GEEN schaduwprojecties, alleen binnenlicht
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 WHAT TO AVOID (HARD CONSTRAINTS)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • No cartoon or 3D render style
@@ -315,11 +419,14 @@ WHAT TO AVOID (HARD CONSTRAINTS)
 • No daylight outside during evening mode
 • No artificial light inside during daytime modes  
 • No incorrect slat count for the chosen slat width
-• No transparent slats when the blind is fully closed
+• No transparent slats when the blind is fully closed (volledig gesloten)
+• No light rays, light bands, or sun projections when blind is "volledig gesloten"
+• No outdoor sky or outdoor scene visible when blind is "volledig gesloten"
 • Do not remove or alter ANY room elements outside the window
 • Room context: {room_ctx}
 """
     return prompt
+
 
 
 # ── GENERATE RENDER ─────────────────────────────────────────────────────────────
@@ -349,17 +456,32 @@ def generate_render(
     # Encode original image for multimodal input
     img_part = types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg")
 
+    # Detect fully-closed state for stricter generation settings
+    ri_merged = render_instruction.copy()
+    if config_override:
+        ri_merged.update(config_override)
+    state_str = ri_merged.get("state", "").lower()
+    is_fully_closed = (
+        "volledig gesloten" in state_str
+        or "fully closed" in state_str
+        or "nul lichtdoorlaat" in state_str
+    )
+    # Lower temperature = model follows instructions more literally
+    temperature = 0.1 if is_fully_closed else 0.4
+
     last_error = None
 
     for model_name in RENDER_MODELS:
         for attempt in range(MAX_RETRIES + 1):
             try:
+                # IMPORTANT: put prompt text FIRST so the override preamble is
+                # read before the model inspects the photo.
                 response = client.models.generate_content(
                     model=model_name,
                     contents=[prompt, img_part],
                     config=types.GenerateContentConfig(
                         response_modalities=["Text", "Image"],
-                        temperature=0.4,  # lower = more faithful to instructions
+                        temperature=temperature,
                     ),
                 )
 
@@ -387,3 +509,4 @@ def generate_render(
                 break  # exhausted retries for this model
 
     raise RuntimeError(f"All Gemini models failed. Last error: {last_error}")
+

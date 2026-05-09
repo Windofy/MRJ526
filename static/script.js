@@ -264,66 +264,122 @@ async function populateResultScreen() {
 }
 
 
-// ── SUGGESTIONS — 4-card animated swatch grid ──────────────────────────────
+// ── SUGGESTIONS — Shopify color-swatch-card structure ───────────────────────
 function renderSuggestions(suggs) {
   const container = $('suggestions');
   container.innerHTML = '';
 
-  // Show up to 4 suggestions in 2×2 grid
   suggs.slice(0, 4).forEach((s, idx) => {
     const catalogItem = findCatalogColor(s.colorName);
     const topUrl    = catalogItem?.topUrl    || catalogItem?.sampleUrl || '';
     const bottomUrl = catalogItem?.bottomUrl || catalogItem?.sampleUrl || '';
-    const sampleUrl = catalogItem?.sampleUrl || topUrl || '';
-    const hex       = s.colorHex || catalogItem?.hex || '#ccc';
-    const material  = (s.material || catalogItem?.material || '').toUpperCase();
+    const hex       = s.colorHex || catalogItem?.hex || '#cccccc';
+    const uid       = `swatch-suggestion-${idx}`;
 
+    // Build picture markup — fallback to a hex-coloured div when no URL
+    const topPicture = topUrl
+      ? `<picture>
+           <img class="swatch-material"
+                src="${topUrl}"
+                srcset="${topUrl} 500w"
+                sizes="(max-width: 768px) 40vw, 100vw"
+                alt="${s.colorName} voorkant"
+                width="127" height="127"
+                loading="lazy"
+                onload="this.style.opacity=1"
+                style="opacity:0;transition:opacity .3s" />
+         </picture>`
+      : `<picture><div class="swatch-hex-fallback" style="background:${hex}"></div></picture>`;
+
+    const bottomPicture = bottomUrl
+      ? `<picture>
+           <img class="swatch-material"
+                role="presentation"
+                src="${bottomUrl}"
+                srcset="${bottomUrl} 500w"
+                sizes="(max-width: 768px) 40vw, 100vw"
+                alt=""
+                width="127" height="127"
+                loading="lazy"
+                onload="this.style.opacity=1"
+                style="opacity:0;transition:opacity .3s" />
+         </picture>`
+      : `<picture><div class="swatch-hex-fallback" style="background:${hex};opacity:.7"></div></picture>`;
+
+    // Exact Shopify card HTML (radio → checkbox for multi-select feel)
     const card = document.createElement('div');
-    card.className = 'color-swatch-card';
+    card.className = 'color-swatch-card card-size--large' + (idx === 0 ? ' is-selected' : '');
     card.setAttribute('role', 'listitem');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', s.colorName);
-
-    // Mark first suggestion as selected by default
-    if (idx === 0) card.classList.add('is-selected');
-
-    // Build inner HTML — picture elements for the hover animation
-    const topImg    = topUrl    ? `<img src="${topUrl}"    alt="${s.colorName} voorkant" loading="lazy" />` : '';
-    const bottomImg = bottomUrl ? `<img src="${bottomUrl}" alt="${s.colorName} detail"   loading="lazy" />` : '';
-
-    const hasImages = topUrl || bottomUrl;
 
     card.innerHTML = `
-      <div class="color-swatch">
-        ${hasImages ? `
-          <picture>${topImg}</picture>
-          <picture>${bottomImg}</picture>
-        ` : `
-          <div class="color-swatch__hex-block" style="background:${hex}"></div>
-        `}
-      </div>
-      <p class="color-swatch-card__name">${s.colorName}</p>
-      <p class="color-swatch-card__material">${material}</p>
+      <input type="radio"
+             class="swatch-radio"
+             id="${uid}"
+             name="suggestion-color"
+             value="${s.colorName}"
+             ${idx === 0 ? 'checked' : ''} />
+
+      <label class="swatch-label" for="${uid}" data-color-name="${s.colorName}">
+
+        <div class="color-swatch-holder">
+
+          <div class="color-swatch size--large">
+            ${topPicture}
+            ${bottomPicture}
+          </div>
+
+          <!-- Checkmark (visible when input:checked via CSS) -->
+          <div class="checkmark-icon" aria-hidden="true">
+            <svg class="icon-checkmark" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="hover-stroke" d="M24.5 5.83331L9.98148 21L3.5 13.6781"
+                    stroke="#3F56CC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+        </div>
+
+        <div class="title-holder">
+          <h5>${s.colorName}</h5>
+        </div>
+
+      </label>
     `;
 
-    // Click / keyboard selection
-    const onSelect = () => {
-      // Remove selected state from all cards
+    // When the radio changes, sync is-selected class and trigger color select
+    card.querySelector('input').addEventListener('change', () => {
       container.querySelectorAll('.color-swatch-card').forEach(c => c.classList.remove('is-selected'));
       card.classList.add('is-selected');
       selectColor({
         name:      s.colorName,
         hex:       hex,
-        material:  `${s.material || ''} ${s.productType || ''}`.trim(),
-        sampleUrl: sampleUrl,
+        sampleUrl: topUrl,
+        material:  s.material || catalogItem?.material || '',
       });
-    };
+    });
 
-    card.addEventListener('click', onSelect);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(); } });
+    // Keyboard: space/enter on the card triggers the radio
+    card.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        card.querySelector('input').click();
+      }
+    });
+    card.setAttribute('tabindex', '0');
 
     container.appendChild(card);
   });
+
+  // Auto-select the first suggestion's color
+  if (suggs.length) {
+    const first = suggs[0];
+    const ci    = findCatalogColor(first.colorName);
+    selectColor({
+      name:      first.colorName,
+      hex:       first.colorHex || ci?.hex || '#ccc',
+      sampleUrl: ci?.topUrl || ci?.sampleUrl || '',
+      material:  first.material || ci?.material || '',
+    });
+  }
 }
 
 
@@ -499,12 +555,22 @@ async function triggerVisualize() {
   if (!sessionId || !renderInstruction) return;
 
   const TILT_MAP = {
-    fully_open:   'Slats fully open at 0° horizontal — blades are perfectly flat, maximum transparency, full outdoor view visible through wide gaps between slats',
-    slightly_open:'Slats tilted slightly at 35° downward — partial view through narrowed gaps, soft diffused light, gentle diagonal shadows on floor',
-    privacy:      'Slats at privacy mode 50° steep angle — broad slat faces visible from front, sightlines from outside blocked, only indirect ambient light enters',
-    closed:       'Slats fully closed at 90° vertical — solid opaque panel, zero gaps, zero light transmission, no outdoor view, fully closed blind surface',
+    // 1. Maximale lichtinval — lamellen volledig horizontaal
+    volledig_open:   'Volledig open — lamellen horizontaal op 0°, maximale transparantie. Vanuit de voorkant zijn de lamellen slechts dunne horizontale lijnen. Maximale lichtinval: brede openingen tussen lamellen, sterke directe zonnestralen op de vloer en muren, volledig buitenzicht zichtbaar door de jaloezie.',
+
+    // 2. Iets minder lichtinval — 25° gekanteld
+    licht_gekanteld: 'Licht gekanteld — lamellen onder 25° hoek neerwaarts gekanteld. Vrij open stand: de lamelfaces zijn licht zichtbaar, smalle maar open tussenruimtes, zacht diffuus licht valt schuin naar binnen, zachte diagonale schaduwlijnen op de vloer. De buitenomgeving is grotendeels zichtbaar. Sfeervolle maar lichte binnenruimte.',
+
+    // 3. Beperkte lichtinval — 50° gekanteld
+    half_gesloten:   'Half gesloten — lamellen op 50° steil neerwaarts gekanteld. Beperkte lichtinval: brede lamelfaces zichtbaar van voor, smalle kijkopeningen, alleen indirecte omgevingsverlichting komt binnen. Geen directe zonnestralen. Subtiele zachte schaduwen. Gedempte ruimteverlichting. Buitenzicht beperkt.',
+
+    // 4. Minimale lichtinval — 70° bijna verticaal
+    privacystand:    'Privacystand — lamellen op 70° bijna verticaal, minimale lichtdoorlaat. Zeer smalle tussenruimtes, alleen indirect omgevingslicht. Geen directe zonnestralen of schaduwbanden. Buitenzicht volledig geblokkeerd. Ruimte is donker en privé, slechts zwak omgevingslicht aanwezig.',
+
+    // 5. Geen lichtdoorlaat — 90° verticaal, volledig gesloten
+    volledig_gesloten:'Volledig gesloten — lamellen staan op 90° exact verticaal en raken elkaar volledig aan. HARD CONSTRAINT: volledig gesloten jaloezie, nul lichtdoorlaat, nul tussenruimtes. Het venster is afgesloten als een aaneengesloten solide paneel. Geen enkel spoor van buitenlicht, geen zonnestralen, geen schaduwprojecties. De ruimte is donker. Enkel zachte binnenverlichting of sfeerlampen verlichten de ruimte.',
   };
-  const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'fully_open';
+  const tiltVal = document.querySelector('input[name="tilt"]:checked')?.value || 'licht_gekanteld';
 
   // Lighting descriptions with exact keywords matched to render_gemini.py _lighting_block() detection
   const LIGHTING_MAP = {
