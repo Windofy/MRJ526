@@ -32,3 +32,11 @@ Thumbs.db
 
 # Docker
 *.log
+
+# Node / npm (installed via npm install @supabase/supabase-js — not needed in repo)
+node_modules/
+package.json
+package-lock.json
+
+# Test scripts
+test-cache.sh
