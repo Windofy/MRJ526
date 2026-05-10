@@ -197,6 +197,20 @@ def preview():
     if not session_id:
         return jsonify({"error": "session_id vereist."}), 400
 
+    # Reject any hex_code that isn't from the authoritative catalog —
+    # frontend should only ever pass catalog hexes, but a stray value would
+    # let Gemini render off-brand colors.
+    if config_override and config_override.get("hex_code"):
+        from core import MR_JEALOUSY_CATALOG
+        allowed_hexes = {
+            c["hex"].lower()
+            for items in MR_JEALOUSY_CATALOG.values()
+            for c in items
+        }
+        requested = config_override["hex_code"].lower()
+        if requested not in allowed_hexes:
+            return jsonify({"error": f"Hex code '{config_override['hex_code']}' niet in catalogus."}), 400
+
     state = _get_session(session_id)
     if state is None:
         return jsonify({"error": "Sessie niet gevonden."}), 404
@@ -369,9 +383,6 @@ def _run_analysis_thread(session_id: str, local_path: str) -> None:
                 print(f"[{session_id}] SAM2 skipped (fal_client not installed: {e}) — using Gemini pipeline")
         else:
             print(f"[{session_id}] SAM2 skipped (no FAL_KEY) — using Gemini pipeline")
-
-        # ── First render always uses Golden Hour for the best first impression ──
-        render_instruction["lighting_condition"] = "Zonsondergang (Warm)"
 
         render_bytes, method = _render_with_fallback(
             img_bytes, render_instruction, mask_bytes

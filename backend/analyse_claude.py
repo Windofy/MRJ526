@@ -223,8 +223,6 @@ Return ONE JSON object — nothing else:
     "hex_code": "<colorHex of top suggestion>",
     "mount_type": "inside mount" or "outside mount",
     "window_sections": <integer>,
-    "lighting_condition": "natural daylight" or "artificial light" or "mixed",
-    "state": "fully lowered" or "half lowered",
     "slat_width": "25mm" or "50mm",
     "ladder_tape": false,
     "scene_description": "<2 sentences max, Dutch, describe window + light>",
