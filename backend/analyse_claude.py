@@ -1,7 +1,8 @@
 """
 analyse_claude.py — Streamlined 2-call Claude Vision pipeline for MRJ526
-Call 1: Quality check (fast gate, ~1s)
-Call 2: Color extraction + catalog match + render planning (single image send, ~8-12s)
+Call 1: Quality check — claude-haiku-4-5 (instant, ~1s)
+Call 2: Color extraction + catalog match + render planning — haiku-4-5 first,
+        fallback to sonnet-4-5 only when JSON parsing fails (~3-6s total)
 """
 import os
 import re
@@ -19,7 +20,8 @@ load_dotenv()
 # Phase → UI step mapping for progress tracking
 PHASE_TO_STEP = {2: 1, 3: 2, 5: 3, 9: 5}
 
-MODEL = "claude-sonnet-4-5"
+MODEL_FAST     = "claude-haiku-4-5"   # Call 1 (always) + Call 2 first attempt
+MODEL_FALLBACK = "claude-sonnet-4-5"  # Call 2 fallback on JSON-parse failure
 
 MAX_RETRIES = 2
 RETRY_DELAY = 1.5
@@ -28,22 +30,21 @@ RETRY_DELAY = 1.5
 def _encode_image(image_path: str) -> tuple[str, str]:
     """Return (base64_data, media_type) for the image file.
 
-    Claude's API enforces a 5 MB limit on base64-encoded image data.
-    If the raw file would exceed that, we progressively compress/resize it
-    using Pillow until it fits, then encode the result.
+    Two-stage pipeline:
+      1. Cap longest edge to MAX_EDGE (1568 px — Claude's internal max).
+         This alone eliminates most oversized uploads and cuts transfer time.
+      2. Progressive JPEG quality/scale reduction until the result is under
+         CLAUDE_MAX_BYTES (API hard limit).
+
+    Falls back to raw encoding when Pillow is not installed.
     """
     CLAUDE_MAX_BYTES = 3_900_000
+    MAX_EDGE = 1568  # Claude's internal max resolution — no benefit going higher
 
     ext = os.path.splitext(image_path)[1].lower()
     media_map = {".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                  ".png": "image/png", ".webp": "image/webp"}
     media_type = media_map.get(ext, "image/jpeg")
-
-    raw_size = os.path.getsize(image_path)
-
-    if raw_size <= CLAUDE_MAX_BYTES:
-        with open(image_path, "rb") as f:
-            return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
 
     try:
         from PIL import Image
@@ -53,15 +54,25 @@ def _encode_image(image_path: str) -> tuple[str, str]:
         if img.mode in ("RGBA", "P", "LA"):
             img = img.convert("RGB")
 
+        # ── Stage 1: cap longest edge to MAX_EDGE ──────────────────────────
+        w, h = img.size
+        if max(w, h) > MAX_EDGE:
+            if w >= h:
+                new_w, new_h = MAX_EDGE, max(1, int(h * MAX_EDGE / w))
+            else:
+                new_w, new_h = max(1, int(w * MAX_EDGE / h)), MAX_EDGE
+            img = img.resize((new_w, new_h), Image.LANCZOS)
+
+        # ── Stage 2: compress until under byte limit ────────────────────────
         output_media = "image/jpeg"
         quality = 85
         scale = 1.0
 
         for _attempt in range(8):
             buf = io.BytesIO()
-            w = int(img.width * scale)
-            h = int(img.height * scale)
-            resized = img.resize((w, h), Image.LANCZOS) if scale < 1.0 else img
+            cw = int(img.width * scale)
+            ch = int(img.height * scale)
+            resized = img.resize((cw, ch), Image.LANCZOS) if scale < 1.0 else img
             resized.save(buf, format="JPEG", quality=quality, optimize=True)
             data = buf.getvalue()
 
@@ -80,7 +91,12 @@ def _encode_image(image_path: str) -> tuple[str, str]:
             return base64.standard_b64encode(f.read()).decode("utf-8"), media_type
 
 
-def _call_claude(system_prompt: str, user_content: list, max_tokens: int = 2048) -> str:
+def _call_claude(
+    system_prompt: str,
+    user_content: list,
+    max_tokens: int = 2048,
+    model: str = MODEL_FAST,
+) -> str:
     """Call Claude with retry logic. Returns raw text response."""
     client = anthropic.Anthropic(
         api_key=os.environ["ANTHROPIC_API_KEY"],
@@ -90,7 +106,7 @@ def _call_claude(system_prompt: str, user_content: list, max_tokens: int = 2048)
     for attempt in range(MAX_RETRIES):
         try:
             response = client.messages.create(
-                model=MODEL,
+                model=model,
                 max_tokens=max_tokens,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_content}],
@@ -244,15 +260,16 @@ def run_pipeline(
 
     image_block = {"type": "image", "source": {"type": "base64", "media_type": img_media, "data": img_b64}}
 
-    # ── CALL 1: Quality check (fast — tiny prompt, tiny output) ────────────
+    # ── CALL 1: Quality check (Haiku — tiny prompt, tiny output) ──────────
     _report(2)
-    print(f"[{session_id}] Call 1/2: Quality check...")
+    print(f"[{session_id}] Call 1/2: Quality check ({MODEL_FAST})...")
     t0 = time.time()
 
     raw_quality = _call_claude(
         _quality_prompt(),
         [image_block, {"type": "text", "text": "Check quality."}],
         max_tokens=64,
+        model=MODEL_FAST,
     )
     quality_result = _extract_json(raw_quality)
     print(f"[{session_id}] Call 1/2 done in {time.time()-t0:.1f}s")
@@ -260,17 +277,33 @@ def run_pipeline(
     if not quality_result.get("quality_pass", False):
         raise RuntimeError(f"QUALITY_FAIL:{json.dumps(quality_result)}")
 
-    # ── CALL 2: Color extraction + catalog match + render planning ─────────
+    # ── CALL 2: Color match + config — Haiku first, Sonnet fallback ───────
     _report(3)
-    print(f"[{session_id}] Call 2/2: Color match + config...")
+    print(f"[{session_id}] Call 2/2: Color match + config ({MODEL_FAST})...")
     t1 = time.time()
 
-    raw_result = _call_claude(
-        _color_config_prompt(),
-        [image_block, {"type": "text", "text": "Analyseer de kamer. Retourneer ALLEEN geldige JSON."}],
-        max_tokens=2048,
-    )
-    result = _extract_json(raw_result)
+    _call2_prompt = _color_config_prompt()
+    _call2_content = [image_block, {"type": "text", "text": "Analyseer de kamer. Retourneer ALLEEN geldige JSON."}]
+
+    result = None
+    for _model in (MODEL_FAST, MODEL_FALLBACK):
+        raw_result = _call_claude(
+            _call2_prompt,
+            _call2_content,
+            max_tokens=2048,
+            model=_model,
+        )
+        try:
+            result = _extract_json(raw_result)
+            if _model == MODEL_FALLBACK:
+                print(f"[{session_id}] Call 2/2 JSON parsed with fallback model ({MODEL_FALLBACK})")
+            break
+        except json.JSONDecodeError:
+            if _model == MODEL_FAST:
+                print(f"[{session_id}] Call 2/2 Haiku JSON parse failed — retrying with {MODEL_FALLBACK}...")
+            else:
+                raise RuntimeError("Call 2: JSON parsing failed on both Haiku and Sonnet")
+
     _report(9)
     print(f"[{session_id}] Call 2/2 done in {time.time()-t1:.1f}s")
 
