@@ -215,39 +215,17 @@ a { color: inherit; }
 .loading-v2__avatar {
   width: 44px;
   height: 44px;
-  background: var(--clr-surface);
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   flex-shrink: 0;
 }
 
-/* 3-dot row */
-.loading-v2__dots {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* Each dot */
-.loading-v2__dots span {
+.loading-v2__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--clr-accent, #e04b2a);
-  animation: dot-up 0.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-.loading-v2__dots span:nth-child(1) { animation-delay: 0s;    }
-.loading-v2__dots span:nth-child(2) { animation-delay: 0.16s; }
-.loading-v2__dots span:nth-child(3) { animation-delay: 0.32s; }
-
-@keyframes dot-up {
-  0%, 100% { transform: translateY(0);   opacity: 0.35; }
-  40%       { transform: translateY(-6px); opacity: 1;    }
-  60%       { transform: translateY(-6px); opacity: 1;    }
 }
 
 

@@ -9,6 +9,7 @@ let pollTimer = null;
 let pollTimeout = null;   // hard stop after MAX_POLL_MS
 const MAX_POLL_MS = 5 * 60 * 1000;  // 5 minutes (pipeline is now 3 calls)
 let currentStep = 0;
+let _barPct = 0;          // monotonic progress tracker — JS-owned, never reads DOM
 let analysisData = null;
 let renderInstruction = null;
 let selectedColor = null;
@@ -180,7 +181,6 @@ const PHASE_MESSAGES = [
 function updateLoadingUI({ status, step }) {
   const stepNum = parseInt(step) || 0;
 
-  // Monotone progress: never go backward
   let pct;
   if (status === 'rendering') {
     pct = 98;
@@ -188,14 +188,11 @@ function updateLoadingUI({ status, step }) {
     pct = Math.min((stepNum / 5) * 95, 95);
   }
 
-  // Only advance, never retreat
-  const barEl = $('loading-bar');
-  const currentPct = parseFloat(barEl.style.width) || 0;
-  if (pct > currentPct) {
-    barEl.style.width = `${pct}%`;
+  if (pct > _barPct) {
+    _barPct = pct;
+    $('loading-bar').style.width = `${pct}%`;
   }
 
-  // Only update step tracking if we advanced
   if (stepNum > currentStep) currentStep = stepNum;
 
   // Status message
@@ -209,6 +206,7 @@ function updateLoadingUI({ status, step }) {
 
 function resetPhaseList() {
   currentStep = 0;
+  _barPct = 0;
   $('loading-bar').style.width = '0%';
   $('loading-message').textContent = 'Super! Ik analyseer jouw foto…';
 }
@@ -227,6 +225,7 @@ async function fetchResult() {
 
     populateResultScreen();
     showScreen('result');
+    _barPct = 100;
     $('loading-bar').style.width = '100%';
   } catch (e) {
     handleError('Kon resultaat niet ophalen.');
