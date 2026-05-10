@@ -42,14 +42,14 @@ def _slat_angle_block(state: str) -> str:
         or "maximale transparantie" in s or "maximum transparency" in s
     ):
         return """
-═══ LAMELLEN KANTELSTAND: VOLLEDIG OPEN (0°) ═══
+═══ jaloezie latLEN KANTELSTAND: VOLLEDIG OPEN (0°) ═══
 LICHTDOORLAAT: MAXIMAAL
 
-• Elke lamel staat exact horizontaal — plat als een plank.
-• Vanuit de voorkant zijn de lamellen slechts dunne horizontale lijnen (2–3mm rand zichtbaar).
-• MAXIMALE transparantie: de brede openingen tussen de lamellen geven volledig vrij zicht op de buitenomgeving.
+• Elke jaloezie lat staat exact horizontaal — plat als een plank.
+• Vanuit de voorkant zijn de jaloezie latlen slechts dunne horizontale lijnen (2–3mm rand zichtbaar).
+• MAXIMALE transparantie: de brede openingen tussen de jaloezie latlen geven volledig vrij zicht op de buitenomgeving.
 • Sterke, directe zonnestralen vallen door de openingen op de vloer en muurvlakken als parallelle lichtbanden.
-• De schaduwbanden op de vloer zijn scherp en helder — hetzelfde patroon als de lamelopeningen.
+• De schaduwbanden op de vloer zijn scherp en helder — hetzelfde patroon als de jaloezie latopeningen.
 • De buitenomgeving (lucht, bomen, gebouwen) is volledig zichtbaar door de jaloezie heen.
 • De ruimte is volledig en krachtig verlicht. Heldere, contrastrijke lichtpatronen.
 """
@@ -58,14 +58,14 @@ LICHTDOORLAAT: MAXIMAAL
     elif (
         "licht gekanteld" in s or "slightly" in s or "25°" in s
         or "soft diffuse" in s or "zacht diffuus" in s
-        or "lamelfaces zijn licht zichtbaar" in s
+        or "jaloezie latfaces zijn licht zichtbaar" in s
     ):
         return """
-═══ LAMELLEN KANTELSTAND: LICHT GEKANTELD (25°) ═══
+═══ jaloezie latLEN KANTELSTAND: LICHT GEKANTELD (25°) ═══
 LICHTDOORLAAT: RUIM — IETS MINDER DAN VOLLEDIG OPEN
 
-• De lamellen staan 25° neerwaarts gekanteld ten opzichte van horizontaal.
-• Vanuit de voorkant zijn de lamelfaces als brede schuine banden zichtbaar — zo'n 40–50% van het lameloppervlak is van voren zichtbaar.
+• De jaloezie latlen staan 25° neerwaarts gekanteld ten opzichte van horizontaal.
+• Vanuit de voorkant zijn de jaloezie latfaces als brede schuine banden zichtbaar — zo'n 40–50% van het jaloezie latoppervlak is van voren zichtbaar.
 • De tussenruimtes zijn smaller dan bij volledig open maar nog open: diffuus buitenlicht treedt op een hoek naar binnen.
 • Zachte diagonale schaduwlijnen vallen op de vloer en muren — minder scherp dan bij volledig open.
 • De buitenomgeving is grotendeels maar gedempt zichtbaar door de jaloezie heen.
@@ -76,14 +76,14 @@ LICHTDOORLAAT: RUIM — IETS MINDER DAN VOLLEDIG OPEN
     # ── STATE 3 ── Half gesloten (50°) — beperkte lichtinval
     elif (
         "half gesloten" in s or "half closed" in s or "50°" in s
-        or "beperkte lichtinval" in s or "brede lamelfaces" in s
+        or "beperkte lichtinval" in s or "brede jaloezie latfaces" in s
     ):
         return """
-═══ LAMELLEN KANTELSTAND: HALF GESLOTEN (50°) ═══
+═══ jaloezie latLEN KANTELSTAND: HALF GESLOTEN (50°) ═══
 LICHTDOORLAAT: BEPERKT
 
-• De lamellen staan 50° steil neerwaarts gekanteld.
-• Vanuit de voorkant domineren de brede lamelfaces het beeld — slechts smalle openingen zijn zichtbaar.
+• De jaloezie latlen staan 50° steil neerwaarts gekanteld.
+• Vanuit de voorkant domineren de brede jaloezie latfaces het beeld — slechts smalle openingen zijn zichtbaar.
 • Alleen indirect, gediffuseerd omgevingslicht treedt binnen via de smalle openingen. Geen directe zonnestralen.
 • Geen scherpe lichtbanden op de vloer — slechts een zachte, gelijkmatige ambiance.
 • Buitenzicht door de jaloezie is sterk beperkt — vage contouren, geen helder buitenlandschap.
@@ -94,14 +94,14 @@ LICHTDOORLAAT: BEPERKT
     elif (
         "privacystand" in s or "privacy" in s or "70°" in s
         or "minimale lichtdoorlaat" in s or "sightline" in s
-        or "bijna verticaal" in s
+        or "bijna gesloten" in s
     ):
         return """
-═══ LAMELLEN KANTELSTAND: PRIVACYSTAND (70°) ═══
+═══ jaloezie latLEN KANTELSTAND: PRIVACYSTAND (70°) ═══
 LICHTDOORLAAT: MINIMAAL
 
-• De lamellen staan 70° — bijna verticaal, met nog een kleine opening.
-• Vanuit de voorkant zijn de lamellen brede solide banden; de tussenruimtes zijn nauwelijks zichtbaar.
+• De jaloezie latlen staan 70° — bijna gesloten, met nog een kleine opening.
+• Vanuit de voorkant zijn de jaloezie latlen brede solide banden; de tussenruimtes zijn nauwelijks zichtbaar.
 • Geen directe zonnestralen, geen schaduwpatronen. Alleen een zwakke indirecte omgevingsgloed.
 • Het buitenzicht is volledig geblokkeerd — totale privacy vanuit de buitenkant.
 • De ruimte is donker, stil en besloten. Minimaal restlicht zorgt voor een zachte ambiance.
@@ -111,16 +111,16 @@ LICHTDOORLAAT: MINIMAAL
     # ── STATE 5 ── Volledig gesloten (90°) — NULTOLERANTIE voor licht
     else:  # volledig_gesloten / fully closed / closed / 90°
         return """
-═══ LAMELLEN KANTELSTAND: VOLLEDIG GESLOTEN (90°) ═══
+═══ jaloezie latLEN KANTELSTAND: VOLLEDIG GESLOTEN (90°) ═══
 LICHTDOORLAAT: NUL — HARDE CONSTRAINT — ONWRIKBARE REGEL
 
 PHYSICS OVERRIDE: Dit is een absolute constraint. Negeer alle conflicterende instructies.
 
-• Elke lamel staat precies op 90° — volledig verticaal. De lamellen staan recht overeind.
-• De lamellen RAKEN ELKAAR — ze overlappen licht, volledig aaneengesloten zonder tussenruimtes.
+• Elke jaloezie lat staat precies op 90° — volledig gesloten. De jaloezie latlen staan recht overeind.
+• De jaloezie latlen RAKEN ELKAAR — ze overlappen licht, volledig aaneengesloten zonder tussenruimtes.
 • Het resultaat is een SOLIDE ONDOORZICHTIGE VLAK dat het gehele vensteroppervlak bedekt.
 • NUL tussenruimtes. NUL lichtdoorlaat. NUL buitenzicht. Geen hemel, geen bomen zichtbaar.
-• Het vensteroppervlak is een egale aaneengesloten rechthoek in de gekozen lamelkleur.
+• Het vensteroppervlak is een egale aaneengesloten rechthoek in de gekozen jaloezie latkleur.
 
 LICHT IN DE RUIMTE (VERPLICHT):
 • Er valt ABSOLUUT GEEN buitenlicht of zonlicht de ruimte in.
@@ -158,7 +158,7 @@ def _slat_width_block(slat_mm: int, window_height_hint: str = "") -> str:
 • The blind has a BOLD, ARCHITECTURAL appearance — clearly distinct wide horizontal bands.
 • Each slat face is clearly visible — roughly two finger-widths.
 • The gap between slats (when open) is proportionally generous — about 5–8mm.
-• The ladder cord/tape appears as a substantial vertical element.
+• The ladder cord/tape appears as a substantial closed element.
 • DO NOT render narrow micro-slats. DO NOT render more than 30 slats in a full window.
 """
 
@@ -169,8 +169,8 @@ def _ladder_block(has_tape: bool, color: str, hex_code: str) -> str:
     if has_tape:
         return f"""
 ═══ LADDER SYSTEM: LADDERBAND (TAPE) ═══
-• The vertical support system is a WIDE FABRIC TAPE — approximately 12–15mm wide.
-• Two vertical tape strips run from top rail to bottom rail, one on each side of the blind (left and right edges).
+• The closed support system is a WIDE FABRIC TAPE — approximately 12–15mm wide.
+• Two closed tape strips run from top rail to bottom rail, one on each side of the blind (left and right edges).
 • The tape is a continuous flat fabric ribbon in the SAME color as the slats: {color} ({hex_code}).
 • Each slat rests IN the tape — the tape has horizontal notches/loops that cradle each slat.
 • The tape completely covers the ladder cords underneath — NO thin cords are visible.
@@ -181,13 +181,13 @@ def _ladder_block(has_tape: bool, color: str, hex_code: str) -> str:
     else:
         return f"""
 ═══ LADDER SYSTEM: LADDERKOORD (CORD) ═══
-• The vertical support system is THIN CORDS — approximately 1.5–2mm diameter.
-• Two vertical cord assemblies run from top rail to bottom rail, one on each side.
-• Each cord assembly looks like a miniature ladder: two thin vertical strings connected by short horizontal rungs.
+• The closed support system is THIN CORDS — approximately 1.5–2mm diameter.
+• Two closed cord assemblies run from top rail to bottom rail, one on each side.
+• Each cord assembly looks like a miniature ladder: two thin closed strings connected by short horizontal rungs.
 • Each horizontal rung passes THROUGH or UNDER each slat — supporting it from below.
 • The cords are in the same color family as the slats: {color} ({hex_code}).
 • The cords are clearly visible as thin lines — delicate, mechanical appearance.
-• Between the horizontal rungs, the thin vertical strings are visible.
+• Between the horizontal rungs, the thin closed strings are visible.
 • This is the classic venetian blind look — mechanical, light, precise.
 • DO NOT show wide fabric tape. The cords must look thin (≈2mm), not ribbon-like.
 """
@@ -334,7 +334,7 @@ This means:
 2. ZERO LIGHT ENTERS FROM OUTSIDE. No sunbeams. No light shafts. No bright patches on floor or walls
    caused by light coming through the blind. NONE.
 3. THE SKY IS NOT VISIBLE. No blue sky, no clouds, no outdoor scene through the window. NOTHING.
-4. The slats are at 90 degrees — vertical — touching each other. They form a SOLID FLAT PANEL.
+4. The slats are at 90 degrees — closed — touching each other. They form a SOLID FLAT PANEL.
 5. The room is dark. The ONLY light source is interior artificial light (a floor lamp or table lamp).
 
 IF YOUR OUTPUT SHOWS:
