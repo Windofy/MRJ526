@@ -14,9 +14,9 @@ load_dotenv()
 
 # Speed-optimised fallback order: fastest first, pro as last resort
 RENDER_MODELS = [
-    "gemini-2.0-flash-preview-image-generation",  # fastest — current image gen
-    "gemini-2.0-flash-exp",                        # experimental flash fallback
-    "gemini-1.5-pro",                              # high quality last resort
+    "gemini-2.5-flash-image",            # stable production image gen
+    "gemini-3.1-flash-image-preview",    # newer preview flash
+    "gemini-3-pro-image-preview",        # high quality last resort
 ]
 
 TRANSIENT_CODES = {429, 500, 503}
@@ -471,38 +471,23 @@ def generate_render(
 
     last_error = None
 
-    # Only the first model supports native image generation
-    # Fallbacks (gemini-2.0-flash-exp, gemini-1.5-pro) use text-only prompts
-    # which cannot natively output images — they are kept only as error-info fallbacks
-    IMAGE_GEN_MODELS = {"gemini-2.0-flash-preview-image-generation"}
-
     for model_name in RENDER_MODELS:
         for attempt in range(MAX_RETRIES + 1):
             try:
-                is_image_model = model_name in IMAGE_GEN_MODELS
-
-                if is_image_model:
-                    # IMPORTANT: put prompt text FIRST so the override preamble is
-                    # read before the model inspects the photo.
-                    response = client.models.generate_content(
-                        model=model_name,
-                        contents=[prompt, img_part],
-                        config=types.GenerateContentConfig(
-                            response_modalities=["Text", "Image"],
-                            temperature=temperature,
-                        ),
-                    )
-                    # Extract image from response
-                    for part in response.candidates[0].content.parts:
-                        if part.inline_data is not None:
-                            return part.inline_data.data  # raw PNG bytes
-                    # No image in response — try next model
-                    last_error = RuntimeError(f"Model {model_name} returned no image")
-                    break
-                else:
-                    # Non-image model — skip (kept as documented fallback only)
-                    last_error = RuntimeError(f"Model {model_name} does not support image output")
-                    break
+                # Prompt text FIRST so the override preamble is read before the photo.
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=[prompt, img_part],
+                    config=types.GenerateContentConfig(
+                        response_modalities=["Text", "Image"],
+                        temperature=temperature,
+                    ),
+                )
+                for part in response.candidates[0].content.parts:
+                    if part.inline_data is not None:
+                        return part.inline_data.data  # raw PNG bytes
+                last_error = RuntimeError(f"Model {model_name} returned no image")
+                break
 
             except Exception as e:
                 err_str = str(e)
