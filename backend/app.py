@@ -158,7 +158,7 @@ def upload():
 
 @app.route("/status/<session_id>")
 def status(session_id: str):
-    state = _get_session(session_id)
+    state = _get_session(session_id, force_refresh=True)
     if state is None:
         return jsonify({"error": "Sessie niet gevonden."}), 404
     return jsonify({
